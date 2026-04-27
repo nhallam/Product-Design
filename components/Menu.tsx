@@ -16,11 +16,10 @@ const navLinks = [
 ]
 
 const socialLinks = [
-  { href: 'https://linkedin.com/in/nrhallam', label: 'LinkedIn' },
+  { href: 'https://www.linkedin.com/in/nickhallam/', label: 'LinkedIn' },
   { href: 'https://github.com/nhallam', label: 'Github' },
-  { href: 'https://twitter.com/nrhallam', label: 'Twitter' },
-  { href: 'https://instagram.com/nrhallam', label: 'Instagram' },
-  { href: 'mailto:nrhallam@gmail.com', label: 'nrhallam@gmail.com' },
+  { href: 'https://x.com/nhallam', label: 'Twitter' },
+  { href: 'https://www.instagram.com/nhallam/', label: 'Instagram' },
 ]
 
 export default function Menu({ open, onClose }: MenuProps) {
@@ -62,12 +61,13 @@ export default function Menu({ open, onClose }: MenuProps) {
               key={label}
               href={href}
               className="text-base text-[#888] hover:text-[#444] transition-colors"
-              target={href.startsWith('http') ? '_blank' : undefined}
-              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {label}
             </a>
           ))}
+          <span className="text-base text-[#888]">nrhallam@gmail.com</span>
         </div>
       </div>
     </div>
