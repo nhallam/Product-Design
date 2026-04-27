@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 interface MenuProps {
@@ -8,6 +9,7 @@ interface MenuProps {
 }
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/writing', label: 'Writing' },
   { href: '/projects', label: 'Projects' },
