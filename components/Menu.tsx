@@ -32,7 +32,7 @@ export default function Menu({ open, onClose }: MenuProps) {
     <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-all duration-300 ease-in-out ${
       open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
     }`}>
-      <div className="flex items-center px-6 py-4">
+      <div className="max-w-2xl mx-auto w-full flex items-center px-6 py-4">
         <button
           onClick={onClose}
           className="text-sm text-[#888] hover:text-[#111] transition-colors cursor-pointer"
@@ -41,7 +41,7 @@ export default function Menu({ open, onClose }: MenuProps) {
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col justify-between px-6 py-12">
+      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-between px-6 py-12">
         <nav className="flex flex-col gap-1">
           {navLinks.map(({ href, label }) => (
             <Link
