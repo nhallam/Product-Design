@@ -9,7 +9,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="max-w-2xl mx-auto min-h-screen flex flex-col">
+      <div className="max-w-2xl mx-auto h-screen flex flex-col">
         <Nav onMenuOpen={() => setMenuOpen(true)} />
         {children}
       </div>

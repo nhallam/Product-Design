@@ -7,7 +7,7 @@ const projects = [
 
 export default function Home() {
   return (
-    <main className="flex-1 flex flex-col px-6 pb-6">
+    <main className="flex-1 flex flex-col min-h-0 px-6 pb-6">
       <div className="flex-1 flex items-center">
         <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 max-w-xs" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           A product designer and founder living in Brooklyn, NY.
