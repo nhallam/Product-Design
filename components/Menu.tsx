@@ -35,7 +35,7 @@ export default function Menu({ open, onClose }: MenuProps) {
       <div className="max-w-2xl mx-auto w-full flex items-center px-6 py-4">
         <button
           onClick={onClose}
-          className="text-sm text-[#888] hover:text-[#111] transition-colors cursor-pointer"
+          className="text-base text-[#888] hover:text-[#111] transition-colors cursor-pointer"
         >
           Close
         </button>
