@@ -1,0 +1,24 @@
+export default function About() {
+  return (
+    <main className="px-6 pb-20">
+      <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-24 mb-16 max-w-xs">
+        About
+      </h1>
+      <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#333]">
+        <p>
+          I&apos;m a product designer and founder living in Brooklyn, NY. I care about building
+          products that are simple, useful, and crafted with intention.
+        </p>
+        <p>
+          Previously I&apos;ve led design at early-stage startups and worked across consumer, SaaS,
+          and AI products. I&apos;m currently exploring new ideas at the intersection of design and
+          technology.
+        </p>
+        <p>
+          When I&apos;m not designing I&apos;m writing, building, or walking around the city looking
+          for good coffee.
+        </p>
+      </div>
+    </main>
+  )
+}
