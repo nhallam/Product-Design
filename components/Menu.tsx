@@ -28,10 +28,10 @@ export default function Menu({ open, onClose }: MenuProps) {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  if (!open) return null
-
   return (
-    <div className="fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col">
+    <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-all duration-300 ease-in-out ${
+      open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
+    }`}>
       <div className="flex items-center px-6 py-4">
         <button
           onClick={onClose}
