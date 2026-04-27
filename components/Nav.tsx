@@ -6,10 +6,7 @@ interface NavProps {
 
 export default function Nav({ onMenuOpen }: NavProps) {
   return (
-    <nav className="flex justify-between items-center px-6 py-4">
-      <Link href="/" className="text-sm text-[#888] hover:text-[#111] transition-colors">
-        Home
-      </Link>
+    <nav className="flex items-center px-6 py-4">
       <button
         onClick={onMenuOpen}
         className="text-sm text-[#888] hover:text-[#111] transition-colors cursor-pointer"

@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect } from 'react'
 
 interface MenuProps {
@@ -32,10 +31,7 @@ export default function Menu({ open, onClose }: MenuProps) {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col">
-      <div className="flex justify-between items-center px-6 py-4">
-        <Link href="/" onClick={onClose} className="text-sm text-[#888] hover:text-[#111] transition-colors">
-          Home
-        </Link>
+      <div className="flex items-center px-6 py-4">
         <button
           onClick={onClose}
           className="text-sm text-[#888] hover:text-[#111] transition-colors cursor-pointer"
