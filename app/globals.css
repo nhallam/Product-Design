@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'AmericanGroteskCondensed';
+  src: url('./fonts/TestAmericanGroteskCondensed-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   background: #f0f0f0;
   color: #111111;

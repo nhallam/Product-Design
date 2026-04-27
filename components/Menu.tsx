@@ -48,7 +48,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               key={href}
               href={href}
               onClick={onClose}
-              className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#111] hover:text-[#555] transition-colors"
+              className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#111] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
             >
               {label}
             </Link>
