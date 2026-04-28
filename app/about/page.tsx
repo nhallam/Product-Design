@@ -29,7 +29,7 @@ export default function About() {
           alt="Nick Hallam"
           width={400}
           height={400}
-          className="object-cover rounded-[5px] shadow-md"
+          className="object-cover rounded-[10px] shadow-[0_4px_6px_-1px_rgb(0,0,0,0.12),0_2px_4px_-2px_rgb(0,0,0,0.12)]"
         />
       </div>
     </main>
