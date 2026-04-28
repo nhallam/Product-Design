@@ -37,11 +37,6 @@ export default function GTrainSticker() {
         <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: dot }} />
         <span className="text-sm text-white/90">{label}</span>
       </div>
-      {data.alerts.length > 0 && (
-        <div className="mt-2 pt-2 border-t border-white/25 text-xs text-white/80 leading-snug line-clamp-4">
-          {data.alerts[0]}
-        </div>
-      )}
     </div>
   )
 }
