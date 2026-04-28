@@ -61,7 +61,7 @@ export default function Home() {
             A product designer and founder living in{' '}
             <button
               onClick={() => setEasterEggActive(true)}
-              className="hover:text-[#555] transition-colors"
+              className="underline underline-offset-4 hover:text-[#555] transition-colors"
             >
               Brooklyn, NY
             </button>
