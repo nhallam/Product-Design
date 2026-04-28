@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Sticker from './Sticker'
+import GTrainSticker from './stickers/GTrainSticker'
 
 interface EasterEggLayerProps {
   active: boolean
@@ -25,13 +26,7 @@ const stickers = [
     id: 'gtrain',
     rotation: 5,
     delay: 0.07,
-    content: (
-      <div className="bg-[#6CBE45] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
-        <div className="text-3xl mb-1">🚇</div>
-        <div className="text-base font-bold text-white">G Train</div>
-        <div className="text-sm text-white/80 mt-0.5">Running on time</div>
-      </div>
-    ),
+    content: <GTrainSticker />,
   },
   {
     id: 'boombox',
