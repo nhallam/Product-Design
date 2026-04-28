@@ -14,7 +14,7 @@ export default async function ProjectPage({ params }: Props) {
 
       <div className="w-full h-72 bg-[#d4d4d4] rounded-sm mb-12" />
 
-      <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#333]">
+      <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>Project overview and description will go here.</p>
       </div>
     </main>

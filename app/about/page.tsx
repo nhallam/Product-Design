@@ -4,7 +4,7 @@ export default function About() {
       <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-24 mb-16 max-w-xs">
         About
       </h1>
-      <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#333]">
+      <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>
           I&apos;m a product designer and founder living in Brooklyn, NY. I care about building
           products that are simple, useful, and crafted with intention.

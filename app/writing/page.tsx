@@ -51,7 +51,7 @@ export default function Writing() {
           />
           <button
             type="submit"
-            className="text-sm font-bold px-4 py-2 bg-[#111] text-[#f0f0f0] hover:bg-[#333] transition-colors rounded-sm"
+            className="text-sm font-bold px-4 py-2 bg-[#1C1C1C] text-[#f0f0f0] hover:bg-[#333] transition-colors rounded-sm"
           >
             Subscribe
           </button>

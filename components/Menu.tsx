@@ -35,7 +35,7 @@ export default function Menu({ open, onClose }: MenuProps) {
       <div className="max-w-2xl mx-auto w-full flex items-center px-6 py-4">
         <button
           onClick={onClose}
-          className="text-base text-[#888] hover:text-[#111] transition-colors cursor-pointer"
+          className="text-base text-[#888] hover:text-[#1C1C1C] transition-colors cursor-pointer"
         >
           Close
         </button>
@@ -48,7 +48,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               key={href}
               href={href}
               onClick={onClose}
-              className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#111] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+              className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
             >
               {label}
             </Link>
