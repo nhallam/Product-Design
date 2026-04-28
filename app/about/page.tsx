@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <main className="px-6 pb-20">
-      <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-8 mb-16 w-full" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
+      <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-8 mb-16 w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
         I&apos;m a product designer and founder living in Brooklyn, NY.
       </h1>
       <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#1C1C1C]">
