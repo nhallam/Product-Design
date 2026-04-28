@@ -77,7 +77,7 @@ export default function Menu({ open, onClose }: MenuProps) {
             >
               nrhallam@gmail.com
             </button>
-            <span className={`text-sm text-[#888] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`text-base text-[#242424] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
               Copied!
             </span>
           </span>
