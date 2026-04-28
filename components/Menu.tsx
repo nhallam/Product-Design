@@ -33,7 +33,7 @@ export default function Menu({ open, onClose }: MenuProps) {
   function copyEmail() {
     navigator.clipboard.writeText('nrhallam@gmail.com')
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    setTimeout(() => setCopied(false), 1500)
   }
 
   return (
