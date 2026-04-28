@@ -25,7 +25,7 @@ function useScramble(initial: string) {
         setText(target)
         clearInterval(interval.current!)
       }
-    }, 20)
+    }, 10)
   }
 
   return { text, scrambleTo }
