@@ -11,7 +11,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ slug, title, tag, image }: ProjectCardProps) {
   return (
-    <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block relative">
+    <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block">
       <ViewTransition name={`project-image-${slug}`} share="morph">
         <div className="relative w-full h-[100px] rounded-sm overflow-hidden">
           <Image
@@ -20,11 +20,11 @@ export default function ProjectCard({ slug, title, tag, image }: ProjectCardProp
             fill
             className="object-cover"
           />
+          <span className="absolute bottom-3 right-3 z-10 text-sm text-white bg-black/30 backdrop-blur-sm px-3 py-1 rounded-[5px]">
+            {tag}
+          </span>
         </div>
       </ViewTransition>
-      <span className="absolute bottom-4 right-4 z-10 text-sm text-white bg-black/30 backdrop-blur-sm px-3 py-1 rounded-[5px]">
-        {tag}
-      </span>
     </Link>
   )
 }
