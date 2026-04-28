@@ -22,7 +22,7 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
       transition={{ type: 'spring', stiffness: 350, damping: 18, delay }}
       whileDrag={{ scale: 1.06, cursor: 'grabbing' }}
       style={{ x: initialX, y: initialY, position: 'absolute', touchAction: 'none' }}
-      className="cursor-grab select-none"
+      className="cursor-grab select-none pointer-events-auto"
     >
       {children}
     </motion.div>
