@@ -101,7 +101,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
         onClick={onDismiss}
         className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-colors"
       >
-        Clear
+        Get outta here!
       </button>
     </div>
   )
