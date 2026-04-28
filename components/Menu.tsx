@@ -44,19 +44,21 @@ export default function Menu({ open, onClose }: MenuProps) {
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
       </div>
 
-      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-between px-6 pt-12 pb-[28px]">
-        <nav className="flex flex-col gap-1">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={onClose}
-              className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
+        <div className="flex-1 flex items-center">
+          <nav className="flex flex-col gap-1">
+            {navLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={onClose}
+                className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         <div className="flex flex-col gap-1">
           {socialLinks.map(({ href, label, hoverClass }) => (
