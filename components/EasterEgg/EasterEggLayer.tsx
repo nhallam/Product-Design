@@ -62,8 +62,8 @@ const stickers = [
     rotation: -3,
     delay: 0.28,
     content: (
-      <div className="bg-[#132448] rounded-2xl shadow-lg p-5 w-[200px] flex items-center justify-center">
-        <img src="/New_York_Yankees_logo.svg" alt="New York Yankees" className="w-24 h-auto" />
+      <div className="p-2 w-[200px] flex items-center justify-center">
+        <img src="/New_York_Yankees_logo.svg" alt="New York Yankees" className="w-28 h-auto" />
       </div>
     ),
   },
