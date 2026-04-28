@@ -37,7 +37,7 @@ export default function Menu({ open, onClose }: MenuProps) {
   }
 
   return (
-    <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-opacity duration-[400ms] ease-in-out ${
+    <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-opacity duration-[600ms] ease-in-out ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
       <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
