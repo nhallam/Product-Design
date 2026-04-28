@@ -18,9 +18,9 @@ export default async function ProjectPage({ params }: Props) {
   const project = projectData[slug]
 
   return (
-    <main className="pb-20">
+    <main className="pb-20 -mt-16">
       <ViewTransition name={`project-image-${slug}`} share="morph">
-        <div className="relative w-full h-[60vh]">
+        <div className="relative w-full h-[calc(60vh+4rem)]">
           {project?.image && (
             <Image
               src={project.image}
