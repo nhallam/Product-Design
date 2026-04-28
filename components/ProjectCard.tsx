@@ -13,7 +13,7 @@ export default function ProjectCard({ slug, title, tag, image }: ProjectCardProp
   return (
     <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block relative">
       <ViewTransition name={`project-image-${slug}`} share="morph">
-        <div className="relative w-full h-[300px] rounded-sm overflow-hidden">
+        <div className="relative w-full h-[100px] rounded-sm overflow-hidden">
           <Image
             src={image}
             alt={title}
