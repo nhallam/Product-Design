@@ -1,9 +1,11 @@
 export default function About() {
   return (
-    <main className="px-6 pb-20">
-      <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-8 mb-16 w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
-        I&apos;m a product designer and founder living in Brooklyn, NY.
-      </h1>
+    <main className="flex-1 grid px-6 pb-6" style={{ gridTemplateRows: '1fr auto' }}>
+      <div className="flex items-center justify-center">
+        <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
+          I&apos;m a product designer and founder living in Brooklyn, NY.
+        </h1>
+      </div>
       <div className="space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>
           I&apos;m a product designer and founder living in Brooklyn, NY. I care about building
