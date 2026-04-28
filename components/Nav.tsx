@@ -1,20 +1,26 @@
 import Link from 'next/link'
 
 interface NavProps {
-  onMenuOpen: () => void
+  menuOpen: boolean
+  onToggle: () => void
 }
 
-export default function Nav({ onMenuOpen }: NavProps) {
+export default function Nav({ menuOpen, onToggle }: NavProps) {
   return (
-    <nav className="flex justify-between items-center px-6 pt-6 pb-4">
+    <nav className="relative z-[51] flex justify-between items-center px-6 pt-6 pb-4">
       <Link href="/" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
         Nick Hallam
       </Link>
       <button
-        onClick={onMenuOpen}
-        className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
+        onClick={onToggle}
+        className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
       >
-        Menu
+        <span className={`block transition-opacity duration-200 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>
+          Menu
+        </span>
+        <span className={`absolute inset-0 flex items-center justify-end transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}>
+          Close
+        </span>
       </button>
     </nav>
   )
