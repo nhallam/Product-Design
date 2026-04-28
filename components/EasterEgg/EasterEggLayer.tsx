@@ -82,11 +82,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
   if (!active || positions.length === 0) return null
 
   return (
-    <div
-      ref={constraintsRef}
-      className="fixed inset-0 z-[200]"
-      onClick={onDismiss}
-    >
+    <div className="absolute inset-0 z-[200] pointer-events-none">
       {stickers.map((s, i) => (
         <Sticker
           key={s.id}
@@ -95,7 +91,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
           rotation={s.rotation}
           delay={s.delay}
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
             {s.content}
           </div>
         </Sticker>
@@ -103,7 +99,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
 
       <button
         onClick={onDismiss}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-colors"
+        className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-colors"
       >
         Clear
       </button>

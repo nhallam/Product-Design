@@ -48,11 +48,11 @@ export default function Home() {
 
   return (
     <>
-      <EasterEggLayer
-        active={easterEggActive}
-        onDismiss={() => setEasterEggActive(false)}
-      />
-      <main className="flex flex-col px-6 pb-6">
+      <main className="relative flex flex-col px-6 pb-6">
+        <EasterEggLayer
+          active={easterEggActive}
+          onDismiss={() => setEasterEggActive(false)}
+        />
         <div className="h-[calc(100dvh-68px-20px)] md:h-[calc(100dvh-68px-60px)] pt-[28vh]">
           <h1
             className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance"
