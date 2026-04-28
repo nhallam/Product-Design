@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function About() {
   return (
     <main className="flex-1 flex flex-col px-6 pb-6">
@@ -20,6 +22,15 @@ export default function About() {
           When I&apos;m not designing I&apos;m writing, building, or walking around the city looking
           for good coffee.
         </p>
+      </div>
+      <div className="flex justify-center mt-16">
+        <Image
+          src="/Nick_Profile.jpg"
+          alt="Nick Hallam"
+          width={400}
+          height={400}
+          className="object-cover"
+        />
       </div>
     </main>
   )
