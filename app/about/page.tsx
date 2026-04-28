@@ -6,7 +6,7 @@ export default function About() {
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </h1>
       </div>
-      <div className="mt-[60vh] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
+      <div className="mt-[40vh] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>
           I&apos;m a product designer and founder living in Brooklyn, NY. I care about building
           products that are simple, useful, and crafted with intention.
