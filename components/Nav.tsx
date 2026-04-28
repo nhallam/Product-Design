@@ -6,7 +6,7 @@ interface NavProps {
 
 export default function Nav({ onMenuOpen }: NavProps) {
   return (
-    <nav className="flex justify-between items-center px-6 py-4">
+    <nav className="flex justify-between items-center px-6 pt-6 pb-4">
       <Link href="/" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
         Nick Hallam
       </Link>

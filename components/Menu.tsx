@@ -32,7 +32,7 @@ export default function Menu({ open, onClose }: MenuProps) {
     <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-all duration-300 ease-in-out ${
       open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
     }`}>
-      <div className="max-w-2xl mx-auto w-full flex justify-between items-center px-6 py-4">
+      <div className="max-w-2xl mx-auto w-full flex justify-between items-center px-6 pt-6 pb-4">
         <span className="text-base text-[#1C1C1C]">Nick Hallam</span>
         <button
           onClick={onClose}
