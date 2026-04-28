@@ -8,7 +8,7 @@ interface NavProps {
 export default function Nav({ menuOpen, onToggle }: NavProps) {
   return (
     <nav className="relative z-[51] flex justify-between items-center px-6 pt-6 pb-4">
-      <Link href="/" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+      <Link href="/" onClick={() => { if (menuOpen) onToggle() }} className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
         Nick Hallam
       </Link>
       <button
