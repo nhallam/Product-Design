@@ -16,10 +16,10 @@ const navLinks = [
 ]
 
 const socialLinks = [
-  { href: 'https://www.linkedin.com/in/nickhallam/', label: 'LinkedIn' },
-  { href: 'https://github.com/nhallam', label: 'Github' },
-  { href: 'https://x.com/nhallam', label: 'Twitter' },
-  { href: 'https://www.instagram.com/nhallam/', label: 'Instagram' },
+  { href: 'https://www.linkedin.com/in/nickhallam/', label: 'LinkedIn', hoverClass: 'hover:text-[#4784FF]' },
+  { href: 'https://github.com/nhallam', label: 'Github', hoverClass: 'hover:text-[#1AB739]' },
+  { href: 'https://x.com/nhallam', label: 'Twitter', hoverClass: 'hover:text-[#1D9BF1]' },
+  { href: 'https://www.instagram.com/nhallam/', label: 'Instagram', hoverClass: 'hover:text-[#FE0033]' },
 ]
 
 export default function Menu({ open, onClose }: MenuProps) {
@@ -51,18 +51,18 @@ export default function Menu({ open, onClose }: MenuProps) {
         </nav>
 
         <div className="flex flex-col gap-1">
-          {socialLinks.map(({ href, label }) => (
+          {socialLinks.map(({ href, label, hoverClass }) => (
             <a
               key={label}
               href={href}
-              className="text-base text-[#888] hover:text-[#444] transition-colors"
+              className={`text-base text-[#888] transition-colors ${hoverClass}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               {label}
             </a>
           ))}
-          <span className="text-base text-[#888]">nrhallam@gmail.com</span>
+          <span className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-default">nrhallam@gmail.com</span>
         </div>
       </div>
     </div>
