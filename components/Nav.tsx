@@ -46,6 +46,8 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
         onClick={() => { if (menuOpen) onToggle() }}
         onMouseEnter={() => scrambleTo('nhallam.design')}
         onMouseLeave={() => scrambleTo('Nick Hallam')}
+        onTouchStart={() => scrambleTo('nhallam.design')}
+        onTouchEnd={() => setTimeout(() => scrambleTo('Nick Hallam'), 600)}
         className="text-base text-[#1C1C1C] transition-colors"
       >
         {text}
