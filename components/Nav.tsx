@@ -1,4 +1,35 @@
+'use client'
+
 import Link from 'next/link'
+import { useState, useRef } from 'react'
+
+const CHARS = 'abcdefghijklmnopqrstuvwxyz.'
+
+function useScramble(initial: string) {
+  const [text, setText] = useState(initial)
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  function scrambleTo(target: string) {
+    let iteration = 0
+    clearInterval(interval.current!)
+    interval.current = setInterval(() => {
+      setText(
+        target.split('').map((char, i) => {
+          if (char === ' ') return ' '
+          if (i < Math.floor(iteration)) return char
+          return CHARS[Math.floor(Math.random() * CHARS.length)]
+        }).join('')
+      )
+      iteration += 0.4
+      if (iteration > target.length) {
+        setText(target)
+        clearInterval(interval.current!)
+      }
+    }, 30)
+  }
+
+  return { text, scrambleTo }
+}
 
 interface NavProps {
   menuOpen: boolean
@@ -6,11 +37,18 @@ interface NavProps {
 }
 
 export default function Nav({ menuOpen, onToggle }: NavProps) {
+  const { text, scrambleTo } = useScramble('Nick Hallam')
+
   return (
     <nav className="relative z-[51] flex justify-between items-center px-6 pt-6 pb-4">
-      <Link href="/" onClick={() => { if (menuOpen) onToggle() }} className="group relative text-base text-[#1C1C1C] transition-colors">
-        <span className="block transition-opacity duration-200 group-hover:opacity-0">Nick Hallam</span>
-        <span className="absolute inset-0 flex items-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">nhallam.design</span>
+      <Link
+        href="/"
+        onClick={() => { if (menuOpen) onToggle() }}
+        onMouseEnter={() => scrambleTo('nhallam.design')}
+        onMouseLeave={() => scrambleTo('Nick Hallam')}
+        className="text-base text-[#1C1C1C] transition-colors"
+      >
+        {text}
       </Link>
       <button
         onClick={onToggle}
