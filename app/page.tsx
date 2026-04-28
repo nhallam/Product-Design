@@ -7,6 +7,36 @@ const projects = [
     tag: 'Design',
     image: '/project-one.jpg',
   },
+  {
+    slug: 'project-two',
+    title: 'Project Two',
+    tag: 'Product',
+    image: '/project-one.jpg',
+  },
+  {
+    slug: 'project-three',
+    title: 'Project Three',
+    tag: 'Branding',
+    image: '/project-one.jpg',
+  },
+  {
+    slug: 'project-four',
+    title: 'Project Four',
+    tag: 'UX Research',
+    image: '/project-one.jpg',
+  },
+  {
+    slug: 'project-five',
+    title: 'Project Five',
+    tag: 'Design',
+    image: '/project-one.jpg',
+  },
+  {
+    slug: 'project-six',
+    title: 'Project Six',
+    tag: 'Product',
+    image: '/project-one.jpg',
+  },
 ]
 
 export default function Home() {
