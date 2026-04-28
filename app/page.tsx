@@ -42,7 +42,7 @@ const projects = [
 export default function Home() {
   return (
     <main className="flex flex-col px-6 pb-6">
-      <div className="h-[calc(100dvh-68px-60px)] pt-[28vh]">
+      <div className="h-[calc(100dvh-68px-20px)] md:h-[calc(100dvh-68px-60px)] pt-[28vh]">
         <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           A product designer and founder living in Brooklyn, NY.
         </h1>
