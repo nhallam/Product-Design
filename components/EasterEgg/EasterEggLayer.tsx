@@ -91,6 +91,13 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
           </div>
         </Sticker>
       ))}
+
+      <button
+        onClick={onDismiss}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-colors"
+      >
+        Clear
+      </button>
     </div>
   )
 }
