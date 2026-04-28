@@ -5,7 +5,7 @@ const projects = [
     slug: 'project-one',
     title: 'Project One',
     tag: 'Design',
-    image: '/images/project-one.jpg',
+    image: '/project-one.jpg',
   },
 ]
 
