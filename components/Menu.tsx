@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface MenuProps {
   open: boolean
@@ -23,10 +23,18 @@ const socialLinks = [
 ]
 
 export default function Menu({ open, onClose }: MenuProps) {
+  const [copied, setCopied] = useState(false)
+
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+
+  function copyEmail() {
+    navigator.clipboard.writeText('nrhallam@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <div className={`fixed inset-0 z-50 bg-[#f0f0f0] flex flex-col transition-opacity duration-[400ms] ease-in-out ${
@@ -62,7 +70,17 @@ export default function Menu({ open, onClose }: MenuProps) {
               {label}
             </a>
           ))}
-          <span className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-default">nrhallam@gmail.com</span>
+          <span className="relative inline-flex items-center gap-3">
+            <button
+              onClick={copyEmail}
+              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
+            >
+              nrhallam@gmail.com
+            </button>
+            <span className={`text-sm text-[#888] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+              Copied!
+            </span>
+          </span>
         </div>
       </div>
     </div>
