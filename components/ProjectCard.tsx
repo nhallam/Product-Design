@@ -22,7 +22,7 @@ export default function ProjectCard({ slug, title, tag, image }: ProjectCardProp
           />
         </div>
       </ViewTransition>
-      <span className="absolute bottom-4 left-4 z-10 text-sm text-white bg-black/30 backdrop-blur-sm px-3 py-1 rounded-[5px]">
+      <span className="absolute bottom-4 right-4 z-10 text-sm text-white bg-black/30 backdrop-blur-sm px-3 py-1 rounded-[5px]">
         {tag}
       </span>
     </Link>
