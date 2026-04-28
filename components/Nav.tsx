@@ -40,7 +40,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
   const { text, scrambleTo } = useScramble('Nick Hallam')
 
   return (
-    <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4">
+    <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4" style={{ viewTransitionName: 'site-nav' }}>
       <Link
         href="/"
         onClick={() => { if (menuOpen) onToggle() }}
