@@ -44,7 +44,7 @@ export default function Menu({ open, onClose }: MenuProps) {
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
       </div>
 
-      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-between px-6 py-12">
+      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-between px-6 pt-12 pb-[40px]">
         <nav className="flex flex-col gap-1">
           {navLinks.map(({ href, label }) => (
             <Link
