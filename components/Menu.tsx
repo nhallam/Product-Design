@@ -9,7 +9,6 @@ interface MenuProps {
 }
 
 const navLinks = [
-  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/writing', label: 'Writing' },
   { href: '/projects', label: 'Projects' },
