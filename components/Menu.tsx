@@ -37,7 +37,7 @@ export default function Menu({ open, onClose }: MenuProps) {
   }
 
   return (
-    <div className={`fixed inset-0 z-50 bg-[#f0f0f0]/90 backdrop-blur-[20px] flex flex-col transition-opacity duration-[500ms] ease-in ${
+    <div onClick={onClose} className={`fixed inset-0 z-50 bg-[#f0f0f0]/90 backdrop-blur-[20px] flex flex-col transition-opacity duration-[500ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
       <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
@@ -74,7 +74,7 @@ export default function Menu({ open, onClose }: MenuProps) {
           ))}
           <span className="relative inline-flex items-center gap-3">
             <button
-              onClick={copyEmail}
+              onClick={(e) => { e.stopPropagation(); copyEmail() }}
               className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
             >
               nrhallam@gmail.com
