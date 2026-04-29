@@ -22,7 +22,7 @@ const stickers = [
   },
   {
     id: 'gtrain',
-    w: 145, h: 237,
+    w: 145, h: 200,
     rotation: 5,
     delay: 0.07,
     content: <GTrainSticker />,

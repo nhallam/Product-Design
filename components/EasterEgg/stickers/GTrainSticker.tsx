@@ -27,13 +27,13 @@ export default function GTrainSticker() {
   return (
     <svg
       width="145"
-      height="237"
-      viewBox="0 0 145 237"
+      height="200"
+      viewBox="0 0 145 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="select-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]"
     >
-      <rect width="145" height="237" rx="10" fill="#1D1D1D" />
+      <rect width="145" height="200" rx="10" fill="#1D1D1D" />
       <line x1="0" y1="25.5" x2="145" y2="25.5" stroke="white" strokeWidth="5" />
       <circle cx="73" cy="94" r="50" fill={color} />
       <path
@@ -51,17 +51,7 @@ export default function GTrainSticker() {
       >
         {label}
       </text>
-      <text
-        x="72.5"
-        y="207"
-        textAnchor="middle"
-        fill="white"
-        fontSize="12"
-        fontFamily="system-ui, -apple-system, sans-serif"
-        opacity="0.5"
-      >
-        G Train
-      </text>
+
     </svg>
   )
 }
