@@ -36,14 +36,27 @@ export default function About() {
       <div className="mt-16 pb-16">
         <div className="divide-y divide-[#E0E0E0]">
           {[
-            { company: 'Company Name', title: 'Head of Design', years: '2023 – Present' },
-            { company: 'Company Name', title: 'Product Designer', years: '2021 – 2023' },
-            { company: 'Company Name', title: 'UX Designer', years: '2019 – 2021' },
-            { company: 'Company Name', title: 'Junior Designer', years: '2017 – 2019' },
-          ].map(({ company, title, years }) => (
-            <div key={years} className="flex justify-between items-baseline py-4">
+            { company: 'Beautiful Function', title: 'Partner and Head of Design', years: '2025 – Present', url: 'https://www.beautifulfunction.com/' },
+            { company: 'Telepathic Instruments', title: 'Product Strategy & Research', years: '2025', url: 'https://telepathicinstruments.com/' },
+            { company: 'Convo', title: 'Product Strategy & Design', years: '2025', url: 'https://www.convo.io/us/home' },
+            { company: 'Cecil', title: 'Product Strategy & Design', years: '2024 – 2025', url: 'https://cecil.earth/' },
+            { company: 'Halo', title: 'Product Design', years: '2023 – 2024', url: 'https://about.halo.car/' },
+            { company: 'WorkSafe Victoria', title: 'Lead Product Designer', years: '2020 – 2022', url: 'https://www.worksafe.vic.gov.au/' },
+            { company: 'Tiller', title: 'Co-founder & Designer', years: '2015 – 2020', url: 'https://www.kickstarter.com/projects/858670600/tillera-minimal-and-seamless-device-for-tracking-y' },
+            { company: 'Joan (agency)', title: 'Co-founder', years: '2015 – 2020', url: null },
+            { company: 'Sex, Drugs & Helvetica', title: 'Co-founder', years: '2010 – 2015', url: 'http://www.sexdrugshelvetica.com/melbourne/' },
+            { company: 'IDEO', title: 'Comm & Interaction Designer', years: '2012', url: 'https://www.ideo.com/' },
+            { company: 'Positive Posters', title: 'Co-founder', years: '2009 – 2013', url: 'https://web.archive.org/web/20130424231629/http://positive-posters.com/' },
+          ].map(({ company, title, years, url }) => (
+            <div key={years + company} className="flex justify-between items-baseline py-4">
               <div>
-                <div className="text-base font-medium text-[#1C1C1C]">{company}</div>
+                {url ? (
+                  <a href={url} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-[#1C1C1C] underline underline-offset-2 hover:text-[#555] transition-colors">
+                    {company}
+                  </a>
+                ) : (
+                  <div className="text-base font-medium text-[#1C1C1C]">{company}</div>
+                )}
                 <div className="text-sm text-[#888] mt-0.5">{title}</div>
               </div>
               <div className="text-sm text-[#888] shrink-0 ml-6">{years}</div>
