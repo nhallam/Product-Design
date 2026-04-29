@@ -50,7 +50,7 @@ export default function Home() {
   useEffect(() => {
     const trigger = () => {
       setShimmer(true)
-      setTimeout(() => setShimmer(false), 1000)
+      setTimeout(() => setShimmer(false), 1500)
     }
     const initial = setTimeout(trigger, 5000)
     const interval = setInterval(trigger, 20000)
