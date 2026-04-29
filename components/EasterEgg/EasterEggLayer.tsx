@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
+import BoomboxSticker from './stickers/BoomboxSticker'
 
 interface EasterEggLayerProps {
   active: boolean
@@ -32,13 +33,7 @@ const stickers = [
     id: 'boombox',
     rotation: -6,
     delay: 0.14,
-    content: (
-      <div className="bg-[#1C1C1C] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
-        <div className="text-3xl mb-1">🎵</div>
-        <div className="text-base font-bold text-white">Boombox</div>
-        <div className="text-sm text-white/60 mt-0.5">Now playing...</div>
-      </div>
-    ),
+    content: <BoomboxSticker />,
   },
   {
     id: 'knicks',
