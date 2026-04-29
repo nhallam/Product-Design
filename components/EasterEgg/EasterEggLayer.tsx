@@ -14,6 +14,7 @@ interface EasterEggLayerProps {
 const stickers = [
   {
     id: 'weather',
+    w: 200, h: 110,
     rotation: -4,
     delay: 0,
     content: (
@@ -26,24 +27,28 @@ const stickers = [
   },
   {
     id: 'gtrain',
+    w: 200, h: 115,
     rotation: 5,
     delay: 0.07,
     content: <GTrainSticker />,
   },
   {
     id: 'boombox',
+    w: 200, h: 140,
     rotation: -6,
     delay: 0.14,
     content: <BoomboxSticker />,
   },
   {
     id: 'knicks',
+    w: 200, h: 140,
     rotation: 4,
     delay: 0.21,
     content: <KnicksSticker />,
   },
   {
     id: 'yankees',
+    w: 200, h: 130,
     rotation: -3,
     delay: 0.28,
     content: (
@@ -54,6 +59,7 @@ const stickers = [
   },
   {
     id: 'nyc-love',
+    w: 200, h: 155,
     rotation: 3,
     delay: 0.35,
     content: (
@@ -64,8 +70,38 @@ const stickers = [
   },
 ]
 
-const STICKER_W = 220
-const STICKER_H = 130
+const GAP = 20
+
+function overlaps(
+  a: { x: number; y: number; w: number; h: number },
+  b: { x: number; y: number; w: number; h: number }
+): boolean {
+  return (
+    a.x < b.x + b.w + GAP &&
+    a.x + a.w + GAP > b.x &&
+    a.y < b.y + b.h + GAP &&
+    a.y + a.h + GAP > b.y
+  )
+}
+
+function generatePositions(viewW: number, viewH: number): { x: number; y: number }[] {
+  const placed: { x: number; y: number; w: number; h: number }[] = []
+
+  return stickers.map((s) => {
+    let pos = { x: 0, y: 0 }
+
+    for (let attempt = 0; attempt < 50; attempt++) {
+      pos = {
+        x: Math.random() * Math.max(viewW - s.w, 0),
+        y: Math.random() * Math.max(viewH - s.h, 0),
+      }
+      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
+    }
+
+    placed.push({ ...pos, w: s.w, h: s.h })
+    return pos
+  })
+}
 
 export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
   const constraintsRef = useRef<HTMLDivElement>(null)
@@ -73,14 +109,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
 
   useEffect(() => {
     if (active) {
-      const w = window.innerWidth
-      const h = window.innerHeight
-      setPositions(
-        stickers.map(() => ({
-          x: Math.random() * Math.max(w - STICKER_W, 0),
-          y: Math.random() * Math.max(h - STICKER_H, 0),
-        }))
-      )
+      setPositions(generatePositions(window.innerWidth, window.innerHeight))
     }
   }, [active])
 
@@ -111,4 +140,3 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
     </div>
   )
 }
-
