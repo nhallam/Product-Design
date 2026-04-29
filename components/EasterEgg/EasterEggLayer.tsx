@@ -52,6 +52,16 @@ const stickers = [
       </div>
     ),
   },
+  {
+    id: 'nyc-love',
+    rotation: 3,
+    delay: 0.35,
+    content: (
+      <div className="p-2 w-[200px] flex items-center justify-center">
+        <img src="/NYC_Love.svg" alt="NYC Love" draggable={false} className="w-36 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]" />
+      </div>
+    ),
+  },
 ]
 
 const STICKER_W = 220
