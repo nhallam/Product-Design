@@ -1,4 +1,4 @@
-import HalftoneImage from '@/components/HalftoneImage'
+import Image from 'next/image'
 
 export default function About() {
   return (
@@ -24,12 +24,12 @@ export default function About() {
         </p>
       </div>
       <div className="flex justify-center mt-16">
-        <HalftoneImage
+        <Image
           src="/Nick_Profile.jpg"
           alt="Nick Hallam"
           width={400}
           height={400}
-          className="rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]"
+          className="object-cover rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]"
         />
       </div>
 
