@@ -25,6 +25,12 @@ function isKnicksGame(event: any): boolean {
   )
 }
 
+function makeLogo(team: any): string {
+  if (team?.logo) return team.logo
+  if (team?.id) return `https://a.espncdn.com/i/teamlogos/nba/500/${team.id}.png`
+  return ''
+}
+
 function parseScore(raw: any): number {
   if (typeof raw === 'number') return raw
   if (typeof raw === 'string') return parseInt(raw, 10) || 0
@@ -51,11 +57,11 @@ function parseGame(event: any): KnicksData {
     status: isLive ? 'live' : isFinal ? 'final' : 'unknown',
     knicksScore: parseScore(knicks?.score),
     knicksAbbrev: knicks?.team?.abbreviation ?? 'NYK',
-    knicksLogo: knicks?.team?.logo ?? '',
+    knicksLogo: makeLogo(knicks?.team),
     knicksColor: knicks?.team?.alternateColor ?? knicks?.team?.color ?? 'F58426',
     oppScore: parseScore(opp?.score),
     oppAbbrev: opp?.team?.abbreviation ?? '???',
-    oppLogo: opp?.team?.logo ?? '',
+    oppLogo: makeLogo(opp?.team),
     oppColor: opp?.team?.color ?? opp?.team?.alternateColor ?? '888888',
     period,
     clock: status.displayClock ?? status.clock ?? '',
