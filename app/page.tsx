@@ -69,7 +69,7 @@ export default function Home() {
             className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance"
             style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
           >
-            A product designer, ideas guy and founder based in{' '}
+            A product designer and founder based in{' '}
             <button
               onClick={() => setEasterEggActive(true)}
               className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
