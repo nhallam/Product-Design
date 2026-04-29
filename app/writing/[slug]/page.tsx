@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 const articles: Record<string, { title: string; date: string; body: string[] }> = {
@@ -78,14 +77,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         ))}
       </div>
 
-      <div className="mt-16 max-w-prose mx-auto w-full">
-        <Link
-          href="/writing"
-          className="text-sm text-[#888] hover:text-[#1C1C1C] transition-colors"
-        >
-          ← All writing
-        </Link>
-      </div>
     </main>
   )
 }

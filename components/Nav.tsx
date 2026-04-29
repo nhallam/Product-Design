@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 
 const CHARS = 'abcdefghijklmnopqrstuvwxyz.'
 
@@ -38,31 +39,41 @@ interface NavProps {
 
 export default function Nav({ menuOpen, onToggle }: NavProps) {
   const { text, scrambleTo } = useScramble('Nick Hallam')
+  const pathname = usePathname()
+  const isArticle = pathname.startsWith('/writing/') && pathname !== '/writing/'
 
   return (
     <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4" style={{ viewTransitionName: 'site-nav' }}>
-      <Link
-        href="/"
-        onClick={() => { if (menuOpen) onToggle() }}
-        onMouseEnter={() => scrambleTo('nhallam.design')}
-        onMouseLeave={() => scrambleTo('Nick Hallam')}
-        onTouchStart={() => scrambleTo('nhallam.design')}
-        onTouchEnd={() => setTimeout(() => scrambleTo('Nick Hallam'), 600)}
-        className="text-base text-[#1C1C1C] transition-colors"
-      >
-        {text}
-      </Link>
-      <button
-        onClick={onToggle}
-        className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
-      >
-        <span className={`block transition-opacity duration-200 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>
-          Menu
-        </span>
-        <span className={`absolute inset-0 flex items-center justify-end transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}>
-          Close
-        </span>
-      </button>
+      {isArticle ? (
+        <Link href="/writing" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+          ← All writing
+        </Link>
+      ) : (
+        <Link
+          href="/"
+          onClick={() => { if (menuOpen) onToggle() }}
+          onMouseEnter={() => scrambleTo('nhallam.design')}
+          onMouseLeave={() => scrambleTo('Nick Hallam')}
+          onTouchStart={() => scrambleTo('nhallam.design')}
+          onTouchEnd={() => setTimeout(() => scrambleTo('Nick Hallam'), 600)}
+          className="text-base text-[#1C1C1C] transition-colors"
+        >
+          {text}
+        </Link>
+      )}
+      {!isArticle && (
+        <button
+          onClick={onToggle}
+          className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
+        >
+          <span className={`block transition-opacity duration-200 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>
+            Menu
+          </span>
+          <span className={`absolute inset-0 flex items-center justify-end transition-opacity duration-200 ${menuOpen ? 'opacity-100' : 'opacity-0'}`}>
+            Close
+          </span>
+        </button>
+      )}
     </nav>
   )
 }
