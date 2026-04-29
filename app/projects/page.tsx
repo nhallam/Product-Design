@@ -9,9 +9,14 @@ const projects = [
 export default function Projects() {
   return (
     <main className="px-6 pb-20">
-      <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mt-24 mb-16 max-w-xs">
-        Projects
-      </h1>
+      <div className="pt-[28vh] mb-16">
+        <h1
+          className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center"
+          style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+        >
+          A selection of past design work
+        </h1>
+      </div>
 
       <div className="flex flex-col gap-6 max-w-sm">
         {projects.map((project) => (
