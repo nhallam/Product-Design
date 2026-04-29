@@ -15,7 +15,7 @@ export default function WeatherSticker() {
       .catch(() => setState({ status: 'unknown' }))
   }, [])
 
-  const loaded = state.status !== 'loading' && state.status !== 'unknown' && 'tempC' in state
+  const loaded = 'tempC' in state
 
   return (
     <div className="bg-[#E8F4FD] border border-[#B3D9F5] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
