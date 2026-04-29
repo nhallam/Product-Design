@@ -30,12 +30,12 @@ export default function GTrainSticker() {
   const { label, dot } = STATUS[data.status]
 
   return (
-    <div className="bg-white/30 backdrop-blur-xl border border-white/50 rounded-2xl shadow-lg px-5 py-4 w-[200px]">
+    <div className="bg-[#6CBE45] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
       <div className="text-3xl mb-2">🚇</div>
-      <div className="text-base font-bold text-[#1C1C1C]">G Train</div>
+      <div className="text-base font-bold text-white">G Train</div>
       <div className="flex items-center gap-2 mt-1">
         <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: dot }} />
-        <span className="text-sm text-[#555]">{label}</span>
+        <span className="text-sm text-white/90">{label}</span>
       </div>
     </div>
   )

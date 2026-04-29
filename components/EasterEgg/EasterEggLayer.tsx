@@ -9,18 +9,16 @@ interface EasterEggLayerProps {
   onDismiss: () => void
 }
 
-const glass = 'bg-white/30 backdrop-blur-xl border border-white/50 rounded-2xl shadow-lg px-5 py-4 w-[200px]'
-
 const stickers = [
   {
     id: 'weather',
     rotation: -4,
     delay: 0,
     content: (
-      <div className={glass}>
+      <div className="bg-[#E8F4FD] border border-[#B3D9F5] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
         <div className="text-3xl mb-1">🌤</div>
         <div className="text-base font-bold text-[#1C1C1C]">72°F · Sunny</div>
-        <div className="text-sm text-[#555] mt-0.5">Brooklyn, NY</div>
+        <div className="text-sm text-[#666] mt-0.5">Brooklyn, NY</div>
       </div>
     ),
   },
@@ -35,10 +33,10 @@ const stickers = [
     rotation: -6,
     delay: 0.14,
     content: (
-      <div className={glass}>
+      <div className="bg-[#1C1C1C] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
         <div className="text-3xl mb-1">🎵</div>
-        <div className="text-base font-bold text-[#1C1C1C]">Boombox</div>
-        <div className="text-sm text-[#555] mt-0.5">Now playing...</div>
+        <div className="text-base font-bold text-white">Boombox</div>
+        <div className="text-sm text-white/60 mt-0.5">Now playing...</div>
       </div>
     ),
   },
@@ -47,10 +45,10 @@ const stickers = [
     rotation: 4,
     delay: 0.21,
     content: (
-      <div className={glass}>
+      <div className="bg-[#F58426] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
         <div className="text-3xl mb-1">🏀</div>
-        <div className="text-base font-bold text-[#1C1C1C]">Knicks</div>
-        <div className="text-sm text-[#555] mt-0.5">112 – 98 · Final</div>
+        <div className="text-base font-bold text-white">Knicks</div>
+        <div className="text-sm text-white/80 mt-0.5">112 – 98 · Final</div>
       </div>
     ),
   },
@@ -89,7 +87,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
   if (!active || positions.length === 0) return null
 
   return (
-    <div className="fixed inset-0 z-[200] pointer-events-none">
+    <div className="fixed inset-0 z-[200] pointer-events-none backdrop-blur-lg bg-white/10">
       {stickers.map((s, i) => (
         <Sticker
           key={s.id}
