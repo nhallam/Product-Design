@@ -32,6 +32,25 @@ export default function About() {
           className="object-cover rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]"
         />
       </div>
+
+      <div className="mt-16 pb-16">
+        <div className="divide-y divide-[#E0E0E0]">
+          {[
+            { company: 'Company Name', title: 'Head of Design', years: '2023 – Present' },
+            { company: 'Company Name', title: 'Product Designer', years: '2021 – 2023' },
+            { company: 'Company Name', title: 'UX Designer', years: '2019 – 2021' },
+            { company: 'Company Name', title: 'Junior Designer', years: '2017 – 2019' },
+          ].map(({ company, title, years }) => (
+            <div key={years} className="flex justify-between items-baseline py-4">
+              <div>
+                <div className="text-base font-medium text-[#1C1C1C]">{company}</div>
+                <div className="text-sm text-[#888] mt-0.5">{title}</div>
+              </div>
+              <div className="text-sm text-[#888] shrink-0 ml-6">{years}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </main>
   )
 }
