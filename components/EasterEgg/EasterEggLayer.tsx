@@ -114,12 +114,20 @@ function generatePositions(viewW: number, viewH: number): { x: number; y: number
 export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
   const constraintsRef = useRef<HTMLDivElement>(null)
   const [positions, setPositions] = useState<{ x: number; y: number }[]>([])
+  const [isDismissing, setIsDismissing] = useState(false)
 
   useEffect(() => {
     if (active) {
+      setIsDismissing(false)
       setPositions(generatePositions(window.innerWidth, window.innerHeight))
     }
   }, [active])
+
+  const handleDismiss = () => {
+    setIsDismissing(true)
+    const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
+    setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
+  }
 
   if (!active || positions.length === 0) return null
 
@@ -132,6 +140,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
           initialY={positions[i].y}
           rotation={s.rotation}
           delay={s.delay}
+          isDismissing={isDismissing}
         >
           <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
             {s.content}
@@ -140,7 +149,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
       ))}
 
       <button
-        onClick={onDismiss}
+        onClick={handleDismiss}
         className="pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-colors"
       >
         Get outta here!
