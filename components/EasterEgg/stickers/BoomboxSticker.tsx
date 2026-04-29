@@ -8,9 +8,25 @@ const TRACKS = [
   { id: 'aygY5OqMuKE' },
 ]
 
+interface YTPlayer {
+  destroy(): void
+  pauseVideo(): void
+  playVideo(): void
+  loadVideoById(id: string): void
+  getVideoData(): { title: string; author: string }
+}
+
+interface YTEvent {
+  target: YTPlayer
+  data: number
+}
+
 declare global {
   interface Window {
-    YT: any
+    YT: {
+      Player: new (el: HTMLElement, config: object) => YTPlayer
+      PlayerState: { PLAYING: number; PAUSED: number; ENDED: number }
+    }
     onYouTubeIframeAPIReady: () => void
   }
 }
@@ -19,7 +35,7 @@ export default function BoomboxSticker() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [trackInfo, setTrackInfo] = useState<{ title: string; author: string } | null>(null)
   const [ready, setReady] = useState(false)
-  const playerRef = useRef<any>(null)
+  const playerRef = useRef<YTPlayer | null>(null)
   const playerDivRef = useRef<HTMLDivElement>(null)
   const currentIndexRef = useRef(0)
 
@@ -41,12 +57,12 @@ export default function BoomboxSticker() {
           playsinline: 1,
         },
         events: {
-          onReady: (event: any) => {
+          onReady: (event: YTEvent) => {
             setReady(true)
             const data = event.target.getVideoData()
             if (data.title) setTrackInfo({ title: data.title, author: data.author })
           },
-          onStateChange: (event: any) => {
+          onStateChange: (event: YTEvent) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true)
               const data = event.target.getVideoData()

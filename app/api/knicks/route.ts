@@ -1,3 +1,42 @@
+interface ESPNTeam {
+  id?: string
+  abbreviation?: string
+  logo?: string
+  color?: string
+  alternateColor?: string
+}
+
+interface ESPNScore {
+  value?: number
+  displayValue?: string
+}
+
+interface ESPNCompetitor {
+  team?: ESPNTeam
+  score?: number | string | ESPNScore
+}
+
+interface ESPNStatusType {
+  state?: string
+  name?: string
+  completed?: boolean
+}
+
+interface ESPNStatus {
+  type?: ESPNStatusType
+  period?: number
+  displayClock?: string
+  clock?: string
+}
+
+interface ESPNEvent {
+  competitions?: Array<{
+    competitors?: ESPNCompetitor[]
+    status?: ESPNStatus
+  }>
+  status?: ESPNStatus
+}
+
 const KNICKS_ID = '18'
 const SCOREBOARD = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard'
 const SCHEDULE = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${KNICKS_ID}/schedule`
@@ -19,34 +58,36 @@ export interface KnicksData {
   isOT: boolean
 }
 
-function isKnicksGame(event: any): boolean {
+function isKnicksGame(event: ESPNEvent): boolean {
   return event.competitions?.[0]?.competitors?.some(
-    (c: any) => c.team?.id === KNICKS_ID
-  )
+    (c) => c.team?.id === KNICKS_ID
+  ) ?? false
 }
 
-function makeLogo(team: any): string {
+function makeLogo(team: ESPNTeam | undefined): string {
   if (team?.logo) return team.logo
   if (team?.id) return `https://a.espncdn.com/i/teamlogos/nba/500/${team.id}.png`
   return ''
 }
 
-function parseScore(raw: any): number {
+function parseScore(raw: ESPNCompetitor['score']): number {
   if (typeof raw === 'number') return raw
   if (typeof raw === 'string') return parseInt(raw, 10) || 0
-  if (raw?.value !== undefined) return Number(raw.value) || 0
-  if (raw?.displayValue !== undefined) return parseInt(raw.displayValue, 10) || 0
+  if (raw && typeof raw === 'object') {
+    if (raw.value !== undefined) return Number(raw.value) || 0
+    if (raw.displayValue !== undefined) return parseInt(raw.displayValue, 10) || 0
+  }
   return 0
 }
 
-function parseGame(event: any): KnicksData {
-  const comp = event.competitions[0]
-  const competitors: any[] = comp.competitors ?? []
+function parseGame(event: ESPNEvent): KnicksData {
+  const comp = event.competitions?.[0] ?? {}
+  const competitors: ESPNCompetitor[] = comp.competitors ?? []
   const status = event.status ?? comp.status ?? {}
   const statusType = status.type ?? {}
 
-  const knicks = competitors.find((c: any) => c.team?.id === KNICKS_ID)
-  const opp = competitors.find((c: any) => c.team?.id !== KNICKS_ID)
+  const knicks = competitors.find((c) => c.team?.id === KNICKS_ID)
+  const opp = competitors.find((c) => c.team?.id !== KNICKS_ID)
 
   const isLive = statusType.state === 'in' || statusType.name === 'STATUS_IN_PROGRESS'
   const isFinal = statusType.completed === true || statusType.state === 'post' || statusType.name === 'STATUS_FINAL'
@@ -87,7 +128,7 @@ export async function GET() {
 
     const completed = [...(sch.events ?? [])]
       .reverse()
-      .find((e: any) => {
+      .find((e: ESPNEvent) => {
         const s = e.status ?? e.competitions?.[0]?.status ?? {}
         const t = s.type ?? {}
         return t.completed === true || t.state === 'post' || t.name === 'STATUS_FINAL'

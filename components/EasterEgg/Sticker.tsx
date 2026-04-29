@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ReactNode, useRef } from 'react'
+import { ReactNode } from 'react'
 
 interface StickerProps {
   children: ReactNode

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
@@ -48,6 +48,7 @@ const stickers = [
     delay: 0.28,
     content: (
       <div className="p-2 w-[200px] flex items-center justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/New_York_Yankees_logo.svg" alt="New York Yankees" draggable={false} className="w-28 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.1))]" />
       </div>
     ),
@@ -59,6 +60,7 @@ const stickers = [
     delay: 0.35,
     content: (
       <div className="p-2 w-[200px] flex items-center justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/NYC_Love.svg" alt="NYC Love" draggable={false} className="w-36 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.1))]" />
       </div>
     ),
@@ -107,35 +109,40 @@ function generatePositions(viewW: number, viewH: number): { x: number; y: number
 }
 
 export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
-  const constraintsRef = useRef<HTMLDivElement>(null)
-  const [positions, setPositions] = useState<{ x: number; y: number }[]>([])
-  const [isDismissing, setIsDismissing] = useState(false)
+  const [layerState, setLayerState] = useState<{
+    positions: { x: number; y: number }[]
+    isDismissing: boolean
+  }>({ positions: [], isDismissing: false })
 
   useEffect(() => {
     if (active) {
-      setIsDismissing(false)
-      setPositions(generatePositions(window.innerWidth, window.innerHeight))
+      // window dimensions are only available client-side, so this effect is necessary
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLayerState({
+        positions: generatePositions(window.innerWidth, window.innerHeight),
+        isDismissing: false,
+      })
     }
   }, [active])
 
   const handleDismiss = () => {
-    setIsDismissing(true)
+    setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
     setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
   }
 
-  if (!active || positions.length === 0) return null
+  if (!active || layerState.positions.length === 0) return null
 
   return (
     <div className="fixed inset-0 z-[200] pointer-events-none">
       {stickers.map((s, i) => (
         <Sticker
           key={s.id}
-          initialX={positions[i].x}
-          initialY={positions[i].y}
+          initialX={layerState.positions[i].x}
+          initialY={layerState.positions[i].y}
           rotation={s.rotation}
           delay={s.delay}
-          isDismissing={isDismissing}
+          isDismissing={layerState.isDismissing}
         >
           <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
             {s.content}
