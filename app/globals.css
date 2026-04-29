@@ -47,8 +47,8 @@ body {
 }
 
 @keyframes text-shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
 .shimmer {
@@ -60,7 +60,8 @@ body {
     #1C1C1C 65%,
     #1C1C1C 100%
   );
-  background-size: 200% auto;
+  background-size: 300% auto;
+  background-repeat: no-repeat;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
