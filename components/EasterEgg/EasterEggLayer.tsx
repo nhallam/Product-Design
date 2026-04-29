@@ -58,7 +58,7 @@ const stickers = [
     delay: 0.28,
     content: (
       <div className="p-2 w-[200px] flex items-center justify-center">
-        <img src="/New_York_Yankees_logo.svg" alt="New York Yankees" className="w-28 h-auto [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]" />
+        <img src="/New_York_Yankees_logo.svg" alt="New York Yankees" draggable={false} className="w-28 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]" />
       </div>
     ),
   },
