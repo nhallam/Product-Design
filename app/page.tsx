@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProjectCard from '@/components/ProjectCard'
 import EasterEggLayer from '@/components/EasterEgg/EasterEggLayer'
 
@@ -45,6 +45,17 @@ const projects = [
 
 export default function Home() {
   const [easterEggActive, setEasterEggActive] = useState(false)
+  const [shimmer, setShimmer] = useState(false)
+
+  useEffect(() => {
+    const trigger = () => {
+      setShimmer(true)
+      setTimeout(() => setShimmer(false), 1000)
+    }
+    const initial = setTimeout(trigger, 5000)
+    const interval = setInterval(trigger, 20000)
+    return () => { clearTimeout(initial); clearInterval(interval) }
+  }, [])
 
   return (
     <>
@@ -61,7 +72,7 @@ export default function Home() {
             A product designer and founder living in{' '}
             <button
               onClick={() => setEasterEggActive(true)}
-              className="underline underline-offset-4 hover:text-[#555] transition-colors"
+              className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
             >
               Brooklyn, NY.
             </button>
