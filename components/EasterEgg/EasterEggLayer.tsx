@@ -68,6 +68,17 @@ const stickers = [
       </div>
     ),
   },
+  {
+    id: 'good-room',
+    w: 200, h: 190,
+    rotation: -5,
+    delay: 0.42,
+    content: (
+      <div className="p-2 w-[200px] flex items-center justify-center">
+        <img src="/Good_Room.svg" alt="Good Room" draggable={false} className="w-28 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.1))]" />
+      </div>
+    ),
+  },
 ]
 
 const GAP = 20
