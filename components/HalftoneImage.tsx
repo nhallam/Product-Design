@@ -2,58 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-const VERT = `
-  attribute vec2 a_pos;
-  varying vec2 v_uv;
-  void main() {
-    v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
-    gl_Position = vec4(a_pos, 0.0, 1.0);
-  }
-`
-
-const FRAG = `
-  precision highp float;
-  uniform sampler2D u_tex;
-  uniform float u_progress;
-  uniform vec2 u_resolution;
-  varying vec2 v_uv;
-
-  void main() {
-    vec4 color = texture2D(u_tex, v_uv);
-    float lum = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-
-    float scale = 55.0;
-    float aspect = u_resolution.x / u_resolution.y;
-
-    // Rotate 45deg for classic newspaper halftone angle
-    float angle = 0.7854;
-    float c = cos(angle), s = sin(angle);
-    vec2 rotUV = vec2(
-      c * v_uv.x * aspect - s * v_uv.y,
-      s * v_uv.x * aspect + c * v_uv.y
-    );
-
-    vec2 cell = fract(rotUV * scale) - 0.5;
-    float dist = length(cell);
-
-    // Darker pixels = larger dots
-    float radius = sqrt(max(0.0, 1.0 - lum)) * 0.68;
-    float dot = smoothstep(radius + 0.02, radius - 0.02, dist);
-
-    // Black dots on white paper
-    vec3 halftone = vec3(1.0 - dot);
-    vec3 final = mix(color.rgb, halftone, u_progress);
-
-    gl_FragColor = vec4(final, color.a);
-  }
-`
-
-function compileShader(gl: WebGLRenderingContext, type: number, src: string) {
-  const shader = gl.createShader(type)!
-  gl.shaderSource(shader, src)
-  gl.compileShader(shader)
-  return shader
-}
+const DOT_GRID = 7 // px between dot centres
 
 interface Props {
   src: string
@@ -66,8 +15,9 @@ interface Props {
 export default function HalftoneImage({ src, width, height, alt, className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const state = useRef({
-    gl: null as WebGLRenderingContext | null,
-    uProgress: null as WebGLUniformLocation | null,
+    ctx: null as CanvasRenderingContext2D | null,
+    original: null as HTMLImageElement | null,
+    halftone: null as HTMLCanvasElement | null,
     progress: 0,
     target: 0,
     raf: 0,
@@ -77,65 +27,81 @@ export default function HalftoneImage({ src, width, height, alt, className }: Pr
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const gl = canvas.getContext('webgl')
-    if (!gl) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
     const s = state.current
-    s.gl = gl
-
-    const prog = gl.createProgram()!
-    gl.attachShader(prog, compileShader(gl, gl.VERTEX_SHADER, VERT))
-    gl.attachShader(prog, compileShader(gl, gl.FRAGMENT_SHADER, FRAG))
-    gl.linkProgram(prog)
-    gl.useProgram(prog)
-
-    // Full-screen quad
-    const buf = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW)
-    const posLoc = gl.getAttribLocation(prog, 'a_pos')
-    gl.enableVertexAttribArray(posLoc)
-    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0)
-
-    s.uProgress = gl.getUniformLocation(prog, 'u_progress')
-    gl.uniform1f(s.uProgress, 0)
-    gl.uniform2f(gl.getUniformLocation(prog, 'u_resolution'), width, height)
-
-    // Load texture
-    const tex = gl.createTexture()
-    gl.bindTexture(gl.TEXTURE_2D, tex)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+    s.ctx = ctx
 
     const img = new window.Image()
-    img.crossOrigin = 'anonymous'
     img.src = src
     img.onload = () => {
-      gl.bindTexture(gl.TEXTURE_2D, tex)
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
-      gl.viewport(0, 0, width, height)
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+      s.original = img
+
+      // Sample image and pre-render halftone to offscreen canvas
+      const off = document.createElement('canvas')
+      off.width = width
+      off.height = height
+      const octx = off.getContext('2d')!
+
+      // Draw image so we can read pixel data
+      octx.drawImage(img, 0, 0, width, height)
+      const { data } = octx.getImageData(0, 0, width, height)
+
+      // White background + black dots
+      octx.fillStyle = '#ffffff'
+      octx.fillRect(0, 0, width, height)
+      octx.fillStyle = '#1C1C1C'
+
+      const step = DOT_GRID
+      for (let y = step / 2; y < height; y += step) {
+        for (let x = step / 2; x < width; x += step) {
+          const px = Math.min(Math.floor(x), width - 1)
+          const py = Math.min(Math.floor(y), height - 1)
+          const i = (py * width + px) * 4
+          const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]
+          const radius = (step / 2) * 0.9 * (1 - lum / 255)
+          if (radius > 0.4) {
+            octx.beginPath()
+            octx.arc(x, y, radius, 0, Math.PI * 2)
+            octx.fill()
+          }
+        }
+      }
+
+      s.halftone = off
+
+      // Initial draw
+      ctx.drawImage(img, 0, 0, width, height)
       s.ready = true
     }
 
     return () => cancelAnimationFrame(s.raf)
   }, [src, width, height])
 
+  function draw(progress: number) {
+    const s = state.current
+    if (!s.ctx || !s.original || !s.halftone) return
+    s.ctx.globalAlpha = 1
+    s.ctx.drawImage(s.original, 0, 0, width, height)
+    if (progress > 0) {
+      s.ctx.globalAlpha = progress
+      s.ctx.drawImage(s.halftone, 0, 0, width, height)
+      s.ctx.globalAlpha = 1
+    }
+  }
+
   function animate() {
     const s = state.current
-    if (!s.gl || !s.ready) return
+    if (!s.ready) return
     const diff = s.target - s.progress
     if (Math.abs(diff) < 0.001) {
       s.progress = s.target
-      s.gl.uniform1f(s.uProgress, s.progress)
-      s.gl.drawArrays(s.gl.TRIANGLE_STRIP, 0, 4)
+      draw(s.progress)
       return
     }
-    s.progress += diff * 0.06
-    s.gl.uniform1f(s.uProgress, s.progress)
-    s.gl.drawArrays(s.gl.TRIANGLE_STRIP, 0, 4)
+    s.progress += diff * 0.07
+    draw(s.progress)
     s.raf = requestAnimationFrame(animate)
   }
 
@@ -164,7 +130,7 @@ export default function HalftoneImage({ src, width, height, alt, className }: Pr
       onMouseLeave={onLeave}
       onTouchStart={onEnter}
       onTouchEnd={onLeave}
-      style={{ cursor: 'crosshair' }}
+      style={{ cursor: 'crosshair', display: 'block', maxWidth: '100%' }}
     />
   )
 }
