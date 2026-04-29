@@ -20,6 +20,14 @@ function isKnicksGame(event: any): boolean {
   )
 }
 
+function parseScore(raw: any): number {
+  if (typeof raw === 'number') return raw
+  if (typeof raw === 'string') return parseInt(raw, 10) || 0
+  if (raw?.value !== undefined) return Number(raw.value) || 0
+  if (raw?.displayValue !== undefined) return parseInt(raw.displayValue, 10) || 0
+  return 0
+}
+
 function parseGame(event: any): KnicksData {
   const comp = event.competitions[0]
   const competitors: any[] = comp.competitors ?? []
@@ -36,8 +44,8 @@ function parseGame(event: any): KnicksData {
 
   return {
     status: isLive ? 'live' : isFinal ? 'final' : 'unknown',
-    knicksScore: parseInt(knicks?.score ?? '0', 10),
-    oppScore: parseInt(opp?.score ?? '0', 10),
+    knicksScore: parseScore(knicks?.score),
+    oppScore: parseScore(opp?.score),
     oppName: opp?.team?.shortDisplayName ?? opp?.team?.abbreviation ?? '???',
     period,
     clock: status.displayClock ?? status.clock ?? '',
