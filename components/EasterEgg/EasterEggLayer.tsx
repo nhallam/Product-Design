@@ -84,18 +84,26 @@ function overlaps(
   )
 }
 
+const MOBILE_BREAKPOINT = 768
+
 function generatePositions(viewW: number, viewH: number): { x: number; y: number }[] {
+  const isMobile = viewW < MOBILE_BREAKPOINT
   const placed: { x: number; y: number; w: number; h: number }[] = []
 
   return stickers.map((s) => {
-    let pos = { x: 0, y: 0 }
+    let pos = {
+      x: Math.random() * Math.max(viewW - s.w, 0),
+      y: Math.random() * Math.max(viewH - s.h, 0),
+    }
 
-    for (let attempt = 0; attempt < 50; attempt++) {
-      pos = {
-        x: Math.random() * Math.max(viewW - s.w, 0),
-        y: Math.random() * Math.max(viewH - s.h, 0),
+    if (!isMobile) {
+      for (let attempt = 0; attempt < 50; attempt++) {
+        pos = {
+          x: Math.random() * Math.max(viewW - s.w, 0),
+          y: Math.random() * Math.max(viewH - s.h, 0),
+        }
+        if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
       }
-      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
     }
 
     placed.push({ ...pos, w: s.w, h: s.h })
