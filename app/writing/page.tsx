@@ -1,3 +1,6 @@
+import { ViewTransition } from 'react'
+import Link from 'next/link'
+
 const articles = [
   { slug: 'article-one',   title: 'Article title goes here', date: 'Jan 2025' },
   { slug: 'article-two',   title: 'Article title goes here', date: 'Nov 2024' },
@@ -20,14 +23,17 @@ export default function Writing() {
 
       <div className="mt-[10vh] divide-y divide-[#E0E0E0]">
         {articles.map(({ slug, title, date }) => (
-          <a
+          <Link
             key={slug}
             href={`/writing/${slug}`}
-            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors cursor-pointer"
+            transitionTypes={['nav-forward']}
+            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
           >
-            <span className="text-base font-medium text-[#1C1C1C]">{title}</span>
+            <ViewTransition name={`article-${slug}`} share="morph">
+              <span className="text-base font-medium text-[#1C1C1C]">{title}</span>
+            </ViewTransition>
             <span className="text-sm text-[#888] shrink-0 ml-6">{date}</span>
-          </a>
+          </Link>
         ))}
       </div>
     </main>
