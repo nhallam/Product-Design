@@ -87,7 +87,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
   if (!active || positions.length === 0) return null
 
   return (
-    <div className="fixed inset-0 z-[200] pointer-events-none backdrop-blur-[13px] bg-white/10">
+    <div className="fixed inset-0 z-[200] pointer-events-none">
       {stickers.map((s, i) => (
         <Sticker
           key={s.id}
