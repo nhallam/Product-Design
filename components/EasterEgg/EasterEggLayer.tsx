@@ -5,6 +5,7 @@ import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
 import KnicksSticker from './stickers/KnicksSticker'
+import WeatherSticker from './stickers/WeatherSticker'
 
 interface EasterEggLayerProps {
   active: boolean
@@ -17,13 +18,7 @@ const stickers = [
     w: 200, h: 110,
     rotation: -4,
     delay: 0,
-    content: (
-      <div className="bg-[#E8F4FD] border border-[#B3D9F5] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
-        <div className="text-3xl mb-1">🌤</div>
-        <div className="text-base font-bold text-[#1C1C1C]">72°F · Sunny</div>
-        <div className="text-sm text-[#666] mt-0.5">Brooklyn, NY</div>
-      </div>
-    ),
+    content: <WeatherSticker />,
   },
   {
     id: 'gtrain',
