@@ -47,21 +47,22 @@ export default function About() {
             { company: 'Sex, Drugs & Helvetica', title: 'Co-founder', years: '2010 – 2015', url: 'http://www.sexdrugshelvetica.com/melbourne/' },
             { company: 'IDEO', title: 'Comm & Interaction Designer', years: '2012', url: 'https://www.ideo.com/' },
             { company: 'Positive Posters', title: 'Co-founder', years: '2009 – 2013', url: 'https://web.archive.org/web/20130424231629/http://positive-posters.com/' },
-          ].map(({ company, title, years, url }) => (
-            <div key={years + company} className="flex justify-between items-baseline py-4">
-              <div>
-                {url ? (
-                  <a href={url} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-[#1C1C1C] underline underline-offset-2 hover:text-[#555] transition-colors">
-                    {company}
-                  </a>
-                ) : (
+          ].map(({ company, title, years, url }) => {
+            const Row = url ? 'a' : 'div'
+            return (
+              <Row
+                key={years + company}
+                {...(url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className={`flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[#E8E8E8]' : ''}`}
+              >
+                <div>
                   <div className="text-base font-medium text-[#1C1C1C]">{company}</div>
-                )}
-                <div className="text-sm text-[#888] mt-0.5">{title}</div>
-              </div>
-              <div className="text-sm text-[#888] shrink-0 ml-6">{years}</div>
-            </div>
-          ))}
+                  <div className="text-sm text-[#888] mt-0.5">{title}</div>
+                </div>
+                <div className="text-sm text-[#888] shrink-0 ml-6">{years}</div>
+              </Row>
+            )
+          })}
         </div>
       </div>
     </main>
