@@ -1,4 +1,3 @@
-import { ViewTransition } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -64,29 +63,24 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   return (
     <main className="flex-1 flex flex-col px-6 pb-16">
       <div className="pt-[28vh]">
-        <ViewTransition name={`article-${slug}`} share="morph">
           <h1
             className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance"
             style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
           >
             {article.title}
           </h1>
-        </ViewTransition>
         <p className="text-sm text-[#888] mt-3 text-center">{article.date}</p>
       </div>
 
-      <ViewTransition enter="slide-up" default="none">
-        <div className="mt-16 space-y-6 text-base leading-relaxed text-[#1C1C1C] max-w-prose mx-auto w-full">
-          {article.body.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
-      </ViewTransition>
+      <div className="mt-16 space-y-6 text-base leading-relaxed text-[#1C1C1C] max-w-prose mx-auto w-full">
+        {article.body.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
+        ))}
+      </div>
 
       <div className="mt-16 max-w-prose mx-auto w-full">
         <Link
           href="/writing"
-          transitionTypes={['nav-back']}
           className="text-sm text-[#888] hover:text-[#1C1C1C] transition-colors"
         >
           ← All writing
