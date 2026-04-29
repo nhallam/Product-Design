@@ -52,7 +52,7 @@ export default function Home() {
       setShimmer(true)
       setTimeout(() => setShimmer(false), 1500)
     }
-    const initial = setTimeout(trigger, 5000)
+    const initial = setTimeout(trigger, 2500)
     const interval = setInterval(trigger, 20000)
     return () => { clearTimeout(initial); clearInterval(interval) }
   }, [])
