@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
+import KnicksSticker from './stickers/KnicksSticker'
 
 interface EasterEggLayerProps {
   active: boolean
@@ -39,13 +40,7 @@ const stickers = [
     id: 'knicks',
     rotation: 4,
     delay: 0.21,
-    content: (
-      <div className="bg-[#F58426] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
-        <div className="text-3xl mb-1">🏀</div>
-        <div className="text-base font-bold text-white">Knicks</div>
-        <div className="text-sm text-white/80 mt-0.5">112 – 98 · Final</div>
-      </div>
-    ),
+    content: <KnicksSticker />,
   },
   {
     id: 'yankees',
