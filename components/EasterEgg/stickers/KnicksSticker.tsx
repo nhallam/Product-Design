@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import type { KnicksData } from '@/app/api/knicks/route'
 
 type State = KnicksData | { status: 'loading' } | { status: 'unknown' }
@@ -22,7 +23,7 @@ function TeamRow({ logo, abbrev, score, color }: { logo: string; abbrev: string;
     <div className="flex items-center gap-3 px-4 py-3">
       <div className="w-[3px] self-stretch rounded-full shrink-0" style={{ backgroundColor: `#${color}` }} />
       {logo ? (
-        <img src={logo} alt={abbrev} draggable={false} className="w-8 h-8 object-contain pointer-events-none" />
+        <Image src={logo} alt={abbrev} width={32} height={32} className="object-contain pointer-events-none" draggable={false} />
       ) : (
         <div className="w-8 h-8" />
       )}
