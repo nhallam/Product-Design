@@ -7,8 +7,13 @@ export const revalidate = 30
 export interface KnicksData {
   status: 'live' | 'final' | 'unknown'
   knicksScore: number
+  knicksAbbrev: string
+  knicksLogo: string
+  knicksColor: string
   oppScore: number
-  oppName: string
+  oppAbbrev: string
+  oppLogo: string
+  oppColor: string
   period: number
   clock: string
   isOT: boolean
@@ -45,8 +50,13 @@ function parseGame(event: any): KnicksData {
   return {
     status: isLive ? 'live' : isFinal ? 'final' : 'unknown',
     knicksScore: parseScore(knicks?.score),
+    knicksAbbrev: knicks?.team?.abbreviation ?? 'NYK',
+    knicksLogo: knicks?.team?.logo ?? '',
+    knicksColor: knicks?.team?.color ?? '006BB6',
     oppScore: parseScore(opp?.score),
-    oppName: opp?.team?.shortDisplayName ?? opp?.team?.abbreviation ?? '???',
+    oppAbbrev: opp?.team?.abbreviation ?? '???',
+    oppLogo: opp?.team?.logo ?? '',
+    oppColor: opp?.team?.color ?? '888888',
     period,
     clock: status.displayClock ?? status.clock ?? '',
     isOT: period > 4,
@@ -55,7 +65,6 @@ function parseGame(event: any): KnicksData {
 
 export async function GET() {
   try {
-    // Check for a live or in-progress game today
     const sbRes = await fetch(SCOREBOARD, { next: { revalidate: 30 } })
     const sb = await sbRes.json()
     const liveGame = (sb.events ?? []).find(isKnicksGame)
@@ -67,7 +76,6 @@ export async function GET() {
       }
     }
 
-    // Fall back to most recent completed game from season schedule
     const schRes = await fetch(SCHEDULE, { next: { revalidate: 300 } })
     const sch = await schRes.json()
 
