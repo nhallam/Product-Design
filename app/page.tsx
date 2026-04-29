@@ -63,9 +63,8 @@ export default function Home() {
               onClick={() => setEasterEggActive(true)}
               className="underline underline-offset-4 hover:text-[#555] transition-colors"
             >
-              Brooklyn, NY
+              Brooklyn, NY.
             </button>
-            .
           </h1>
         </div>
 
