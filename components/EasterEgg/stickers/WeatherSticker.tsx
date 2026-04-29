@@ -22,11 +22,14 @@ export default function WeatherSticker() {
       <div className="text-3xl mb-1">{loaded ? (state as WeatherData).emoji : '🌤'}</div>
       <div className="text-base font-bold text-[#1C1C1C]">
         {loaded
-          ? `${(state as WeatherData).tempF}°F / ${(state as WeatherData).tempC}°C · ${(state as WeatherData).label}`
+          ? `${(state as WeatherData).tempF}°F / ${(state as WeatherData).tempC}°C`
           : state.status === 'loading' ? 'Loading...' : 'Unavailable'
         }
       </div>
-      <div className="text-sm text-[#666] mt-0.5">Brooklyn, NY</div>
+      <div className="text-sm text-[#666] mt-0.5">
+        {loaded ? (state as WeatherData).label : 'Brooklyn, NY'}
+      </div>
+      {loaded && <div className="text-sm text-[#666]">Brooklyn, NY</div>}
     </div>
   )
 }
