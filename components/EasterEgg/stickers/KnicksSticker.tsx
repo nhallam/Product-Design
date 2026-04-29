@@ -27,8 +27,8 @@ function TeamRow({ logo, abbrev, score, color }: { logo: string; abbrev: string;
       ) : (
         <div className="w-8 h-8" />
       )}
-      <span className="text-sm font-bold text-white flex-1">{abbrev}</span>
-      <span className="text-xl font-black text-white tabular-nums">{score}</span>
+      <span className="text-sm font-bold text-[#1C1C1C] flex-1">{abbrev}</span>
+      <span className="text-xl font-black text-[#1C1C1C] tabular-nums">{score}</span>
     </div>
   )
 }
@@ -46,12 +46,12 @@ export default function KnicksSticker() {
   const isLive = state.status === 'live'
 
   return (
-    <div className="bg-[#1C1C1C] rounded-2xl shadow-lg overflow-hidden w-[200px]">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden w-[200px]">
       {state.status === 'loading' || state.status === 'unknown' ? (
         <div className="px-5 py-4">
           <div className="text-3xl mb-2">🏀</div>
-          <div className="text-base font-bold text-white">Knicks</div>
-          <div className="text-sm text-white/50 mt-0.5">
+          <div className="text-base font-bold text-[#1C1C1C]">Knicks</div>
+          <div className="text-sm text-[#1C1C1C]/50 mt-0.5">
             {state.status === 'loading' ? 'Loading...' : 'No data'}
           </div>
         </div>
@@ -65,14 +65,14 @@ export default function KnicksSticker() {
           />
 
           <div className="flex items-center gap-2 px-4">
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-black/10" />
             <div className="flex items-center gap-1.5">
-              {isLive && <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />}
-              <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
+              {isLive && <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />}
+              <span className="text-[10px] font-bold text-[#1C1C1C]/40 uppercase tracking-wider">
                 {periodLabel(state as KnicksData)}
               </span>
             </div>
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-black/10" />
           </div>
 
           <TeamRow
