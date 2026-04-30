@@ -3,6 +3,7 @@
 import { useEffect, useState, cloneElement, isValidElement, ReactElement } from 'react'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
+export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
 
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
@@ -11,10 +12,6 @@ import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
 import PizzaSticker from './stickers/PizzaSticker'
 
-interface EasterEggLayerProps {
-  active: boolean
-  onDismiss: () => void
-}
 
 const stickers = [
   {
@@ -126,59 +123,45 @@ function withGhostProp(content: ReactElement | React.ReactNode): React.ReactNode
   return content
 }
 
-export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
+export default function EasterEggLayer() {
+  const [active, setActive] = useState(false)
   const [layerState, setLayerState] = useState<{
     positions: { x: number; y: number }[]
     isDismissing: boolean
   }>({ positions: [], isDismissing: false })
 
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
-  const [ghostVisible, setGhostVisible] = useState(false)
 
-  useEffect(() => {
-    if (active) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setGhostPositions(null)
-      setGhostVisible(false)
-      setLayerState({
-        positions: generatePositions(window.innerWidth, window.innerHeight),
-        isDismissing: false,
-      })
-    }
-  }, [active])
-
-  useEffect(() => {
-    if (ghostPositions) {
-      requestAnimationFrame(() => setGhostVisible(true))
-    }
-  }, [ghostPositions])
+  const activate = () => {
+    setGhostPositions(null)
+    setLayerState({
+      positions: generatePositions(window.innerWidth, window.innerHeight),
+      isDismissing: false,
+    })
+    setActive(true)
+  }
 
   const handleDismiss = () => {
+    setGhostPositions([...layerState.positions])
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
-    const duration = (maxDelay + 0.4) * 1000
-    setTimeout(() => {
-      setGhostPositions([...layerState.positions])
-      onDismiss()
-    }, duration)
+    setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
   }
 
   useEffect(() => {
     easterEggDismissRef.current = active ? handleDismiss : null
+    easterEggActivateRef.current = !active ? activate : null
   })
 
-  useEffect(() => () => { easterEggDismissRef.current = null }, [])
+  useEffect(() => () => {
+    easterEggDismissRef.current = null
+    easterEggActivateRef.current = null
+  }, [])
 
   return (
     <>
       {ghostPositions && (
-        <div
-          className="fixed inset-0 z-[2] pointer-events-none"
-          style={{
-            opacity: ghostVisible ? 1 : 0,
-            transition: 'opacity 0.8s ease-in',
-          }}
-        >
+        <div className="fixed inset-0 z-[2] pointer-events-none">
           {stickers.map((s, i) => (
             <div
               key={s.id}
