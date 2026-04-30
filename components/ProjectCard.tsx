@@ -5,11 +5,10 @@ import { ViewTransition } from 'react'
 interface ProjectCardProps {
   slug: string
   title: string
-  tag: string
   image: string
 }
 
-export default function ProjectCard({ slug, title, tag, image }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block">
       <ViewTransition name={`project-image-${slug}`} share="morph">
