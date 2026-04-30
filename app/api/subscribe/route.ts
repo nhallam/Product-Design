@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   const res = await fetch(`https://emailoctopus.com/api/1.6/lists/${listId}/contacts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ api_key: apiKey, email_address: email, status: 'subscribed' }),
+    body: JSON.stringify({ api_key: apiKey, email_address: email, status: 'SUBSCRIBED' }),
   })
 
   const data = await res.json()
