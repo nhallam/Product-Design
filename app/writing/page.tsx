@@ -14,11 +14,7 @@ export default function Writing() {
         </h1>
       </div>
 
-      <div className="mt-[10vh]">
-        <NewsletterSignup />
-      </div>
-
-      <div className="divide-y divide-[#E0E0E0]">
+      <div className="mt-[10vh] divide-y divide-[#E0E0E0]">
         {articleList.map(({ slug, title, date }) => (
           <Link
             key={slug}
@@ -29,6 +25,10 @@ export default function Writing() {
             <span className="text-sm text-[#888] shrink-0 ml-6">{date}</span>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-6">
+        <NewsletterSignup />
       </div>
     </main>
   )
