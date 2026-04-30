@@ -20,9 +20,6 @@ export default function ProjectCard({ slug, title, tag, image }: ProjectCardProp
             fill
             className="object-cover"
           />
-          <span className="absolute bottom-3 right-3 z-10 text-sm text-white bg-black/30 backdrop-blur-sm px-3 py-1 rounded-[5px]">
-            {tag}
-          </span>
         </div>
       </ViewTransition>
     </Link>
