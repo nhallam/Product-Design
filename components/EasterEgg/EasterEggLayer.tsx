@@ -169,7 +169,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
 
       <button
         onClick={handleDismiss}
-        className={`pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-all duration-300 ease-in-out ${layerState.isDismissing ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+        className={`pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-opacity duration-300 ease-in-out ${layerState.isDismissing ? 'opacity-0' : 'opacity-100'}`}
       >
         Get outta here!
       </button>
