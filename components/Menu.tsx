@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useHasGhosts, easterEggClearGhostsRef } from './EasterEgg/EasterEggLayer'
 
 interface MenuProps {
   open: boolean
@@ -23,6 +24,7 @@ const socialLinks = [
 
 export default function Menu({ open, onClose }: MenuProps) {
   const [copied, setCopied] = useState(false)
+  const hasGhosts = useHasGhosts()
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -60,6 +62,18 @@ export default function Menu({ open, onClose }: MenuProps) {
         </div>
 
         <div className="flex flex-col gap-1">
+          {hasGhosts && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onClose()
+                setTimeout(() => easterEggClearGhostsRef.current?.(), 150)
+              }}
+              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left mb-2"
+            >
+              Clean up the stickers
+            </button>
+          )}
           {socialLinks.map(({ href, label, hoverClass }) => (
             <a
               key={label}
