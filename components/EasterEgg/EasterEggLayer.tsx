@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
+export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
+
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
@@ -130,6 +133,12 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
     setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
   }
+
+  useEffect(() => {
+    easterEggDismissRef.current = active ? handleDismiss : null
+  })
+
+  useEffect(() => () => { easterEggDismissRef.current = null }, [])
 
   if (!active || layerState.positions.length === 0) return null
 
