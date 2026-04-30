@@ -5,6 +5,7 @@ import SiteShell from "@/components/SiteShell";
 export const metadata: Metadata = {
   title: "Nick Hallam — Product Designer",
   description: "A product designer and founder living in Brooklyn, NY.",
+  icons: { icon: '/Favicon.svg' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
