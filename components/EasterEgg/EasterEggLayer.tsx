@@ -133,13 +133,11 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
   }>({ positions: [], isDismissing: false })
 
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
-  const [ghostVisible, setGhostVisible] = useState(false)
 
   useEffect(() => {
     if (active) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setGhostPositions(null)
-      setGhostVisible(false)
       setLayerState({
         positions: generatePositions(window.innerWidth, window.innerHeight),
         isDismissing: false,
@@ -147,20 +145,11 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
     }
   }, [active])
 
-  useEffect(() => {
-    if (ghostPositions) {
-      requestAnimationFrame(() => setGhostVisible(true))
-    }
-  }, [ghostPositions])
-
   const handleDismiss = () => {
+    setGhostPositions([...layerState.positions])
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
-    const duration = (maxDelay + 0.4) * 1000
-    setTimeout(() => {
-      setGhostPositions([...layerState.positions])
-      onDismiss()
-    }, duration)
+    setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
   }
 
   useEffect(() => {
@@ -172,13 +161,7 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
   return (
     <>
       {ghostPositions && (
-        <div
-          className="fixed inset-0 z-[2] pointer-events-none"
-          style={{
-            opacity: ghostVisible ? 1 : 0,
-            transition: 'opacity 0.8s ease-in',
-          }}
-        >
+        <div className="fixed inset-0 z-[2] pointer-events-none">
           {stickers.map((s, i) => (
             <div
               key={s.id}
