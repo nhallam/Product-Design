@@ -64,7 +64,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
       )}
       {!isArticle && (
         <button
-          onClick={onToggle}
+          onClick={() => { easterEggDismissRef.current?.(); onToggle() }}
           className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
         >
           <span className={`block transition-opacity duration-200 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>
