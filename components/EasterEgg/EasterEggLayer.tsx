@@ -3,6 +3,7 @@
 import { useEffect, useState, cloneElement, isValidElement, ReactElement } from 'react'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
+export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
 
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
@@ -11,10 +12,6 @@ import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
 import PizzaSticker from './stickers/PizzaSticker'
 
-interface EasterEggLayerProps {
-  active: boolean
-  onDismiss: () => void
-}
 
 const stickers = [
   {
@@ -126,7 +123,8 @@ function withGhostProp(content: ReactElement | React.ReactNode): React.ReactNode
   return content
 }
 
-export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
+export default function EasterEggLayer() {
+  const [active, setActive] = useState(false)
   const [layerState, setLayerState] = useState<{
     positions: { x: number; y: number }[]
     isDismissing: boolean
@@ -134,29 +132,31 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
 
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
 
-  useEffect(() => {
-    if (active) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setGhostPositions(null)
-      setLayerState({
-        positions: generatePositions(window.innerWidth, window.innerHeight),
-        isDismissing: false,
-      })
-    }
-  }, [active])
+  const activate = () => {
+    setGhostPositions(null)
+    setLayerState({
+      positions: generatePositions(window.innerWidth, window.innerHeight),
+      isDismissing: false,
+    })
+    setActive(true)
+  }
 
   const handleDismiss = () => {
     setGhostPositions([...layerState.positions])
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
-    setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
+    setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
   }
 
   useEffect(() => {
     easterEggDismissRef.current = active ? handleDismiss : null
+    easterEggActivateRef.current = !active ? activate : null
   })
 
-  useEffect(() => () => { easterEggDismissRef.current = null }, [])
+  useEffect(() => () => {
+    easterEggDismissRef.current = null
+    easterEggActivateRef.current = null
+  }, [])
 
   return (
     <>
