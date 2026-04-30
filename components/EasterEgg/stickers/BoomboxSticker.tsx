@@ -182,7 +182,7 @@ export default function BoomboxSticker() {
           <button
             onClick={(e) => { e.stopPropagation(); nextTrack() }}
             disabled={!ready}
-            style={{ width: 14, height: 7, background: '#2a2a2a', borderRadius: 2, border: '1px solid #3a3a3a', cursor: ready ? 'pointer' : 'default', color: 'rgba(255,255,255,0.35)', fontSize: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            style={{ width: 14, height: 7, background: '#2a2a2a', borderRadius: 2, border: 'none', cursor: ready ? 'pointer' : 'default', color: 'rgba(255,255,255,0.35)', fontSize: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #3a3a3a' } as React.CSSProperties}
             aria-label="Next track"
           >
             ⏭
