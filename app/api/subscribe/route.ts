@@ -10,6 +10,11 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.EMAILOCTOPUS_API_KEY
   const listId = process.env.EMAILOCTOPUS_LIST_ID
 
+  if (!apiKey || !listId) {
+    console.error('Missing env vars:', { apiKey: !!apiKey, listId: !!listId })
+    return NextResponse.json({ error: `Missing config: apiKey=${!!apiKey} listId=${!!listId}` }, { status: 500 })
+  }
+
   const res = await fetch(`https://emailoctopus.com/api/1.6/lists/${listId}/contacts`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
