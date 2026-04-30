@@ -9,7 +9,7 @@ export default function Writing() {
           className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
         >
-          I&apos;m a product designer and founder living in Brooklyn, NY.
+          A selection of blog posts from over the years.
         </h1>
       </div>
 
