@@ -71,7 +71,7 @@ const stickers = [
   },
   {
     id: 'pizza',
-    w: 130, h: 145,
+    w: 160, h: 160,
     rotation: 8,
     delay: 0.42,
     content: <PizzaSticker />,
