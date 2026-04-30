@@ -57,15 +57,21 @@ export default function KnicksSticker() {
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimeLeft>>(null)
 
   useEffect(() => {
-    fetch('/api/knicks')
-      .then((r) => r.json())
-      .then((data: KnicksData) => {
-        setState(data)
-        if (data.status === 'upcoming') {
-          setTimeLeft(getTimeLeft(data.gameTime))
-        }
-      })
-      .catch(() => setState({ status: 'unknown' }))
+    const fetchData = () => {
+      fetch('/api/knicks')
+        .then((r) => r.json())
+        .then((data: KnicksData) => {
+          setState(data)
+          if (data.status === 'upcoming') {
+            setTimeLeft(getTimeLeft(data.gameTime))
+          }
+        })
+        .catch(() => setState({ status: 'unknown' }))
+    }
+
+    fetchData()
+    const poll = setInterval(fetchData, 30000)
+    return () => clearInterval(poll)
   }, [])
 
   useEffect(() => {
