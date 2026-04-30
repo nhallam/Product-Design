@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, cloneElement, isValidElement, ReactElement } from 'react'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 
@@ -119,16 +119,27 @@ function generatePositions(viewW: number, viewH: number): { x: number; y: number
   })
 }
 
+function withGhostProp(content: ReactElement | React.ReactNode): React.ReactNode {
+  if (isValidElement(content)) {
+    return cloneElement(content as ReactElement<{ ghost?: boolean }>, { ghost: true })
+  }
+  return content
+}
+
 export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProps) {
   const [layerState, setLayerState] = useState<{
     positions: { x: number; y: number }[]
     isDismissing: boolean
   }>({ positions: [], isDismissing: false })
 
+  const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
+  const [ghostVisible, setGhostVisible] = useState(false)
+
   useEffect(() => {
     if (active) {
-      // window dimensions are only available client-side, so this effect is necessary
       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setGhostPositions(null)
+      setGhostVisible(false)
       setLayerState({
         positions: generatePositions(window.innerWidth, window.innerHeight),
         isDismissing: false,
@@ -136,10 +147,20 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
     }
   }, [active])
 
+  useEffect(() => {
+    if (ghostPositions) {
+      requestAnimationFrame(() => setGhostVisible(true))
+    }
+  }, [ghostPositions])
+
   const handleDismiss = () => {
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
-    setTimeout(onDismiss, (maxDelay + 0.4) * 1000)
+    const duration = (maxDelay + 0.4) * 1000
+    setTimeout(() => {
+      setGhostPositions([...layerState.positions])
+      onDismiss()
+    }, duration)
   }
 
   useEffect(() => {
@@ -148,31 +169,61 @@ export default function EasterEggLayer({ active, onDismiss }: EasterEggLayerProp
 
   useEffect(() => () => { easterEggDismissRef.current = null }, [])
 
-  if (!active || layerState.positions.length === 0) return null
-
   return (
-    <div className="fixed inset-0 z-[200] pointer-events-none">
-      {stickers.map((s, i) => (
-        <Sticker
-          key={s.id}
-          initialX={layerState.positions[i].x}
-          initialY={layerState.positions[i].y}
-          rotation={s.rotation}
-          delay={s.delay}
-          isDismissing={layerState.isDismissing}
+    <>
+      {ghostPositions && (
+        <div
+          className="fixed inset-0 z-[2] pointer-events-none"
+          style={{
+            opacity: ghostVisible ? 1 : 0,
+            transition: 'opacity 0.8s ease-in',
+          }}
         >
-          <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
-            {s.content}
-          </div>
-        </Sticker>
-      ))}
+          {stickers.map((s, i) => (
+            <div
+              key={s.id}
+              className="absolute"
+              style={{
+                left: ghostPositions[i].x,
+                top: ghostPositions[i].y,
+                width: s.w,
+                transform: `rotate(${s.rotation}deg)`,
+                transformOrigin: 'top left',
+                opacity: 0.12,
+                filter: 'grayscale(1)',
+              }}
+            >
+              {withGhostProp(s.content)}
+            </div>
+          ))}
+        </div>
+      )}
 
-      <button
-        onClick={handleDismiss}
-        className={`pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-opacity duration-300 ease-in-out ${layerState.isDismissing ? 'opacity-0' : 'opacity-100'}`}
-      >
-        Get outta here!
-      </button>
-    </div>
+      {active && layerState.positions.length > 0 && (
+        <div className="fixed inset-0 z-[200] pointer-events-none">
+          {stickers.map((s, i) => (
+            <Sticker
+              key={s.id}
+              initialX={layerState.positions[i].x}
+              initialY={layerState.positions[i].y}
+              rotation={s.rotation}
+              delay={s.delay}
+              isDismissing={layerState.isDismissing}
+            >
+              <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                {s.content}
+              </div>
+            </Sticker>
+          ))}
+
+          <button
+            onClick={handleDismiss}
+            className={`pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-opacity duration-300 ease-in-out ${layerState.isDismissing ? 'opacity-0' : 'opacity-100'}`}
+          >
+            Get outta here!
+          </button>
+        </div>
+      )}
+    </>
   )
 }

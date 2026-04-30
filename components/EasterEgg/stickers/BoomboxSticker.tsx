@@ -31,7 +31,7 @@ declare global {
   }
 }
 
-export default function BoomboxSticker() {
+export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [trackInfo, setTrackInfo] = useState<{ title: string; author: string } | null>(null)
   const [ready, setReady] = useState(false)
@@ -78,6 +78,8 @@ export default function BoomboxSticker() {
       })
     }
 
+    if (ghost) return
+
     if (window.YT?.Player) {
       initPlayer()
     } else {
@@ -97,7 +99,7 @@ export default function BoomboxSticker() {
       playerRef.current?.destroy()
       playerRef.current = null
     }
-  }, [])
+  }, [ghost])
 
   const togglePlay = () => {
     if (!ready || !playerRef.current) return
