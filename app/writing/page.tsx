@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { articleList } from './articles'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function Writing() {
   return (
@@ -13,7 +14,11 @@ export default function Writing() {
         </h1>
       </div>
 
-      <div className="mt-[10vh] divide-y divide-[#E0E0E0]">
+      <div className="mt-[10vh]">
+        <NewsletterSignup />
+      </div>
+
+      <div className="divide-y divide-[#E0E0E0]">
         {articleList.map(({ slug, title, date }) => (
           <Link
             key={slug}
