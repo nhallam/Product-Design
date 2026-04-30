@@ -4,6 +4,23 @@ import { useEffect, useState, cloneElement, isValidElement, ReactElement } from 
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
+export const easterEggClearGhostsRef: { current: (() => void) | null } = { current: null }
+
+// Lightweight reactive primitive so Menu can subscribe to ghost state
+let _hasGhosts = false
+const _ghostListeners = new Set<(v: boolean) => void>()
+function notifyGhostListeners(v: boolean) {
+  _hasGhosts = v
+  _ghostListeners.forEach((fn) => fn(v))
+}
+export function useHasGhosts() {
+  const [hasGhosts, setHasGhosts] = useState(_hasGhosts)
+  useEffect(() => {
+    _ghostListeners.add(setHasGhosts)
+    return () => { _ghostListeners.delete(setHasGhosts) }
+  }, [])
+  return hasGhosts
+}
 
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
@@ -12,41 +29,13 @@ import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
 import PizzaSticker from './stickers/PizzaSticker'
 
-
 const stickers = [
+  { id: 'weather', w: 200, h: 110, rotation: -4, delay: 0, content: <WeatherSticker /> },
+  { id: 'gtrain', w: 145, h: 200, rotation: 5, delay: 0.07, content: <GTrainSticker /> },
+  { id: 'boombox', w: 200, h: 140, rotation: -6, delay: 0.14, content: <BoomboxSticker /> },
+  { id: 'knicks', w: 200, h: 140, rotation: 4, delay: 0.21, content: <KnicksSticker /> },
   {
-    id: 'weather',
-    w: 200, h: 110,
-    rotation: -4,
-    delay: 0,
-    content: <WeatherSticker />,
-  },
-  {
-    id: 'gtrain',
-    w: 145, h: 200,
-    rotation: 5,
-    delay: 0.07,
-    content: <GTrainSticker />,
-  },
-  {
-    id: 'boombox',
-    w: 200, h: 140,
-    rotation: -6,
-    delay: 0.14,
-    content: <BoomboxSticker />,
-  },
-  {
-    id: 'knicks',
-    w: 200, h: 140,
-    rotation: 4,
-    delay: 0.21,
-    content: <KnicksSticker />,
-  },
-  {
-    id: 'yankees',
-    w: 200, h: 130,
-    rotation: -3,
-    delay: 0.28,
+    id: 'yankees', w: 200, h: 130, rotation: -3, delay: 0.28,
     content: (
       <div className="p-2 w-[200px] flex items-center justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -55,10 +44,7 @@ const stickers = [
     ),
   },
   {
-    id: 'nyc-love',
-    w: 200, h: 155,
-    rotation: 3,
-    delay: 0.35,
+    id: 'nyc-love', w: 200, h: 155, rotation: 3, delay: 0.35,
     content: (
       <div className="p-2 w-[200px] flex items-center justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -66,13 +52,7 @@ const stickers = [
       </div>
     ),
   },
-  {
-    id: 'pizza',
-    w: 160, h: 160,
-    rotation: 8,
-    delay: 0.42,
-    content: <PizzaSticker />,
-  },
+  { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
 ]
 
 const GAP = 20
@@ -100,7 +80,6 @@ function generatePositions(viewW: number, viewH: number): { x: number; y: number
       x: Math.random() * Math.max(viewW - s.w, 0),
       y: Math.random() * Math.max(viewH - s.h, 0),
     }
-
     if (!isMobile) {
       for (let attempt = 0; attempt < 50; attempt++) {
         pos = {
@@ -110,7 +89,6 @@ function generatePositions(viewW: number, viewH: number): { x: number; y: number
         if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
       }
     }
-
     placed.push({ ...pos, w: s.w, h: s.h })
     return pos
   })
@@ -129,11 +107,13 @@ export default function EasterEggLayer() {
     positions: { x: number; y: number }[]
     isDismissing: boolean
   }>({ positions: [], isDismissing: false })
-
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
+  const [ghostFading, setGhostFading] = useState(false)
 
   const activate = () => {
     setGhostPositions(null)
+    setGhostFading(false)
+    notifyGhostListeners(false)
     setLayerState({
       positions: generatePositions(window.innerWidth, window.innerHeight),
       isDismissing: false,
@@ -143,25 +123,43 @@ export default function EasterEggLayer() {
 
   const handleDismiss = () => {
     setGhostPositions([...layerState.positions])
+    notifyGhostListeners(true)
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
     setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
   }
 
+  const clearGhosts = () => {
+    setGhostFading(true)
+    setTimeout(() => {
+      setGhostPositions(null)
+      setGhostFading(false)
+      notifyGhostListeners(false)
+    }, 600)
+  }
+
   useEffect(() => {
     easterEggDismissRef.current = active ? handleDismiss : null
     easterEggActivateRef.current = !active ? activate : null
+    easterEggClearGhostsRef.current = ghostPositions ? clearGhosts : null
   })
 
   useEffect(() => () => {
     easterEggDismissRef.current = null
     easterEggActivateRef.current = null
+    easterEggClearGhostsRef.current = null
   }, [])
 
   return (
     <>
       {ghostPositions && (
-        <div className="fixed inset-0 z-[2] pointer-events-none">
+        <div
+          className="fixed inset-0 z-[2] pointer-events-none"
+          style={{
+            opacity: ghostFading ? 0 : 1,
+            transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',
+          }}
+        >
           {stickers.map((s, i) => (
             <div
               key={s.id}
