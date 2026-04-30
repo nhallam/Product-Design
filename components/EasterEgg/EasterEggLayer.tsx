@@ -9,6 +9,7 @@ import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
 import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
+import PizzaSticker from './stickers/PizzaSticker'
 
 interface EasterEggLayerProps {
   active: boolean
@@ -67,6 +68,13 @@ const stickers = [
         <img src="/NYC_Love.svg" alt="NYC Love" draggable={false} className="w-36 h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.1))]" />
       </div>
     ),
+  },
+  {
+    id: 'pizza',
+    w: 130, h: 145,
+    rotation: 8,
+    delay: 0.42,
+    content: <PizzaSticker />,
   },
 ]
 
