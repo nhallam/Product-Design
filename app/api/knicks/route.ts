@@ -1,6 +1,7 @@
 interface ESPNTeam {
   id?: string
   abbreviation?: string
+  displayName?: string
   logo?: string
   color?: string
   alternateColor?: string
@@ -14,6 +15,7 @@ interface ESPNScore {
 interface ESPNCompetitor {
   team?: ESPNTeam
   score?: number | string | ESPNScore
+  homeAway?: string
 }
 
 interface ESPNStatusType {
@@ -30,6 +32,7 @@ interface ESPNStatus {
 }
 
 interface ESPNEvent {
+  date?: string
   competitions?: Array<{
     competitors?: ESPNCompetitor[]
     status?: ESPNStatus
@@ -43,20 +46,32 @@ const SCHEDULE = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/t
 
 export const revalidate = 30
 
-export interface KnicksData {
-  status: 'live' | 'final' | 'unknown'
-  knicksScore: number
-  knicksAbbrev: string
-  knicksLogo: string
-  knicksColor: string
-  oppScore: number
-  oppAbbrev: string
-  oppLogo: string
-  oppColor: string
-  period: number
-  clock: string
-  isOT: boolean
-}
+export type KnicksData =
+  | {
+      status: 'live' | 'final'
+      knicksScore: number
+      knicksAbbrev: string
+      knicksLogo: string
+      knicksColor: string
+      oppScore: number
+      oppAbbrev: string
+      oppLogo: string
+      oppColor: string
+      period: number
+      clock: string
+      isOT: boolean
+    }
+  | {
+      status: 'upcoming'
+      gameTime: string
+      isHome: boolean
+      oppAbbrev: string
+      oppDisplayName: string
+      oppLogo: string
+      oppColor: string
+      knicksLogo: string
+    }
+  | { status: 'unknown' }
 
 function isKnicksGame(event: ESPNEvent): boolean {
   return event.competitions?.[0]?.competitors?.some(
@@ -107,7 +122,7 @@ function parseGame(event: ESPNEvent): KnicksData {
     period,
     clock: status.displayClock ?? status.clock ?? '',
     isOT: period > 4,
-  }
+  } as KnicksData
 }
 
 export async function GET() {
@@ -126,18 +141,32 @@ export async function GET() {
     const schRes = await fetch(SCHEDULE, { next: { revalidate: 300 } })
     const sch = await schRes.json()
 
-    const completed = [...(sch.events ?? [])]
-      .reverse()
-      .find((e: ESPNEvent) => {
-        const s = e.status ?? e.competitions?.[0]?.status ?? {}
-        const t = s.type ?? {}
-        return t.completed === true || t.state === 'post' || t.name === 'STATUS_FINAL'
-      })
+    const upcoming = (sch.events ?? []).find((e: ESPNEvent) => {
+      const s = e.status ?? e.competitions?.[0]?.status ?? {}
+      const t = s.type ?? {}
+      return t.state === 'pre' || t.name === 'STATUS_SCHEDULED'
+    })
 
-    if (!completed) return Response.json({ status: 'unknown' })
+    if (upcoming) {
+      const comp = upcoming.competitions?.[0] ?? {}
+      const competitors: ESPNCompetitor[] = comp.competitors ?? []
+      const opp = competitors.find((c: ESPNCompetitor) => c.team?.id !== KNICKS_ID)
+      const knicksComp = competitors.find((c: ESPNCompetitor) => c.team?.id === KNICKS_ID)
 
-    return Response.json(parseGame(completed))
+      return Response.json({
+        status: 'upcoming',
+        gameTime: upcoming.date,
+        isHome: knicksComp?.homeAway === 'home',
+        oppAbbrev: opp?.team?.abbreviation ?? '???',
+        oppDisplayName: opp?.team?.displayName ?? opp?.team?.abbreviation ?? '???',
+        oppLogo: makeLogo(opp?.team),
+        oppColor: opp?.team?.color ?? '888888',
+        knicksLogo: makeLogo(knicksComp?.team),
+      } satisfies KnicksData)
+    }
+
+    return Response.json({ status: 'unknown' } satisfies KnicksData)
   } catch {
-    return Response.json({ status: 'unknown' })
+    return Response.json({ status: 'unknown' } satisfies KnicksData)
   }
 }
