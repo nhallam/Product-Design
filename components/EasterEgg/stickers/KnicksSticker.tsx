@@ -52,7 +52,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
   )
 }
 
-export default function KnicksSticker() {
+export default function KnicksSticker({ ghost = false }: { ghost?: boolean }) {
   const [state, setState] = useState<State>({ status: 'loading' })
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimeLeft>>(null)
 
@@ -70,9 +70,10 @@ export default function KnicksSticker() {
     }
 
     fetchData()
+    if (ghost) return
     const poll = setInterval(fetchData, 30000)
     return () => clearInterval(poll)
-  }, [])
+  }, [ghost])
 
   useEffect(() => {
     if (state.status !== 'upcoming') return
