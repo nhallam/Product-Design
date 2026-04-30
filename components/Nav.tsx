@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useRef } from 'react'
 import { usePathname } from 'next/navigation'
+import { easterEggDismissRef } from './EasterEgg/EasterEggLayer'
 
 const CHARS = 'abcdefghijklmnopqrstuvwxyz.'
 
@@ -51,7 +52,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
       ) : (
         <Link
           href="/"
-          onClick={() => { if (menuOpen) onToggle() }}
+          onClick={() => { easterEggDismissRef.current?.(); if (menuOpen) onToggle() }}
           onMouseEnter={() => scrambleTo('nhallam.design')}
           onMouseLeave={() => scrambleTo('Nick Hallam')}
           onTouchStart={() => scrambleTo('nhallam.design')}

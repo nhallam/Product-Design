@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { easterEggDismissRef } from './EasterEgg/EasterEggLayer'
 
 interface MenuProps {
   open: boolean
@@ -50,7 +51,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               <Link
                 key={href}
                 href={href}
-                onClick={onClose}
+                onClick={() => { easterEggDismissRef.current?.(); onClose() }}
                 className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
               >
                 {label}
