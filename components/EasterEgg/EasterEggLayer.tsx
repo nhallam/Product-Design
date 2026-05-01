@@ -53,6 +53,15 @@ const stickers = [
     ),
   },
   { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
+  {
+    id: 'anti', w: 160, h: 156, rotation: -5, delay: 0.49,
+    content: (
+      <div className="p-2 w-[160px] flex items-center justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/anti.svg" alt="Anti" draggable={false} className="w-full h-auto pointer-events-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.15))]" />
+      </div>
+    ),
+  },
 ]
 
 const GAP = 20

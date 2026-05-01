@@ -43,6 +43,7 @@ interface ESPNEvent {
 const KNICKS_ID = '18'
 const SCOREBOARD = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard'
 const SCHEDULE = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${KNICKS_ID}/schedule`
+const SCHEDULE_PLAYOFFS = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${KNICKS_ID}/schedule?seasontype=3`
 
 export const revalidate = 30
 
@@ -138,14 +139,21 @@ export async function GET() {
       }
     }
 
-    const schRes = await fetch(SCHEDULE, { next: { revalidate: 300 } })
-    const sch = await schRes.json()
-
-    const upcoming = (sch.events ?? []).find((e: ESPNEvent) => {
+    const findUpcoming = (events: ESPNEvent[]) => events.find((e: ESPNEvent) => {
       const s = e.status ?? e.competitions?.[0]?.status ?? {}
       const t = s.type ?? {}
       return t.state === 'pre' || t.name === 'STATUS_SCHEDULED'
     })
+
+    const schRes = await fetch(SCHEDULE, { next: { revalidate: 300 } })
+    const sch = await schRes.json()
+    let upcoming = findUpcoming(sch.events ?? [])
+
+    if (!upcoming) {
+      const playoffRes = await fetch(SCHEDULE_PLAYOFFS, { next: { revalidate: 300 } })
+      const playoff = await playoffRes.json()
+      upcoming = findUpcoming(playoff.events ?? [])
+    }
 
     if (upcoming) {
       const comp = upcoming.competitions?.[0] ?? {}
@@ -155,7 +163,7 @@ export async function GET() {
 
       return Response.json({
         status: 'upcoming',
-        gameTime: upcoming.date,
+        gameTime: upcoming.date ?? '',
         isHome: knicksComp?.homeAway === 'home',
         oppAbbrev: opp?.team?.abbreviation ?? '???',
         oppDisplayName: opp?.team?.displayName ?? opp?.team?.abbreviation ?? '???',

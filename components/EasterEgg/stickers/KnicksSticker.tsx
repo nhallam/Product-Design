@@ -89,7 +89,7 @@ export default function KnicksSticker({ ghost = false }: { ghost?: boolean }) {
         <div className="text-3xl mb-2">🏀</div>
         <div className="text-base font-bold text-[#1C1C1C]">Knicks</div>
         <div className="text-sm text-[#1C1C1C]/50 mt-0.5">
-          {state.status === 'loading' ? 'Loading...' : 'No data'}
+          {state.status === 'loading' ? 'Loading...' : 'No games scheduled'}
         </div>
       </div>
     )
