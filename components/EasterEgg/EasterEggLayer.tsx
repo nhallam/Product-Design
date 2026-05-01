@@ -122,21 +122,22 @@ export default function EasterEggLayer() {
   const [draggingId, setDraggingId] = useState<string | null>(null)
   const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
   const binRef = useRef<HTMLDivElement>(null)
+  const livePositionsRef = useRef<Record<string, { x: number; y: number }>>({})
 
   const activate = () => {
     setGhostPositions(null)
     setGhostFading(false)
     notifyGhostListeners(false)
     setDeletedIds(new Set())
-    setLayerState({
-      positions: generatePositions(window.innerWidth, window.innerHeight),
-      isDismissing: false,
-    })
+    const positions = generatePositions(window.innerWidth, window.innerHeight)
+    stickers.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
+    setLayerState({ positions, isDismissing: false })
     setActive(true)
   }
 
   const handleDismiss = () => {
-    setGhostPositions([...layerState.positions])
+    const ghostPos = stickers.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
+    setGhostPositions(ghostPos)
     notifyGhostListeners(true)
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
@@ -207,6 +208,7 @@ export default function EasterEggLayer() {
                 rotation={s.rotation}
                 delay={s.delay}
                 isDismissing={layerState.isDismissing}
+                onPositionChange={(x, y) => { livePositionsRef.current[s.id] = { x, y } }}
                 onDragStart={() => setDraggingId(s.id)}
                 onDragEnd={(_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
                   setDraggingId(null)
