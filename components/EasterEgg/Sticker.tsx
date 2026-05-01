@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, PanInfo } from 'framer-motion'
+import { motion, useMotionValue, PanInfo } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface StickerProps {
@@ -12,9 +12,13 @@ interface StickerProps {
   isDismissing?: boolean
   onDragStart?: () => void
   onDragEnd?: (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void
+  onPositionChange?: (x: number, y: number) => void
 }
 
-export default function Sticker({ children, initialX, initialY, rotation = 0, delay = 0, isDismissing = false, onDragStart, onDragEnd }: StickerProps) {
+export default function Sticker({ children, initialX, initialY, rotation = 0, delay = 0, isDismissing = false, onDragStart, onDragEnd, onPositionChange }: StickerProps) {
+  const x = useMotionValue(initialX)
+  const y = useMotionValue(initialY)
+
   return (
     <motion.div
       drag={!isDismissing}
@@ -30,9 +34,10 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
         : { type: 'spring', stiffness: 350, damping: 18, delay }
       }
       whileDrag={{ scale: 1.06, cursor: 'grabbing' }}
-      style={{ x: initialX, y: initialY, position: 'absolute', touchAction: 'none' }}
+      style={{ x, y, position: 'absolute', touchAction: 'none' }}
       className="cursor-grab select-none pointer-events-auto"
       onDragStart={onDragStart}
+      onDrag={() => onPositionChange?.(x.get(), y.get())}
       onDragEnd={onDragEnd}
     >
       {children}
