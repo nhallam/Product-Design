@@ -163,7 +163,7 @@ export async function GET() {
 
       return Response.json({
         status: 'upcoming',
-        gameTime: upcoming.date,
+        gameTime: upcoming.date ?? '',
         isHome: knicksComp?.homeAway === 'home',
         oppAbbrev: opp?.team?.abbreviation ?? '???',
         oppDisplayName: opp?.team?.displayName ?? opp?.team?.abbreviation ?? '???',
