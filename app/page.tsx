@@ -22,8 +22,9 @@ export default function Home() {
       >
         This website started by me wondering if I could use a poster I own and my Crocs as inspiration for a new personal site. The two typefaces are American Grotesk Condensed by Klim and Inter by Rasmus Andersson. The whole site is built by Claude Code in about four days.
       </p>
-      <div className="flex justify-between items-baseline mt-8 pb-6 text-sm text-[#888]">
+      <div className="text-center mt-8 pb-6 text-sm text-[#888]">
         <span>Last updated {lastUpdated}</span>
+        <span className="mx-2">•</span>
         <a
           href="https://x.com/nhallam"
           target="_blank"
