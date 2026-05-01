@@ -27,7 +27,7 @@ export default function Writing() {
         ))}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-16">
         <NewsletterSignup />
       </div>
     </main>
