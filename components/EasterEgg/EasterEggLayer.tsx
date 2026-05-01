@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState, cloneElement, isValidElement, ReactElement } from 'react'
+import { useEffect, useRef, useState, cloneElement, isValidElement, ReactElement } from 'react'
+import { PanInfo } from 'framer-motion'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
@@ -118,11 +119,15 @@ export default function EasterEggLayer() {
   }>({ positions: [], isDismissing: false })
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
   const [ghostFading, setGhostFading] = useState(false)
+  const [draggingId, setDraggingId] = useState<string | null>(null)
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
+  const binRef = useRef<HTMLDivElement>(null)
 
   const activate = () => {
     setGhostPositions(null)
     setGhostFading(false)
     notifyGhostListeners(false)
+    setDeletedIds(new Set())
     setLayerState({
       positions: generatePositions(window.innerWidth, window.innerHeight),
       isDismissing: false,
@@ -191,20 +196,45 @@ export default function EasterEggLayer() {
 
       {active && layerState.positions.length > 0 && (
         <div className="fixed inset-0 z-[200] pointer-events-auto" onClick={handleDismiss}>
-          {stickers.map((s, i) => (
-            <Sticker
-              key={s.id}
-              initialX={layerState.positions[i].x}
-              initialY={layerState.positions[i].y}
-              rotation={s.rotation}
-              delay={s.delay}
-              isDismissing={layerState.isDismissing}
-            >
-              <div onClick={(e) => e.stopPropagation()}>
-                {s.content}
-              </div>
-            </Sticker>
-          ))}
+          {stickers
+            .map((s, i) => ({ ...s, position: layerState.positions[i] }))
+            .filter((s) => !deletedIds.has(s.id))
+            .map((s) => (
+              <Sticker
+                key={s.id}
+                initialX={s.position.x}
+                initialY={s.position.y}
+                rotation={s.rotation}
+                delay={s.delay}
+                isDismissing={layerState.isDismissing}
+                onDragStart={() => setDraggingId(s.id)}
+                onDragEnd={(_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+                  setDraggingId(null)
+                  if (binRef.current) {
+                    const bin = binRef.current.getBoundingClientRect()
+                    if (
+                      info.point.x >= bin.left && info.point.x <= bin.right &&
+                      info.point.y >= bin.top && info.point.y <= bin.bottom
+                    ) {
+                      setDeletedIds((prev) => new Set([...prev, s.id]))
+                    }
+                  }
+                }}
+              >
+                <div onClick={(e) => e.stopPropagation()}>
+                  {s.content}
+                </div>
+              </Sticker>
+            ))}
+
+          <div
+            ref={binRef}
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-[#1C1C1C] flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
+              draggingId && !layerState.isDismissing ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+            }`}
+          >
+            🗑
+          </div>
         </div>
       )}
     </>
