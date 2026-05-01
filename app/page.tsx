@@ -33,7 +33,7 @@ export default function Home() {
         </h1>
       </div>
       <p
-        className="text-center text-balance font-black pb-6 mt-[50dvh]"
+        className="text-center text-balance font-black pb-6 mt-[100dvh]"
         style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif", fontSize: '20px', lineHeight: '22px' }}
       >
         This website started by me wondering if I could use a poster I own and my Crocs as inspiration for a new personal site. The two typefaces are American Grotesk Condensed by Klim and Inter by Rasmus Andersson. The whole site is built by Claude Code in about four days.
