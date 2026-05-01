@@ -69,7 +69,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                 onClose()
                 setTimeout(() => easterEggClearGhostsRef.current?.(), 150)
               }}
-              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left mb-2"
+              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left"
             >
               Clean up the stickers 🍕
             </button>
