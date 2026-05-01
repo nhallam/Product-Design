@@ -71,7 +71,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               }}
               className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left mb-2"
             >
-              🍕 Clean up the stickers
+              Clean up the stickers 🍕
             </button>
           )}
           {socialLinks.map(({ href, label, hoverClass }) => (
