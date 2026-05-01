@@ -169,7 +169,7 @@ export default function EasterEggLayer() {
     <>
       {ghostPositions && (
         <div
-          className="fixed inset-0 z-[0] pointer-events-none"
+          className="fixed inset-0 z-[-1] pointer-events-none"
           style={{
             opacity: ghostFading ? 0 : 1,
             transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',

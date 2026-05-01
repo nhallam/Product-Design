@@ -11,7 +11,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <EasterEggLayer />
-      <div className="relative z-[1] max-w-2xl mx-auto min-h-[100dvh] flex flex-col">
+      <div className="relative max-w-2xl mx-auto min-h-[100dvh] flex flex-col">
         <Nav menuOpen={menuOpen} onToggle={() => setMenuOpen(!menuOpen)} />
         {children}
       </div>
