@@ -229,7 +229,7 @@ export default function EasterEggLayer() {
 
           <div
             ref={binRef}
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-[#1C1C1C] flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
               draggingId && !layerState.isDismissing ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
             }`}
           >
