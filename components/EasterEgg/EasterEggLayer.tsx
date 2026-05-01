@@ -181,7 +181,7 @@ export default function EasterEggLayer() {
       )}
 
       {active && layerState.positions.length > 0 && (
-        <div className="fixed inset-0 z-[200] pointer-events-none">
+        <div className="fixed inset-0 z-[200] pointer-events-auto" onClick={handleDismiss}>
           {stickers.map((s, i) => (
             <Sticker
               key={s.id}
@@ -191,18 +191,11 @@ export default function EasterEggLayer() {
               delay={s.delay}
               isDismissing={layerState.isDismissing}
             >
-              <div className="pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+              <div onClick={(e) => e.stopPropagation()}>
                 {s.content}
               </div>
             </Sticker>
           ))}
-
-          <button
-            onClick={handleDismiss}
-            className={`pointer-events-auto fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-2 bg-[#1C1C1C] text-white text-sm rounded-full shadow-lg hover:bg-[#333] transition-opacity duration-300 ease-in-out ${layerState.isDismissing ? 'opacity-0' : 'opacity-100'}`}
-          >
-            Get outta here!
-          </button>
         </div>
       )}
     </>
