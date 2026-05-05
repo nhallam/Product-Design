@@ -14,9 +14,18 @@ export default function Home() {
   const lastUpdated = `${day} ${month}, ${year}`
 
   return (
-    <main className="flex flex-col px-6 pb-6">
-      <HomeHero />
-      <div className="h-[100dvh] mt-[100dvh] flex flex-col items-center justify-center gap-8 pb-6">
+    <main className="flex flex-col px-6">
+      <section
+        className="h-[100dvh] flex items-center"
+        style={{ scrollSnapAlign: 'start' }}
+      >
+        <HomeHero />
+      </section>
+
+      <section
+        className="h-[100dvh] flex flex-col items-center justify-center gap-8 pb-6"
+        style={{ scrollSnapAlign: 'start' }}
+      >
         <p
           className="text-center text-balance font-black"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif", fontSize: '20px', lineHeight: '22px' }}
@@ -41,7 +50,7 @@ export default function Home() {
             Designed by @nhallam
           </a>
         </div>
-      </div>
+      </section>
     </main>
   )
 }
