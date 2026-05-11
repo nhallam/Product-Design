@@ -17,8 +17,19 @@ export default function HomeHero() {
   }, [])
 
   useEffect(() => {
-    document.documentElement.style.scrollSnapType = 'y mandatory'
-    return () => { document.documentElement.style.scrollSnapType = '' }
+    const applySnap = () => {
+      if (window.innerWidth >= 768) {
+        document.documentElement.style.scrollSnapType = 'y mandatory'
+      } else {
+        document.documentElement.style.scrollSnapType = ''
+      }
+    }
+    applySnap()
+    window.addEventListener('resize', applySnap)
+    return () => {
+      window.removeEventListener('resize', applySnap)
+      document.documentElement.style.scrollSnapType = ''
+    }
   }, [])
 
   return (
