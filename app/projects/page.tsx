@@ -1,12 +1,12 @@
 import ProjectCard from '@/components/ProjectCard'
 
 const projects = [
-  { slug: 'project-one', title: 'Project One', image: '/project-one.jpg' },
-  { slug: 'project-two', title: 'Project Two', image: '/project-one.jpg' },
-  { slug: 'project-three', title: 'Project Three', image: '/project-one.jpg' },
-  { slug: 'project-four', title: 'Project Four', image: '/project-one.jpg' },
-  { slug: 'project-five', title: 'Project Five', image: '/project-one.jpg' },
-  { slug: 'project-six', title: 'Project Six', image: '/project-one.jpg' },
+  { slug: 'halo', title: 'Halo', description: 'In-vehicle experience for an autonomous car platform', image: '/project-one.jpg' },
+  { slug: 'cecil', title: 'Cecil', description: 'AI-powered home management app', image: '/project-one.jpg' },
+  { slug: 'convo', title: 'Convo', description: 'Enterprise communication platform redesign', image: '/project-one.jpg' },
+  { slug: 'worksafe', title: 'WorkSafe Victoria', description: 'Government safety reporting platform', image: '/project-one.jpg' },
+  { slug: 'tiller', title: 'Tiller', description: 'Minimal device for tracking your day', image: '/project-one.jpg' },
+  { slug: 'beautiful-function', title: 'Beautiful Function', description: 'Design studio identity and client work', image: '/project-one.jpg' },
 ]
 
 export default function Projects() {
