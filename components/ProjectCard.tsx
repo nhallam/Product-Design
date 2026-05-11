@@ -5,12 +5,13 @@ import { ViewTransition } from 'react'
 interface ProjectCardProps {
   slug: string
   title: string
+  description: string
   image: string
 }
 
-export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, description, image }: ProjectCardProps) {
   return (
-    <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block">
+    <Link href={`/projects/${slug}`} transitionTypes={['nav-forward']} className="block group">
       <ViewTransition name={`project-image-${slug}`} share="morph">
         <div className="relative w-full h-[200px] rounded-sm overflow-hidden">
           <Image
@@ -21,6 +22,10 @@ export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
           />
         </div>
       </ViewTransition>
+      <div className="mt-3 flex justify-between items-baseline gap-6">
+        <span className="text-base font-medium text-[#1C1C1C] group-hover:text-[#555] transition-colors">{title}</span>
+        <span className="text-sm text-[#888] shrink-0">{description}</span>
+      </div>
     </Link>
   )
 }
