@@ -40,9 +40,15 @@ export default function HomeHero() {
       A product designer and founder based in{' '}
       <button
         onClick={() => easterEggActivateRef.current?.()}
-        className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
+        className="group relative inline-block underline underline-offset-4 hover:text-[#555] transition-colors"
       >
-        Brooklyn, NY.
+        <span
+          aria-hidden="true"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full group-hover:translate-y-[60%] transition-transform duration-500 ease-out text-4xl pointer-events-none select-none z-[0]"
+        >
+          🗽
+        </span>
+        <span className={`relative z-[1]${shimmer ? ' shimmer' : ''}`}>Brooklyn, NY.</span>
       </button>
     </h1>
   )
