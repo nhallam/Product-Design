@@ -5,7 +5,7 @@
   src: url('./fonts/TestAmericanGroteskCondensed-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 body {
