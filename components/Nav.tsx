@@ -42,12 +42,17 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
   const { text, scrambleTo } = useScramble('Nick Hallam')
   const pathname = usePathname()
   const isArticle = pathname.startsWith('/writing/') && pathname !== '/writing/'
+  const isProject = pathname.startsWith('/projects/') && pathname !== '/projects/'
 
   return (
     <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4" style={{ viewTransitionName: 'site-nav' }}>
       {isArticle ? (
         <Link href="/writing" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
           ← All writing
+        </Link>
+      ) : isProject ? (
+        <Link href="/projects" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+          ← All projects
         </Link>
       ) : (
         <Link
@@ -62,7 +67,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
           {text}
         </Link>
       )}
-      {!isArticle && (
+      {!isArticle && !isProject && (
         <button
           onClick={() => { easterEggDismissRef.current?.(); onToggle() }}
           className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
