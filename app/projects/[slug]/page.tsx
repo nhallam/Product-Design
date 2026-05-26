@@ -1,10 +1,22 @@
 import Image from 'next/image'
 
-const projectData: Record<string, { title: string; tag: string; image: string }> = {
+type ProjectData = {
+  title: string
+  tag: string
+  image?: string
+  vimeoId?: string
+}
+
+const projectData: Record<string, ProjectData> = {
   'project-one': {
     title: 'Project One',
     tag: 'Design',
     image: '/project-one.jpg',
+  },
+  'tiller': {
+    title: 'Tiller',
+    tag: 'Product Design',
+    vimeoId: '1195689621',
   },
 }
 
@@ -18,15 +30,22 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="pb-20 -mt-16">
-      <div className="relative w-full h-[calc(60vh+4rem)]">
-        {project?.image && (
+      <div className="relative w-full h-[calc(60vh+4rem)] overflow-hidden">
+        {project?.vimeoId ? (
+          <iframe
+            src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
+            className="absolute inset-0 w-full h-full"
+            allow="autoplay; fullscreen"
+            style={{ border: 'none' }}
+          />
+        ) : project?.image ? (
           <Image
             src={project.image}
             alt={project?.title ?? slug}
             fill
             className="object-cover"
           />
-        )}
+        ) : null}
       </div>
 
       <div className="px-6 mt-10">
