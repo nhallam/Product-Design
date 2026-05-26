@@ -40,7 +40,8 @@ export default function HomeHero() {
       A product designer and founder based in{' '}
       <button
         onClick={() => easterEggActivateRef.current?.()}
-        className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
+        className={`inline-block bg-[#1C1C1C] text-white px-2 py-0.5 transition-opacity hover:opacity-75 ${shimmer ? 'shimmer' : ''}`}
+        style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 700 }}
       >
         Brooklyn, NY.
       </button>
