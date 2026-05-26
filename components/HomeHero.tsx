@@ -34,14 +34,13 @@ export default function HomeHero() {
 
   return (
     <h1
-      className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance"
+      className="text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
       style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
     >
       A product designer and founder based in{' '}
       <button
         onClick={() => easterEggActivateRef.current?.()}
-        className={`inline-block bg-[#1C1C1C] text-white px-2 py-0.5 transition-opacity hover:opacity-75 ${shimmer ? 'shimmer' : ''}`}
-        style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", fontWeight: 700 }}
+        className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
       >
         Brooklyn, NY.
       </button>
