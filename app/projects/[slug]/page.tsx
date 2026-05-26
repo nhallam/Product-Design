@@ -18,6 +18,11 @@ const projectData: Record<string, ProjectData> = {
     tag: 'Product Design',
     vimeoId: '1195689621',
   },
+  'gumroad': {
+    title: 'Tipping on Gumroad',
+    tag: 'Product Design',
+    image: '/Gumroad_01.svg',
+  },
 }
 
 interface Props {
