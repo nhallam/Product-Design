@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { ViewTransition } from 'react'
 
 const projectData: Record<string, { title: string; tag: string; image: string }> = {
   'project-one': {
@@ -19,18 +18,16 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="pb-20 -mt-16">
-      <ViewTransition name={`project-image-${slug}`} share="morph">
-        <div className="relative w-full h-[calc(60vh+4rem)]">
-          {project?.image && (
-            <Image
-              src={project.image}
-              alt={project?.title ?? slug}
-              fill
-              className="object-cover"
-            />
-          )}
-        </div>
-      </ViewTransition>
+      <div className="relative w-full h-[calc(60vh+4rem)]">
+        {project?.image && (
+          <Image
+            src={project.image}
+            alt={project?.title ?? slug}
+            fill
+            className="object-cover"
+          />
+        )}
+      </div>
 
       <div className="px-6 mt-10">
         <p className="text-sm text-[#888] mb-2">{project?.tag}</p>
