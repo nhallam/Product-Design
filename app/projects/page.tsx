@@ -1,6 +1,7 @@
 import ProjectCard from '@/components/ProjectCard'
 
 const projects = [
+  { slug: 'gumroad', title: 'Tipping on Gumroad', description: 'Tipping feature design for Gumroad', image: '/Gumroad_01.svg' },
   { slug: 'halo', title: 'Halo', description: 'In-vehicle experience for an autonomous car platform', image: '/project-one.jpg' },
   { slug: 'cecil', title: 'Cecil', description: 'AI-powered home management app', image: '/project-one.jpg' },
   { slug: 'convo', title: 'Convo', description: 'Enterprise communication platform redesign', image: '/project-one.jpg' },
