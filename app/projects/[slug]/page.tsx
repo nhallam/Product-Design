@@ -29,8 +29,8 @@ export default async function ProjectPage({ params }: Props) {
   const project = projectData[slug]
 
   return (
-    <main className="pb-20 -mt-16">
-      <div className="relative w-full h-[calc(60vh+4rem)] overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
+    <main className="pb-20">
+      <div className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
         {project?.vimeoId ? (
           <iframe
             src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
