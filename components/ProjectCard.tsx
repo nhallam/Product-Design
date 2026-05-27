@@ -4,11 +4,10 @@ import Image from 'next/image'
 interface ProjectCardProps {
   slug: string
   title: string
-  description: string
   image: string
 }
 
-export default function ProjectCard({ slug, title, description, image }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="block group">
       <div className="relative w-full h-[400px] rounded-sm overflow-hidden">
@@ -19,9 +18,8 @@ export default function ProjectCard({ slug, title, description, image }: Project
           className="object-cover"
         />
       </div>
-      <div className="mt-3 flex justify-between items-baseline gap-6">
+      <div className="mt-3">
         <span className="text-base font-medium text-[#1C1C1C] group-hover:text-[#555] transition-colors">{title}</span>
-        <span className="text-sm text-[#888] shrink-0">{description}</span>
       </div>
     </Link>
   )
