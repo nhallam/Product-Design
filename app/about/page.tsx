@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function About() {
   return (
@@ -14,6 +15,9 @@ export default function About() {
         </p>
         <p>
           Currently, I lead design at <a href="https://www.beautifulfunction.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Beautiful Function</a>. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also build a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, <a href="http://www.sexdrugshelvetica.com/melbourne/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Sex, Drugs &amp; Helvetica</a>.
+        </p>
+        <p>
+          I <a href="https://www.discogs.com/user/nick_hallam/collection" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">collect records</a>, DJ in the city and put out <a href="https://soundcloud.com/nhallam" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">mixes</a> with each of my <Link href="/writing#newsletter" className="underline underline-offset-2 hover:text-[#555] transition-colors">newsletters</Link>.
         </p>
       </div>
       <div className="flex justify-center mt-16">
