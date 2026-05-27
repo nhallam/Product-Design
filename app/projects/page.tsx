@@ -2,12 +2,12 @@ import ProjectCard from '@/components/ProjectCard'
 
 const projects = [
   { slug: 'gumroad', title: 'Tipping on Gumroad', image: '/Gumroad_01.svg' },
-  { slug: 'tiller', title: 'Tiller', image: '/project-one.jpg', comingSoon: true },
-  { slug: 'tiller-onboarding', title: 'Tiller, onboarding', image: '/project-one.jpg', comingSoon: true },
-  { slug: 'halo', title: 'Halo', image: '/project-one.jpg', comingSoon: true },
-  { slug: 'rea', title: 'REA, inspection booking', image: '/project-one.jpg', comingSoon: true },
-  { slug: 'wsv', title: 'WSV, design system', image: '/project-one.jpg', comingSoon: true },
-  { slug: 'ai-experiments', title: 'AI Experiments', image: '/project-one.jpg', comingSoon: true },
+  { slug: 'tiller', title: 'Tiller', image: '/project-one.jpg' },
+  { slug: 'tiller-onboarding', title: 'Tiller, onboarding', comingSoon: true },
+  { slug: 'halo', title: 'Halo', comingSoon: true },
+  { slug: 'rea', title: 'REA, inspection booking', comingSoon: true },
+  { slug: 'wsv', title: 'WSV, design system', comingSoon: true },
+  { slug: 'ai-experiments', title: 'AI Experiments', comingSoon: true },
 ]
 
 export default function Projects() {
