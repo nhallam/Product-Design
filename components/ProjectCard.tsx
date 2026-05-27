@@ -4,7 +4,7 @@ import Image from 'next/image'
 interface ProjectCardProps {
   slug: string
   title: string
-  image: string
+  image?: string
   comingSoon?: boolean
 }
 
@@ -12,18 +12,16 @@ export default function ProjectCard({ slug, title, image, comingSoon }: ProjectC
   const inner = (
     <>
       <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover"
-        />
+        {image && !comingSoon ? (
+          <Image src={image} alt={title} fill className="object-cover" />
+        ) : (
+          <div className="w-full h-full bg-[#E0E0E0]" />
+        )}
       </div>
-      <div className="mt-3 mb-[50px] flex items-baseline gap-3">
-        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[#888]' : 'text-[#1C1C1C] group-hover:text-[#555]'}`}>
+      <div className="mt-3 mb-[50px]">
+        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[#aaa]' : 'text-[#1C1C1C] group-hover:text-[#555]'}`}>
           {title}
         </span>
-        {comingSoon && <span className="text-sm text-[#aaa]">Coming soon</span>}
       </div>
     </>
   )
