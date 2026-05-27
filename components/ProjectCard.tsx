@@ -10,7 +10,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="block group">
-      <div className="relative w-full h-[400px] rounded-sm overflow-hidden">
+      <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
         <Image
           src={image}
           alt={title}
