@@ -10,7 +10,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="block group">
-      <div className="relative w-full h-[400px] rounded-sm overflow-hidden">
+      <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
         <Image
           src={image}
           alt={title}
@@ -18,7 +18,7 @@ export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
           className="object-cover"
         />
       </div>
-      <div className="mt-3">
+      <div className="mt-3 mb-[50px]">
         <span className="text-base font-medium text-[#1C1C1C] group-hover:text-[#555] transition-colors">{title}</span>
       </div>
     </Link>
