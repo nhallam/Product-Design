@@ -4,7 +4,7 @@ export default function About() {
   return (
     <main className="flex-1 flex flex-col px-6 pb-6">
       <div className="pt-[28vh]">
-        <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
+        <h1 className="text-[2.75rem] font-black leading-[1.1] w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </h1>
       </div>
@@ -13,7 +13,7 @@ export default function About() {
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </p>
         <p>
-          Currently, I lead design at Beautiful Function. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also build a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, Sex, Drugs &amp; Helvetica.
+          Currently, I lead design at <a href="https://www.beautifulfunction.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Beautiful Function</a>. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also build a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, <a href="http://www.sexdrugshelvetica.com/melbourne/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Sex, Drugs &amp; Helvetica</a>.
         </p>
       </div>
       <div className="flex justify-center mt-16">
