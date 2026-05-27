@@ -30,7 +30,7 @@ export default function NewsletterSignup() {
   }
 
   return (
-    <div className="py-10 border-t border-[#E0E0E0]">
+    <div className="py-10">
       <h2
         className="text-[2.75rem] font-black leading-[1] mb-6"
         style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
