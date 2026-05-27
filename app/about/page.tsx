@@ -10,17 +10,10 @@ export default function About() {
       </div>
       <div className="mt-[20vh] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>
-          I&apos;m a product designer and founder living in Brooklyn, NY. I care about building
-          products that are simple, useful, and crafted with intention.
+          I&apos;m a product designer and founder living in Brooklyn, NY.
         </p>
         <p>
-          Previously I&apos;ve led design at early-stage startups and worked across consumer, SaaS,
-          and AI products. I&apos;m currently exploring new ideas at the intersection of design and
-          technology.
-        </p>
-        <p>
-          When I&apos;m not designing I&apos;m writing, building, or walking around the city looking
-          for good coffee.
+          Currently, I lead design at Beautiful Function. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also build a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, Sex, Drugs &amp; Helvetica.
         </p>
       </div>
       <div className="flex justify-center mt-16">
