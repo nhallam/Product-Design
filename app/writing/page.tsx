@@ -7,7 +7,7 @@ export default function Writing() {
     <main className="flex-1 flex flex-col px-6 pb-6">
       <div className="pt-[28vh]">
         <h1
-          className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center"
+          className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
         >
           A selection of blog posts from over the years.
@@ -27,7 +27,7 @@ export default function Writing() {
         ))}
       </div>
 
-      <div id="newsletter">
+      <div id="newsletter" className="mt-[100px]">
         <NewsletterSignup />
       </div>
     </main>
