@@ -5,11 +5,12 @@ interface ProjectCardProps {
   slug: string
   title: string
   image: string
+  comingSoon?: boolean
 }
 
-export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
-  return (
-    <Link href={`/projects/${slug}`} className="block group">
+export default function ProjectCard({ slug, title, image, comingSoon }: ProjectCardProps) {
+  const inner = (
+    <>
       <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
         <Image
           src={image}
@@ -18,9 +19,22 @@ export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
           className="object-cover"
         />
       </div>
-      <div className="mt-3 mb-[50px]">
-        <span className="text-base font-medium text-[#1C1C1C] group-hover:text-[#555] transition-colors">{title}</span>
+      <div className="mt-3 mb-[50px] flex items-baseline gap-3">
+        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[#888]' : 'text-[#1C1C1C] group-hover:text-[#555]'}`}>
+          {title}
+        </span>
+        {comingSoon && <span className="text-sm text-[#aaa]">Coming soon</span>}
       </div>
+    </>
+  )
+
+  if (comingSoon) {
+    return <div>{inner}</div>
+  }
+
+  return (
+    <Link href={`/projects/${slug}`} className="block group">
+      {inner}
     </Link>
   )
 }
