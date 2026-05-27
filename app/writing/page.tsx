@@ -27,7 +27,9 @@ export default function Writing() {
         ))}
       </div>
 
-      <NewsletterSignup />
+      <div id="newsletter">
+        <NewsletterSignup />
+      </div>
     </main>
   )
 }
