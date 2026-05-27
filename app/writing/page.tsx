@@ -27,7 +27,7 @@ export default function Writing() {
         ))}
       </div>
 
-      <div id="newsletter" className="mt-[100px]">
+      <div id="newsletter" className="mt-[100px] border-t border-[#E0E0E0]">
         <NewsletterSignup />
       </div>
     </main>

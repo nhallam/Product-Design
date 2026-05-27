@@ -5,6 +5,7 @@ type ProjectData = {
   tag: string
   image?: string
   vimeoId?: string
+  body?: string
 }
 
 const projectData: Record<string, ProjectData> = {
@@ -17,6 +18,18 @@ const projectData: Record<string, ProjectData> = {
     title: 'Tiller',
     tag: 'Product Design',
     vimeoId: '1195689621',
+    body: `
+      <p>Tiller helped services businesses more accurately record where their time goes by using a combination of hardware and software. We came up with the idea for a 'button for time tracking' while sitting in the pub one day having lunch. We spent the next few years turning a sketch of the idea into a finished product that we funded on Kickstarter and shipped to thousands of customers around the world.</p>
+      <p>Our team of four did everything including branding, industrial design, interaction design, packaging, firmware, hardware, software design, development, pricing strategy, go-to-market.</p>
+      <p>The website is no longer live, but you can read more at the links below.</p>
+      <p>RIP Tiller, the most complex and beautiful project I've worked on and the work I'm most proud of.</p>
+      <ul>
+        <li><a href="https://www.kickstarter.com/projects/858670600/tillera-minimal-and-seamless-device-for-tracking-y" target="_blank" rel="noopener noreferrer">Kickstarter campaign</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">Verge coverage</a></li>
+        <li><a href="#" target="_blank" rel="noopener noreferrer">Core 77 coverage</a></li>
+        <li><a href="https://patents.google.com/patent/USD877149S1" target="_blank" rel="noopener noreferrer">Patent USD877149S1</a></li>
+      </ul>
+    `,
   },
   'tiller-onboarding': {
     title: 'Tiller, onboarding',
@@ -77,9 +90,19 @@ export default async function ProjectPage({ params }: Props) {
         <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mb-10" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           {project?.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
         </h1>
-        <div className="max-w-sm space-y-6 text-base leading-relaxed text-[#1C1C1C]">
-          <p>Project overview and description will go here.</p>
-        </div>
+        {project?.body ? (
+          <div
+            className="max-w-prose space-y-6 text-base leading-relaxed text-[#1C1C1C]
+              [&_p]:mb-5
+              [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2
+              [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-[#555] [&_a]:transition-colors"
+            dangerouslySetInnerHTML={{ __html: project.body }}
+          />
+        ) : (
+          <div className="max-w-prose text-base leading-relaxed text-[#1C1C1C]">
+            <p>Project overview and description will go here.</p>
+          </div>
+        )}
       </div>
     </main>
   )
