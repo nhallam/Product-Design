@@ -7,6 +7,7 @@ const projects = [
   { slug: 'halo', title: 'Halo', image: '/project-one.jpg' },
   { slug: 'rea', title: 'REA, inspection booking', image: '/project-one.jpg' },
   { slug: 'wsv', title: 'WSV, design system', image: '/project-one.jpg' },
+  { slug: 'ai-experiments', title: 'AI Experiments', image: '/project-one.jpg' },
 ]
 
 export default function Projects() {

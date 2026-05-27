@@ -38,6 +38,11 @@ const projectData: Record<string, ProjectData> = {
     tag: 'Product Design',
     image: '/project-one.jpg',
   },
+  'ai-experiments': {
+    title: 'AI Experiments',
+    tag: 'Product Design',
+    image: '/project-one.jpg',
+  },
 }
 
 interface Props {
