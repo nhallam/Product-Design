@@ -9,7 +9,7 @@ export default function About() {
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </h1>
       </div>
-      <div className="mt-[20vh] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
+      <div className="mt-[calc(20vh-50px)] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
         <p>
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </p>

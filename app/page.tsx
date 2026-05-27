@@ -36,7 +36,7 @@ export default function Home() {
           <a href="https://klim.co.nz/collections/american-grotesk/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">American Grotesk Condensed by Klim</a>
           {' '}and{' '}
           <a href="https://rsms.me/inter/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">Inter by Rasmus Andersson</a>
-          . The whole site is built by Claude Code in about four days.
+          .
         </p>
         <div className="text-center text-sm text-[#888]">
           <span>Last updated {lastUpdated}</span>
