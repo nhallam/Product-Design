@@ -18,7 +18,7 @@ export default function ProjectCard({ slug, title, image }: ProjectCardProps) {
           className="object-cover"
         />
       </div>
-      <div className="mt-3">
+      <div className="mt-3 mb-[50px]">
         <span className="text-base font-medium text-[#1C1C1C] group-hover:text-[#555] transition-colors">{title}</span>
       </div>
     </Link>
