@@ -8,20 +8,35 @@ type ProjectData = {
 }
 
 const projectData: Record<string, ProjectData> = {
-  'project-one': {
-    title: 'Project One',
-    tag: 'Design',
-    image: '/project-one.jpg',
+  'gumroad': {
+    title: 'Tipping on Gumroad',
+    tag: 'Product Design',
+    image: '/Gumroad_01.svg',
   },
   'tiller': {
     title: 'Tiller',
     tag: 'Product Design',
     vimeoId: '1195689621',
   },
-  'gumroad': {
-    title: 'Tipping on Gumroad',
+  'tiller-onboarding': {
+    title: 'Tiller, onboarding',
     tag: 'Product Design',
-    image: '/Gumroad_01.svg',
+    image: '/project-one.jpg',
+  },
+  'halo': {
+    title: 'Halo',
+    tag: 'Product Design',
+    image: '/project-one.jpg',
+  },
+  'rea': {
+    title: 'REA, inspection booking',
+    tag: 'Product Design',
+    image: '/project-one.jpg',
+  },
+  'wsv': {
+    title: 'WSV, design system',
+    tag: 'Product Design',
+    image: '/project-one.jpg',
   },
 }
 
