@@ -10,7 +10,7 @@ export default function Writing() {
           className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
         >
-          A selection of blog posts from over the years.
+          Blog Posts
         </h1>
       </div>
 

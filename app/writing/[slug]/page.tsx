@@ -11,7 +11,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     <main className="flex-1 flex flex-col px-6 pb-16">
       <div className="pt-[28vh]">
         <h1
-          className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 w-full text-center text-balance"
+          className="text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
         >
           {article.title}
