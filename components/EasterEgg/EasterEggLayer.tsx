@@ -229,6 +229,15 @@ export default function EasterEggLayer() {
               </Sticker>
             ))}
 
+          <button
+            onClick={(e) => { e.stopPropagation(); handleDismiss() }}
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
+              draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          >
+            Clear
+          </button>
+
           <div
             ref={binRef}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
