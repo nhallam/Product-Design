@@ -230,7 +230,7 @@ export default function EasterEggLayer() {
             ))}
 
           <button
-            onClick={(e) => { e.stopPropagation(); handleDismiss() }}
+            onClick={(e) => { e.stopPropagation(); handleDismiss(); clearGhosts() }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
               draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
