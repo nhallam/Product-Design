@@ -7,6 +7,7 @@ type ProjectData = {
   videoSrc?: string
   vimeoId?: string
   body?: string
+  images?: string[]
 }
 
 const projectData: Record<string, ProjectData> = {
@@ -15,6 +16,7 @@ const projectData: Record<string, ProjectData> = {
     tag: 'Product Design',
     image: '/Gumroad_01.svg',
     videoSrc: '/Gumroad_Tipping1.mp4',
+    images: ['/Gumroad_03.svg', '/Gumroad_04.svg', '/Gumroad_05.svg', '/Gumroad_06.svg', '/Gumroad_07.svg'],
     body: `<p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>`,
   },
   'tiller': {
@@ -126,6 +128,15 @@ export default async function ProjectPage({ params }: Props) {
               fill
               className="object-cover"
             />
+          </div>
+        )}
+        {project?.images && project.images.length > 0 && (
+          <div className="mt-10 flex flex-col gap-10">
+            {project.images.map((src, i) => (
+              <div key={i} className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
+                <Image src={src} alt={`${project.title} ${i + 3}`} fill className="object-cover" />
+              </div>
+            ))}
           </div>
         )}
       </div>
