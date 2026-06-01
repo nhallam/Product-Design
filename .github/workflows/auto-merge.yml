@@ -1,0 +1,30 @@
+name: Auto-merge on Vercel success
+
+on:
+  status:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: github.event.state == 'success' && github.event.context == 'Vercel'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge open PR for this commit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.sha }}
+        run: |
+          PR=$(gh pr list \
+               --repo "$GITHUB_REPOSITORY" \
+               --state open \
+               --json number,headRefOid \
+               --jq ".[] | select(.headRefOid == \"$SHA\") | .number")
+          if [ -n "$PR" ]; then
+            echo "Merging PR #$PR"
+            gh pr merge "$PR" --rebase --repo "$GITHUB_REPOSITORY"
+          else
+            echo "No open PR found for SHA $SHA"
+          fi
