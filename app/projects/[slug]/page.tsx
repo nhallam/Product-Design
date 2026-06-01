@@ -20,7 +20,7 @@ const projectData: Record<string, ProjectData> = {
     body: `<p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>`,
   },
   'tiller': {
-    title: 'Tiller',
+    title: 'Tiller, onboarding',
     tag: 'Product Design',
     vimeoId: '1195689621',
     body: `
@@ -42,7 +42,7 @@ const projectData: Record<string, ProjectData> = {
     `,
   },
   'tiller-onboarding': {
-    title: 'Tiller, onboarding',
+    title: 'Tiller',
     tag: 'Product Design',
     image: '/project-one.jpg',
   },
@@ -78,18 +78,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="pb-20">
-      {project?.vimeoId && (
-        <div className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
-          <iframe
-            src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
-            className="absolute inset-0 w-full h-full"
-            allow="autoplay; fullscreen"
-            style={{ border: 'none' }}
-          />
-        </div>
-      )}
-
-      <div className={`px-6 ${project?.vimeoId ? 'mt-10' : 'mt-0'}`}>
+      <div className="px-6">
         <h1 className="text-[2.75rem] font-black leading-[1.1] mb-10" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           {project?.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
         </h1>
@@ -106,6 +95,16 @@ export default async function ProjectPage({ params }: Props) {
         ) : (
           <div className="max-w-prose text-base leading-relaxed text-[#1C1C1C]">
             <p>Project overview and description will go here.</p>
+          </div>
+        )}
+        {project?.vimeoId && (
+          <div className="mt-10 relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
+            <iframe
+              src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; fullscreen"
+              style={{ border: 'none' }}
+            />
           </div>
         )}
         {project?.videoSrc && (
