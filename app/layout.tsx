@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SiteShell from "@/components/SiteShell";
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Nick Hallam — Product Designer",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="h-full">
       <body className="min-h-full">
         <SiteShell>{children}</SiteShell>
+        <Analytics />
       </body>
     </html>
   );
