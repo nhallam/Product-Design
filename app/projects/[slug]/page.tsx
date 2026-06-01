@@ -76,25 +76,18 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="pb-20">
-      <div className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
-        {project?.vimeoId ? (
+      {project?.vimeoId && (
+        <div className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
           <iframe
             src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
             className="absolute inset-0 w-full h-full"
             allow="autoplay; fullscreen"
             style={{ border: 'none' }}
           />
-        ) : project?.image ? (
-          <Image
-            src={project.image}
-            alt={project?.title ?? slug}
-            fill
-            className="object-cover"
-          />
-        ) : null}
-      </div>
+        </div>
+      )}
 
-      <div className="px-6 mt-10">
+      <div className={`px-6 ${project?.vimeoId ? 'mt-10' : 'mt-0'}`}>
         <h1 className="text-[2.75rem] font-black leading-[1.1] mb-10" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           {project?.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
         </h1>
@@ -122,6 +115,16 @@ export default async function ProjectPage({ params }: Props) {
               loop
               playsInline
               className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        {!project?.vimeoId && project?.image && (
+          <div className="mt-10 relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover"
             />
           </div>
         )}
