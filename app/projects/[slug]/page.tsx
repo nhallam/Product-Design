@@ -135,7 +135,7 @@ export default async function ProjectPage({ params }: Props) {
             <p className="text-base text-[#888]">Development work.</p>
             {project.images.map((src, i) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={i} src={src} alt={`${project.title} ${i + 3}`} className="w-[90%]" />
+              <img key={i} src={src} alt={`${project.title} ${i + 3}`} className="w-full" />
             ))}
           </div>
         )}
