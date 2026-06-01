@@ -92,7 +92,7 @@ export default async function ProjectPage({ params }: Props) {
       </div>
 
       <div className="px-6 mt-10">
-        <h1 className="text-[2.75rem] font-black leading-[1.1] underline underline-offset-4 mb-10" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
+        <h1 className="text-[2.75rem] font-black leading-[1.1] mb-10" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           {project?.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
         </h1>
         {project?.body ? (
