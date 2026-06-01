@@ -77,16 +77,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <main className="pb-20">
       <div className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
-        {project?.videoSrc ? (
-          <video
-            src={project.videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : project?.vimeoId ? (
+        {project?.vimeoId ? (
           <iframe
             src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
             className="absolute inset-0 w-full h-full"
@@ -120,6 +111,18 @@ export default async function ProjectPage({ params }: Props) {
         ) : (
           <div className="max-w-prose text-base leading-relaxed text-[#1C1C1C]">
             <p>Project overview and description will go here.</p>
+          </div>
+        )}
+        {project?.videoSrc && (
+          <div className="mt-10 w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
+            <video
+              src={project.videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            />
           </div>
         )}
       </div>
