@@ -132,10 +132,10 @@ export default async function ProjectPage({ params }: Props) {
         )}
         {project?.images && project.images.length > 0 && (
           <div className="mt-10 flex flex-col gap-10">
+            <p className="text-base text-[#888]">Development work.</p>
             {project.images.map((src, i) => (
-              <div key={i} className="relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
-                <Image src={src} alt={`${project.title} ${i + 3}`} fill className="object-cover" />
-              </div>
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={i} src={src} alt={`${project.title} ${i + 3}`} className="w-[90%] rounded-[10px]" />
             ))}
           </div>
         )}
