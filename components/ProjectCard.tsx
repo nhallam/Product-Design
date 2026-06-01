@@ -5,14 +5,17 @@ interface ProjectCardProps {
   slug: string
   title: string
   image?: string
+  video?: string
   comingSoon?: boolean
 }
 
-export default function ProjectCard({ slug, title, image, comingSoon }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, image, video, comingSoon }: ProjectCardProps) {
   const inner = (
     <>
       <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
-        {image && !comingSoon ? (
+        {video && !comingSoon ? (
+          <video src={video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+        ) : image && !comingSoon ? (
           <Image src={image} alt={title} fill className="object-cover" />
         ) : (
           <div className="w-full h-full bg-[#E0E0E0]" />

@@ -1,7 +1,7 @@
 import ProjectCard from '@/components/ProjectCard'
 
 const projects = [
-  { slug: 'gumroad', title: 'Tipping on Gumroad', image: '/Gumroad_01.svg' },
+  { slug: 'gumroad', title: 'Tipping on Gumroad', video: '/Gumroad_Tipping1.mp4' },
   { slug: 'tiller', title: 'Tiller', image: '/project-one.jpg' },
   { slug: 'tiller-onboarding', title: 'Tiller, onboarding', comingSoon: true },
   { slug: 'halo', title: 'Halo', comingSoon: true },
