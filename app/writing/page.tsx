@@ -19,7 +19,7 @@ export default function Writing() {
           <Link
             key={slug}
             href={`/writing/${slug}`}
-            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
+            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#FF59F3] transition-colors"
           >
             <span className="text-base font-medium text-[#1C1C1C]">{title}</span>
             <span className="text-sm text-[#888] shrink-0 ml-6">{date}</span>
