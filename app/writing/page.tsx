@@ -37,7 +37,7 @@ export default function Writing() {
             <span className="flex items-center gap-2">
                 <span className="text-base font-medium text-[#1C1C1C]">{title}</span>
                 {isNew(date) && (
-                  <span className="text-xs font-medium bg-[#1C1C1C] text-white px-2 py-0.5 rounded-full">New</span>
+                  <span className="text-xs font-medium bg-[#FF4DE7] text-white px-2 py-0.5 rounded-full">New</span>
                 )}
               </span>
             <span className="text-sm text-[#888] shrink-0 ml-6">{date}</span>
