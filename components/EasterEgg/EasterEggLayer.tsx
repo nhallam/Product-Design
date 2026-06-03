@@ -29,6 +29,7 @@ import BoomboxSticker from './stickers/BoomboxSticker'
 import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
 import PizzaSticker from './stickers/PizzaSticker'
+import KelloggsSticker from './stickers/KelloggsSticker'
 
 const stickers = [
   { id: 'weather', w: 200, h: 110, rotation: -4, delay: 0, content: <WeatherSticker /> },
@@ -54,8 +55,9 @@ const stickers = [
     ),
   },
   { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
+  { id: 'kelloggs', w: 220, h: 80, rotation: -3, delay: 0.49, content: <KelloggsSticker /> },
   {
-    id: 'anti', w: 160, h: 156, rotation: -5, delay: 0.49,
+    id: 'anti', w: 160, h: 156, rotation: -5, delay: 0.56,
     content: (
       <div className="p-2 w-[160px] flex items-center justify-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
