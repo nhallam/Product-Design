@@ -84,6 +84,21 @@ body {
   animation: text-shimmer 1.5s ease-in-out;
 }
 
+@keyframes light-flicker {
+  0%, 16%, 18%, 20%, 60%, 62%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 30px rgba(180,200,255,0.5);
+  }
+  17%, 19%, 61% {
+    opacity: 0.15;
+    box-shadow: none;
+  }
+}
+
+.light-flicker {
+  animation: light-flicker 5s infinite;
+}
+
 @layer base {
   a {
     color: inherit;
