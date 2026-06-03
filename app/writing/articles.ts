@@ -1,6 +1,11 @@
 export type Article = { title: string; date: string; body: string }
 
 export const articles: Record<string, Article> = {
+  'ai-product-experiments': {
+    title: 'AI Product Experiments',
+    date: 'Jun 2026',
+    body: `<p>I've been spinning up a few different product experiments lately that I wanted to share. As I move through each week, I often find a problem where I ask, doesn't this already have a solution or can I build something for it?</p><p>So here are a few things that I've been hacking away on.</p><h2>Splity</h2><p>A couple recently moved into the spare room in my apartment and we fairly quickly realised that we should be using Splitwise to keep track of the bills and house purchases. By design, Splitwise doesn't let you add more than a few expenses a day which is a great way to get everyone to pay for it. So I wondered if I could build our own bill recording product without all the additional functionality of Splitwise.</p><p>We now use it every week and today it doesn't cost me anything to run it.</p><p>[Video]</p><h2>Family Dates App (wip)</h2><p>This one has been bumping around my head for years. My close friends circle back home now has something like 25 kids across all the various families. Keeping track of who is born when is something I suck at. And this can certainly be solved with my regular Google calendar, but for a while I've had an idea of 'subscribing' to a family to get all their significant dates and then making Groups based on various family configurations. It's a work in progress and my first time building with Swift and making an iOS app, but it's up and running and in TestFlight. Will be sending it back home to my friends for testing soon.</p><p>[Video]</p><h2>Brand Message Generator</h2><p>On a recent client project, we were exploring different brand tag lines and messaging ideas that needed to speak to a few different audiences. Once we had defined the territories I wondered if we could spin up an app that let us control the weighting and spit out a bunch of different options. So I built this small app which did do the task, but not super well. I missed something about the quality of the copy somehow or maybe it needed more specific instructions or references. The UI was interesting though.</p><p>[Video]</p>`,
+  },
   'green-squares': {
     title: 'Green Squares',
     date: 'May 2025',
@@ -69,6 +74,7 @@ export const articles: Record<string, Article> = {
 }
 
 export const articleList: Array<{ slug: string; title: string; date: string }> = [
+  { slug: 'ai-product-experiments', title: 'AI Product Experiments', date: 'Jun 2026' },
   { slug: 'green-squares', title: 'Green Squares', date: 'May 2025' },
   { slug: 'friction', title: 'Friction', date: 'Apr 2025' },
   { slug: 'ai-interfaces-for-creative-tools', title: 'AI Interfaces for Creative Tools', date: 'Aug 2024' },
