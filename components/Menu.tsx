@@ -48,20 +48,36 @@ export default function Menu({ open, onClose }: MenuProps) {
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
         <div className="flex-1 flex items-center">
           <nav className="flex flex-col gap-1">
-            {navLinks.map(({ href, label }) => (
-              <Link
+            {navLinks.map(({ href, label }, i) => (
+              <div
                 key={href}
-                href={href}
-                onClick={onClose}
-                className="text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+                className="transition-[opacity,transform] duration-300 ease-out"
+                style={{
+                  transitionDelay: open ? `${i * 70}ms` : '0ms',
+                  opacity: open ? 1 : 0,
+                  transform: open ? 'translateY(0)' : 'translateY(16px)',
+                }}
               >
-                {label}
-              </Link>
+                <Link
+                  href={href}
+                  onClick={onClose}
+                  className="inline-block text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+                >
+                  {label}
+                </Link>
+              </div>
             ))}
           </nav>
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div
+          className="flex flex-col gap-1 transition-[opacity,transform] duration-300 ease-out"
+          style={{
+            transitionDelay: open ? `${navLinks.length * 70}ms` : '0ms',
+            opacity: open ? 1 : 0,
+            transform: open ? 'translateY(0)' : 'translateY(16px)',
+          }}
+        >
           {hasGhosts && (
             <button
               onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
