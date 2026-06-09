@@ -37,6 +37,26 @@ export default function Menu({ open, onClose }: MenuProps) {
     setTimeout(() => setCopied(false), 1500)
   }
 
+  const NAV_STAGGER = 70
+  const FOOTER_BASE = navLinks.length * NAV_STAGGER + 60
+  const FOOTER_STAGGER = 50
+
+  function navStyle(i: number) {
+    return {
+      transitionDelay: open ? `${i * NAV_STAGGER}ms` : '0ms',
+      opacity: open ? 1 : 0,
+      transform: open ? 'translateY(0)' : 'translateY(16px)',
+    }
+  }
+
+  function footerStyle(i: number) {
+    return {
+      transitionDelay: open ? `${FOOTER_BASE + i * FOOTER_STAGGER}ms` : '0ms',
+      opacity: open ? 1 : 0,
+      transform: open ? 'translateY(0)' : 'translateY(12px)',
+    }
+  }
+
   return (
     <div onClick={onClose} className={`fixed inset-0 z-50 bg-[#f0f0f0]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -52,16 +72,13 @@ export default function Menu({ open, onClose }: MenuProps) {
               <div
                 key={href}
                 className="transition-[opacity,transform] duration-300 ease-out"
-                style={{
-                  transitionDelay: open ? `${i * 70}ms` : '0ms',
-                  opacity: open ? 1 : 0,
-                  transform: open ? 'translateY(0)' : 'translateY(16px)',
-                }}
+                style={navStyle(i)}
               >
                 <Link
                   href={href}
                   onClick={onClose}
-                  className="inline-block text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+                  className="inline-block text-[2.75rem] leading-[1.1] font-black underline underline-offset-4 text-[#1C1C1C] hover:text-[#555] transition-colors"
+                  style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
                 >
                   {label}
                 </Link>
@@ -70,44 +87,51 @@ export default function Menu({ open, onClose }: MenuProps) {
           </nav>
         </div>
 
-        <div
-          className="flex flex-col gap-1 transition-[opacity,transform] duration-300 ease-out"
-          style={{
-            transitionDelay: open ? `${navLinks.length * 70}ms` : '0ms',
-            opacity: open ? 1 : 0,
-            transform: open ? 'translateY(0)' : 'translateY(16px)',
-          }}
-        >
-          {hasGhosts && (
-            <button
-              onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
-              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left"
-            >
-              Clean up the stickers 🍕
-            </button>
-          )}
-          {socialLinks.map(({ href, label, hoverClass }) => (
-            <a
-              key={label}
-              href={href}
-              className={`text-base text-[#888] transition-colors ${hoverClass}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {label}
-            </a>
-          ))}
-          <span className="relative inline-flex items-center gap-3">
-            <button
-              onClick={(e) => { e.stopPropagation(); copyEmail() }}
-              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
-            >
-              nrhallam@gmail.com
-            </button>
-            <span className={`text-base text-[#242424] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
-              Copied!
-            </span>
-          </span>
+        <div className="flex flex-col gap-1">
+          {(() => {
+            let i = 0
+            const items = []
+            if (hasGhosts) {
+              const idx = i++
+              items.push(
+                <div key="ghosts" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
+                    className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left"
+                  >
+                    Clean up the stickers 🍕
+                  </button>
+                </div>
+              )
+            }
+            socialLinks.forEach(({ href, label, hoverClass }) => {
+              const idx = i++
+              items.push(
+                <div key={label} className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
+                  <a href={href} className={`text-base text-[#888] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
+                    {label}
+                  </a>
+                </div>
+              )
+            })
+            const emailIdx = i++
+            items.push(
+              <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
+                <span className="relative inline-flex items-center gap-3">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); copyEmail() }}
+                    className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
+                  >
+                    nrhallam@gmail.com
+                  </button>
+                  <span className={`text-base text-[#242424] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+                    Copied!
+                  </span>
+                </span>
+              </div>
+            )
+            return items
+          })()}
         </div>
       </div>
     </div>
