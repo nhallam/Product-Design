@@ -1,6 +1,11 @@
 export type Article = { title: string; date: string; body: string }
 
 export const articles: Record<string, Article> = {
+  'leaving-spotify': {
+    title: 'Leaving Spotify',
+    date: 'Jun 2026',
+    body: `<p>Six months ago I decided to leave Spotify after 10 years as a paying customer. The straw the broke the camels back was the appearance of a lot of AI created music on the platform. For years I had heard the same thing about Spotify not paying artists fairly, but the switching cost always felt too great.</p>`,
+  },
   'ai-product-experiments': {
     title: 'AI Product Experiments',
     date: 'Jun 2026',
@@ -74,6 +79,7 @@ export const articles: Record<string, Article> = {
 }
 
 export const articleList: Array<{ slug: string; title: string; date: string }> = [
+  { slug: 'leaving-spotify', title: 'Leaving Spotify', date: 'Jun 2026' },
   { slug: 'ai-product-experiments', title: 'AI Product Experiments', date: 'Jun 2026' },
   { slug: 'green-squares', title: 'Green Squares', date: 'May 2026' },
   { slug: 'friction', title: 'Friction', date: 'Apr 2025' },
