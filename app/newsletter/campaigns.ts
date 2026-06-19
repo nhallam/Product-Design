@@ -1,5 +1,6 @@
 export type Campaign = {
   id: string
+  status: string
   subject: string
   sent_at: string
   content: { html: string }
@@ -14,7 +15,7 @@ export async function getCampaigns(): Promise<Campaign[]> {
   if (!res.ok) return []
   const data = await res.json()
   return (data.data as Campaign[])
-    .filter((c: Campaign & { status: string }) => (c as unknown as { status: string }).status === 'SENT')
+    .filter((c) => c.status === 'SENT')
     .sort((a, b) => new Date(b.sent_at).getTime() - new Date(a.sent_at).getTime())
 }
 
