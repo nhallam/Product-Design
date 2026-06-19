@@ -96,7 +96,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       {/* Campaign modal */}
       {openCampaign && (
         <div
-          className="fixed inset-0 z-50 bg-[#f0f0f0]/90 backdrop-blur-[15px] overflow-y-auto"
+          className="fixed inset-0 z-[60] bg-[#f0f0f0]/90 backdrop-blur-[15px] overflow-y-auto"
           onClick={() => setOpenCampaign(null)}
         >
           <div className="max-w-2xl mx-auto px-6 pt-6 pb-16" onClick={(e) => e.stopPropagation()}>
