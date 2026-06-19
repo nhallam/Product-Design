@@ -34,11 +34,11 @@ export default function NewsletterSignup() {
       {status === 'success' ? (
         <p className="text-base text-[#1C1C1C]">You&apos;re subscribed. Thanks!</p>
       ) : (
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <p className="text-base text-[#1C1C1C] md:w-64 shrink-0">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <p className="text-base text-[#1C1C1C] max-w-sm">
             Every few weeks I send an email to around 250 people about design, technology and culture.
           </p>
-          <form onSubmit={handleSubmit} className="flex flex-1 gap-0">
+          <form onSubmit={handleSubmit} className="flex w-full max-w-sm gap-0">
             <input
               type="email"
               value={email}
@@ -56,7 +56,7 @@ export default function NewsletterSignup() {
             </button>
           </form>
           {status === 'error' && (
-            <p className="text-sm text-red-500 mt-2">{message}</p>
+            <p className="text-sm text-red-500">{message}</p>
           )}
         </div>
       )}
