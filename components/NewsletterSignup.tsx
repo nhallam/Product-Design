@@ -31,13 +31,6 @@ export default function NewsletterSignup() {
 
   return (
     <div className="py-10">
-      <h2
-        className="text-[2.75rem] font-black leading-[1] mb-6"
-        style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
-      >
-        Newsletter
-      </h2>
-
       {status === 'success' ? (
         <p className="text-base text-[#1C1C1C]">You&apos;re subscribed. Thanks!</p>
       ) : (
