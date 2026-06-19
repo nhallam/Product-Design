@@ -43,6 +43,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
   const pathname = usePathname()
   const isArticle = pathname.startsWith('/writing/') && pathname !== '/writing/'
   const isProject = pathname.startsWith('/projects/') && pathname !== '/projects/'
+  const isNewsletter = pathname.startsWith('/newsletter/') && pathname !== '/newsletter/'
 
   return (
     <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4" style={{ viewTransitionName: 'site-nav' }}>
@@ -53,6 +54,10 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
       ) : isProject ? (
         <Link href="/projects" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
           ← All projects
+        </Link>
+      ) : isNewsletter ? (
+        <Link href="/writing" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+          ← All writing
         </Link>
       ) : (
         <Link
@@ -67,7 +72,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
           {text}
         </Link>
       )}
-      {!isArticle && !isProject && (
+      {!isArticle && !isProject && !isNewsletter && (
         <button
           onClick={() => { easterEggDismissRef.current?.(); onToggle() }}
           className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
