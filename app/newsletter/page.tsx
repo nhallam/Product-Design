@@ -1,0 +1,37 @@
+import Link from 'next/link'
+import { getCampaigns, formatCampaignDate } from './campaigns'
+import NewsletterSignup from '@/components/NewsletterSignup'
+
+export default async function NewsletterPage() {
+  const campaigns = await getCampaigns()
+
+  return (
+    <main className="flex-1 flex flex-col px-6 pb-6">
+      <div className="pt-[28vh]">
+        <h1
+          className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
+          style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+        >
+          Newsletter
+        </h1>
+      </div>
+
+      <div className="mt-[10vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+        {campaigns.map((c) => (
+          <Link
+            key={c.id}
+            href={`/newsletter/${c.id}`}
+            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
+          >
+            <span className="text-base font-medium text-[#1C1C1C]">{c.subject}</span>
+            <span className="text-sm text-[#888] shrink-0 ml-6">{formatCampaignDate(c.sent_at)}</span>
+          </Link>
+        ))}
+      </div>
+
+      <div id="newsletter" className="mt-[100px]">
+        <NewsletterSignup />
+      </div>
+    </main>
+  )
+}
