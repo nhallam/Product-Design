@@ -41,7 +41,7 @@ jobs:
                --jq ".[] | select(.headRefOid == \"$SHA\") | .number")
           if [ -n "$PR" ]; then
             echo "Merging PR #$PR"
-            gh pr merge "$PR" --rebase --repo "$GITHUB_REPOSITORY"
+            gh pr merge "$PR" --merge --repo "$GITHUB_REPOSITORY"
           else
             echo "No open PR found for SHA $SHA"
           fi
