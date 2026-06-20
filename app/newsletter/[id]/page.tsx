@@ -8,6 +8,10 @@ export default async function CampaignPage({ params }: { params: Promise<{ id: s
 
   if (!campaign) notFound()
 
+  const html = campaign.content.html
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/font-family:[^;}"']+/gi, '')
+
   return (
     <main className="flex-1 flex flex-col px-6 pb-16">
       <div className="pt-[28vh]">
@@ -31,7 +35,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ id: s
           [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4
           [&_img]:max-w-full [&_img]:h-auto
           [&_table]:w-full [&_td]:align-top"
-        dangerouslySetInnerHTML={{ __html: campaign.content.html }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
     </main>
   )
