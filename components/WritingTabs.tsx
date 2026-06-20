@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import NewsletterSignup from './NewsletterSignup'
 import type { Campaign } from '@/app/newsletter/campaigns'
@@ -27,12 +27,6 @@ interface WritingTabsProps {
 
 export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
   const [tab, setTab] = useState<'blog' | 'newsletter'>('blog')
-  const [openCampaign, setOpenCampaign] = useState<Campaign | null>(null)
-
-  useEffect(() => {
-    document.body.style.overflow = openCampaign ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [openCampaign])
 
   return (
     <main className="flex-1 flex flex-col px-6 pb-6">
@@ -54,7 +48,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       </div>
 
       {tab === 'blog' && (
-        <div className="mt-[10vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+        <div className="mt-[6vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
           {articles.map(({ slug, title, date }) => (
             <Link
               key={slug}
@@ -74,58 +68,21 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       )}
 
       {tab === 'newsletter' && (
-        <div className="mt-[10vh]">
+        <div className="mt-[6vh]">
           <NewsletterSignup />
           <div className="mt-10 divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
             {campaigns.map((c) => (
-              <button
+              <Link
                 key={c.id}
-                onClick={() => setOpenCampaign(c)}
-                className="w-full flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors text-left cursor-pointer"
+                href={`/newsletter/${c.id}`}
+                className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
               >
                 <span className="text-base font-medium text-[#1C1C1C]">{c.subject}</span>
                 <span className="text-sm text-[#888] shrink-0 ml-6">
                   {new Date(c.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
-              </button>
+              </Link>
             ))}
-          </div>
-        </div>
-      )}
-
-      {/* Campaign modal */}
-      {openCampaign && (
-        <div
-          className="fixed inset-0 z-50 bg-[#f0f0f0]/90 backdrop-blur-[15px] overflow-y-auto"
-          onClick={() => setOpenCampaign(null)}
-        >
-          <div className="max-w-2xl mx-auto px-6 pt-6 pb-16" onClick={(e) => e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-12">
-              <span className="text-sm text-[#888]">
-                {new Date(openCampaign.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-              </span>
-              <button
-                onClick={() => setOpenCampaign(null)}
-                className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-            <h1
-              className="text-[2.75rem] font-black leading-[1.1] text-center text-balance mb-12"
-              style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
-            >
-              {openCampaign.subject}
-            </h1>
-            <div
-              className="[&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[#1C1C1C]
-                [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[#1C1C1C] [&_a:hover]:text-[#555]
-                [&_strong]:font-bold [&_em]:italic
-                [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2 [&_ul_li]:text-base [&_ul_li]:leading-relaxed
-                [&_img]:max-w-full [&_img]:h-auto
-                [&_table]:w-full [&_td]:align-top"
-              dangerouslySetInnerHTML={{ __html: openCampaign.content.html }}
-            />
           </div>
         </div>
       )}
