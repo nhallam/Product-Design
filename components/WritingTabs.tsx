@@ -48,7 +48,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       </div>
 
       {tab === 'blog' && (
-        <div className="mt-[10vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+        <div className="mt-[6vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
           {articles.map(({ slug, title, date }) => (
             <Link
               key={slug}
@@ -68,7 +68,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       )}
 
       {tab === 'newsletter' && (
-        <div className="mt-[10vh]">
+        <div className="mt-[6vh]">
           <NewsletterSignup />
           <div className="mt-10 divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
             {campaigns.map((c) => (
