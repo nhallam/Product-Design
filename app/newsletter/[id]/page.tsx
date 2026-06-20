@@ -33,7 +33,7 @@ export default async function CampaignPage({ params }: { params: Promise<{ id: s
           [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2 [&_ul_li]:text-base [&_ul_li]:leading-relaxed
           [&_ol]:mb-5 [&_ol]:pl-5 [&_ol]:list-decimal [&_ol_li]:mb-2 [&_ol_li]:text-base [&_ol_li]:leading-relaxed
           [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4
-          [&_img]:max-w-full [&_img]:h-auto
+          [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-[10px]
           [&_table]:w-full [&_td]:align-top"
         dangerouslySetInnerHTML={{ __html: html }}
       />
