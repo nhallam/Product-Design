@@ -67,7 +67,7 @@ const stickers = [
   },
 ]
 
-const VISIBLE = 0.2
+const VISIBLE = 0.3
 const GAP = 24
 const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
