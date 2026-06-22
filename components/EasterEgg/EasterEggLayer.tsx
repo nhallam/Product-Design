@@ -30,11 +30,13 @@ import KnicksSticker from './stickers/KnicksSticker'
 import WeatherSticker from './stickers/WeatherSticker'
 import PizzaSticker from './stickers/PizzaSticker'
 import KelloggsSticker from './stickers/KelloggsSticker'
+import VideoSticker from './stickers/VideoSticker'
 
 const stickers = [
   { id: 'weather', w: 200, h: 110, rotation: -4, delay: 0, content: <WeatherSticker /> },
-  { id: 'gtrain', w: 145, h: 200, rotation: 5, delay: 0.07, content: <GTrainSticker /> },
-  { id: 'boombox', w: 200, h: 140, rotation: -6, delay: 0.14, content: <BoomboxSticker /> },
+  { id: 'video', w: 220, h: 124, rotation: 4, delay: 0.07, content: <VideoSticker /> },
+  { id: 'gtrain', w: 145, h: 200, rotation: 5, delay: 0.14, content: <GTrainSticker /> },
+  { id: 'boombox', w: 200, h: 140, rotation: -6, delay: 0.21, content: <BoomboxSticker /> },
   { id: 'knicks', w: 200, h: 140, rotation: 4, delay: 0.21, content: <KnicksSticker /> },
   {
     id: 'yankees', w: 200, h: 130, rotation: -3, delay: 0.28,
