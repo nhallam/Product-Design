@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, SkipForward } from 'react-feather'
+import { Play, Pause } from 'react-feather'
 
 const TRACKS = [
   { id: 'd2FQCRvigBU' },
@@ -125,7 +125,12 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         <div ref={playerDivRef} />
       </div>
 
-      <div className="text-3xl mb-2">🎵</div>
+      <div
+        className="text-2xl font-black text-white mb-2 leading-none"
+        style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+      >
+        BOOMBOX
+      </div>
       <div className="text-sm font-bold text-white leading-tight line-clamp-1">
         {trackInfo?.title ?? 'Boombox'}
       </div>
@@ -140,7 +145,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
           className="text-white hover:text-white/70 transition-colors disabled:opacity-30"
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
-          {isPlaying ? <Pause size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" /> : <Play size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />}
+          {isPlaying ? <Pause size={16} fill="currentColor" stroke="none" /> : <Play size={16} fill="currentColor" stroke="none" />}
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); nextTrack() }}
@@ -148,7 +153,10 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
           className="text-white/50 hover:text-white transition-colors disabled:opacity-30"
           aria-label="Next track"
         >
-          <SkipForward size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <polygon points="4 4 15 12 4 20" />
+            <rect x="16" y="4" width="3" height="16" rx="1" />
+          </svg>
         </button>
       </div>
     </div>
