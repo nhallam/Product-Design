@@ -96,10 +96,14 @@ function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, v
   }
 }
 
+const MOBILE_BREAKPOINT = 768
+const MOBILE_MAX_STICKERS = 5
+
 function generateEdgePositions(viewW: number, viewH: number): { x: number; y: number }[] {
   const placed: { x: number; y: number; w: number; h: number }[] = []
+  const pool = viewW < MOBILE_BREAKPOINT ? stickers.slice(0, MOBILE_MAX_STICKERS) : stickers
 
-  return stickers.map((s) => {
+  return pool.map((s) => {
     let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
     for (let attempt = 0; attempt < 60; attempt++) {
       const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
@@ -137,17 +141,18 @@ export default function EasterEggLayer() {
     notifyGhostListeners(false)
     setDeletedIds(new Set())
     const positions = generateEdgePositions(window.innerWidth, window.innerHeight)
-    stickers.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
+    positions.forEach((pos, i) => { livePositionsRef.current[stickers[i].id] = pos })
     setLayerState({ positions, isDismissing: false })
     setActive(true)
   }
 
   const handleDismiss = () => {
-    const ghostPos = stickers.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
+    const activeStickers = stickers.slice(0, layerState.positions.length)
+    const ghostPos = activeStickers.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
     setGhostPositions(ghostPos)
     notifyGhostListeners(true)
     setLayerState((s) => ({ ...s, isDismissing: true }))
-    const maxDelay = Math.max(...stickers.map((s) => s.delay)) * 0.4
+    const maxDelay = Math.max(...activeStickers.map((s) => s.delay)) * 0.4
     setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
   }
 
@@ -200,13 +205,13 @@ export default function EasterEggLayer() {
             transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',
           }}
         >
-          {stickers.map((s, i) => (
+          {ghostPositions.map((pos, i) => { const s = stickers[i]; return (
             <div
               key={s.id}
               className="absolute"
               style={{
-                left: ghostPositions[i].x,
-                top: ghostPositions[i].y,
+                left: pos.x,
+                top: pos.y,
                 width: s.w,
                 transform: `rotate(${s.rotation}deg)`,
                 transformOrigin: 'top left',
@@ -216,13 +221,15 @@ export default function EasterEggLayer() {
             >
               {withGhostProp(s.content)}
             </div>
-          ))}
+          )})}
+
         </div>
       )}
 
       {active && layerState.positions.length > 0 && (
         <div className="fixed inset-0 z-[100] pointer-events-none">
           {stickers
+            .slice(0, layerState.positions.length)
             .map((s, i) => ({ ...s, position: layerState.positions[i] }))
             .filter((s) => !deletedIds.has(s.id))
             .map((s) => (

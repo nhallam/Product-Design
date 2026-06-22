@@ -30,9 +30,7 @@ export default function Home() {
           className="text-center text-balance font-black"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif", fontSize: '20px', lineHeight: '22px' }}
         >
-          This website started by me wondering if I could use{' '}
-          <a href="https://x.com/nhallam/status/2049988485356863821" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">a poster I own and my Crocs as inspiration</a>
-          {' '}for a new personal site. The two typefaces are{' '}
+          Typeface credit,{' '}
           <a href="https://klim.co.nz/collections/american-grotesk/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">American Grotesk Condensed by Klim</a>
           {' '}and{' '}
           <a href="https://rsms.me/inter/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">Inter by Rasmus Andersson</a>
