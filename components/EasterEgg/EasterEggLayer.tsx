@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, cloneElement, isValidElement, ReactElement } from 'react'
 import { PanInfo } from 'framer-motion'
+import { X, Shuffle } from 'react-feather'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
@@ -134,8 +135,18 @@ export default function EasterEggLayer() {
   const [ghostFading, setGhostFading] = useState(false)
   const [draggingId, setDraggingId] = useState<string | null>(null)
   const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
+  const [controlsVisible, setControlsVisible] = useState(false)
+  const [shuffleKey, setShuffleKey] = useState(0)
   const binRef = useRef<HTMLDivElement>(null)
   const livePositionsRef = useRef<Record<string, { x: number; y: number }>>({})
+  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const scheduleControls = (count: number) => {
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
+    setControlsVisible(false)
+    const maxDelay = Math.max(...stickers.slice(0, count).map((s) => s.delay))
+    controlsTimerRef.current = setTimeout(() => setControlsVisible(true), (maxDelay + 0.7) * 1000)
+  }
 
   const activate = () => {
     setGhostPositions(null)
@@ -146,9 +157,21 @@ export default function EasterEggLayer() {
     positions.forEach((pos, i) => { livePositionsRef.current[stickers[i].id] = pos })
     setLayerState({ positions, isDismissing: false })
     setActive(true)
+    scheduleControls(positions.length)
+  }
+
+  const handleShuffle = () => {
+    const positions = generateEdgePositions(window.innerWidth, window.innerHeight)
+    positions.forEach((pos, i) => { livePositionsRef.current[stickers[i].id] = pos })
+    setLayerState({ positions, isDismissing: false })
+    setDeletedIds(new Set())
+    setShuffleKey((k) => k + 1)
+    scheduleControls(positions.length)
   }
 
   const handleDismiss = () => {
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
+    setControlsVisible(false)
     const activeStickers = stickers.slice(0, layerState.positions.length)
     const ghostPos = activeStickers.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
     setGhostPositions(ghostPos)
@@ -174,6 +197,7 @@ export default function EasterEggLayer() {
   })
 
   useEffect(() => () => {
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
     easterEggDismissRef.current = null
     easterEggActivateRef.current = null
     easterEggClearGhostsRef.current = null
@@ -240,7 +264,7 @@ export default function EasterEggLayer() {
             .filter((s) => !deletedIds.has(s.id))
             .map((s) => (
               <Sticker
-                key={s.id}
+                key={s.id + '-' + shuffleKey}
                 initialX={s.position.x}
                 initialY={s.position.y}
                 rotation={s.rotation}
@@ -265,15 +289,31 @@ export default function EasterEggLayer() {
               </Sticker>
             ))}
 
-          <button
+          <div
             data-egg-control
-            onClick={() => { handleDismiss(); clearGhosts() }}
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
-              draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
+              controlsVisible && !draggingId && !layerState.isDismissing
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            Clear
-          </button>
+            <button
+              data-egg-control
+              onClick={() => { handleDismiss(); clearGhosts() }}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Clear stickers"
+            >
+              <X size={15} strokeWidth={2.5} />
+            </button>
+            <button
+              data-egg-control
+              onClick={handleShuffle}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Shuffle stickers"
+            >
+              <Shuffle size={15} strokeWidth={2.5} />
+            </button>
+          </div>
 
           <div
             ref={binRef}
