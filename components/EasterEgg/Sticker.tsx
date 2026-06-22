@@ -36,6 +36,7 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
       whileDrag={{ scale: 1.06, cursor: 'grabbing' }}
       style={{ x, y, position: 'absolute', touchAction: 'none' }}
       className="cursor-grab select-none pointer-events-auto"
+      data-sticker
       onDragStart={onDragStart}
       onDrag={() => onPositionChange?.(x.get(), y.get())}
       onDragEnd={onDragEnd}

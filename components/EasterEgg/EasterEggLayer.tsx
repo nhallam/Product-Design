@@ -151,6 +151,20 @@ export default function EasterEggLayer() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { activate() }, [])
 
+  // Click anywhere that isn't a sticker (or the Clear button) dismisses them
+  useEffect(() => {
+    if (!active || layerState.isDismissing) return
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('[data-sticker]') || target.closest('[data-egg-control]')) return
+      handleDismiss()
+    }
+    // Defer so the same click that activated doesn't immediately dismiss
+    const id = setTimeout(() => document.addEventListener('click', onClick), 0)
+    return () => { clearTimeout(id); document.removeEventListener('click', onClick) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, layerState.isDismissing])
+
   return (
     <>
       {ghostPositions && (
@@ -214,6 +228,7 @@ export default function EasterEggLayer() {
             ))}
 
           <button
+            data-egg-control
             onClick={() => { handleDismiss(); clearGhosts() }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
               draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
