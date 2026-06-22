@@ -166,7 +166,6 @@ export default function EasterEggLayer() {
     setLayerState({ positions, isDismissing: false })
     setDeletedIds(new Set())
     setShuffleKey((k) => k + 1)
-    scheduleControls(positions.length)
   }
 
   const handleDismiss = () => {
