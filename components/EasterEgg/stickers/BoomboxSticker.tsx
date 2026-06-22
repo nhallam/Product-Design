@@ -125,7 +125,12 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         <div ref={playerDivRef} />
       </div>
 
-      <div className="text-3xl mb-2">🎵</div>
+      <div
+        className="text-2xl font-black text-white mb-2 leading-none"
+        style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+      >
+        BOOMBOX
+      </div>
       <div className="text-sm font-bold text-white leading-tight line-clamp-1">
         {trackInfo?.title ?? 'Boombox'}
       </div>
