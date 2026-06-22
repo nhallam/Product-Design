@@ -67,42 +67,22 @@ const stickers = [
   },
 ]
 
-const GAP = 20
+const VISIBLE = 0.2
+const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
-function overlaps(
-  a: { x: number; y: number; w: number; h: number },
-  b: { x: number; y: number; w: number; h: number }
-): boolean {
-  return (
-    a.x < b.x + b.w + GAP &&
-    a.x + a.w + GAP > b.x &&
-    a.y < b.y + b.h + GAP &&
-    a.y + a.h + GAP > b.y
-  )
-}
-
-const MOBILE_BREAKPOINT = 768
-
-function generatePositions(viewW: number, viewH: number): { x: number; y: number }[] {
-  const isMobile = viewW < MOBILE_BREAKPOINT
-  const placed: { x: number; y: number; w: number; h: number }[] = []
-
+function generateEdgePositions(viewW: number, viewH: number): { x: number; y: number }[] {
   return stickers.map((s) => {
-    let pos = {
-      x: Math.random() * Math.max(viewW - s.w, 0),
-      y: Math.random() * Math.max(viewH - s.h, 0),
+    const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
+    switch (edge) {
+      case 'left':
+        return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
+      case 'right':
+        return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
+      case 'top':
+        return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
+      case 'bottom':
+        return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
     }
-    if (!isMobile) {
-      for (let attempt = 0; attempt < 50; attempt++) {
-        pos = {
-          x: Math.random() * Math.max(viewW - s.w, 0),
-          y: Math.random() * Math.max(viewH - s.h, 0),
-        }
-        if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
-      }
-    }
-    placed.push({ ...pos, w: s.w, h: s.h })
-    return pos
   })
 }
 
@@ -131,7 +111,7 @@ export default function EasterEggLayer() {
     setGhostFading(false)
     notifyGhostListeners(false)
     setDeletedIds(new Set())
-    const positions = generatePositions(window.innerWidth, window.innerHeight)
+    const positions = generateEdgePositions(window.innerWidth, window.innerHeight)
     stickers.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
     setLayerState({ positions, isDismissing: false })
     setActive(true)
@@ -167,6 +147,10 @@ export default function EasterEggLayer() {
     easterEggClearGhostsRef.current = null
   }, [])
 
+  // Auto-activate on mount so stickers appear at edges on page load
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { activate() }, [])
+
   return (
     <>
       {ghostPositions && (
@@ -198,7 +182,7 @@ export default function EasterEggLayer() {
       )}
 
       {active && layerState.positions.length > 0 && (
-        <div className="fixed inset-0 z-[200] pointer-events-auto" onClick={handleDismiss}>
+        <div className="fixed inset-0 z-[100] pointer-events-none">
           {stickers
             .map((s, i) => ({ ...s, position: layerState.positions[i] }))
             .filter((s) => !deletedIds.has(s.id))
@@ -225,14 +209,12 @@ export default function EasterEggLayer() {
                   }
                 }}
               >
-                <div onClick={(e) => e.stopPropagation()}>
-                  {s.content}
-                </div>
+                {s.content}
               </Sticker>
             ))}
 
           <button
-            onClick={(e) => { e.stopPropagation(); handleDismiss(); clearGhosts() }}
+            onClick={() => { handleDismiss(); clearGhosts() }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
               draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
