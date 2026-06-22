@@ -139,6 +139,7 @@ export default function EasterEggLayer() {
   const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
   const [controlsVisible, setControlsVisible] = useState(false)
   const [shuffleKey, setShuffleKey] = useState(0)
+  const [buttonLabel, setButtonLabel] = useState<string | null>(null)
   const binRef = useRef<HTMLDivElement>(null)
   const livePositionsRef = useRef<Record<string, { x: number; y: number }>>({})
   const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -298,32 +299,32 @@ export default function EasterEggLayer() {
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <div data-egg-control className="relative group">
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-2 py-0.5 bg-[#1C1C1C] text-[11px] font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
-                Clear
-              </span>
-              <button
-                data-egg-control
-                onClick={() => { handleDismiss(); clearGhosts() }}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-                aria-label="Clear stickers"
-              >
-                <X size={15} strokeWidth={2.5} />
-              </button>
-            </div>
-            <div data-egg-control className="relative group">
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-2 py-0.5 bg-[#1C1C1C] text-[11px] font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
-                Shuffle
-              </span>
-              <button
-                data-egg-control
-                onClick={handleShuffle}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-                aria-label="Shuffle stickers"
-              >
-                <Shuffle size={15} strokeWidth={2.5} />
-              </button>
-            </div>
+            <span
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-150"
+              style={{ opacity: buttonLabel ? 1 : 0 }}
+            >
+              {buttonLabel ?? ''}
+            </span>
+            <button
+              data-egg-control
+              onClick={() => { handleDismiss(); clearGhosts() }}
+              onMouseEnter={() => setButtonLabel('Clear')}
+              onMouseLeave={() => setButtonLabel(null)}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Clear stickers"
+            >
+              <X size={15} strokeWidth={2.5} />
+            </button>
+            <button
+              data-egg-control
+              onClick={handleShuffle}
+              onMouseEnter={() => setButtonLabel('Shuffle')}
+              onMouseLeave={() => setButtonLabel(null)}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Shuffle stickers"
+            >
+              <Shuffle size={15} strokeWidth={2.5} />
+            </button>
           </div>
 
           <div
