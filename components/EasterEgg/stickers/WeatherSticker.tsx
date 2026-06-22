@@ -18,7 +18,7 @@ export default function WeatherSticker() {
   const loaded = 'tempC' in state
 
   return (
-    <div className="bg-[#E8F4FD] border border-[#B3D9F5] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
+    <div className="bg-[#E8F4FD] border border-[#B3D9F5] rounded-2xl shadow-lg px-5 py-4 w-[150px] text-center">
       <div className="text-3xl mb-1">{loaded ? (state as WeatherData).emoji : '🌤'}</div>
       <div className="text-base font-bold text-[#1C1C1C]">
         {loaded
