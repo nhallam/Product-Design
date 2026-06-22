@@ -299,7 +299,7 @@ export default function EasterEggLayer() {
             }`}
           >
             <div data-egg-control className="relative group">
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 text-[11px] font-medium text-white/70 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-2 py-0.5 bg-[#1C1C1C] text-[11px] font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
                 Clear
               </span>
               <button
@@ -312,7 +312,7 @@ export default function EasterEggLayer() {
               </button>
             </div>
             <div data-egg-control className="relative group">
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 text-[11px] font-medium text-white/70 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-2 py-0.5 bg-[#1C1C1C] text-[11px] font-medium text-white rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
                 Shuffle
               </span>
               <button
