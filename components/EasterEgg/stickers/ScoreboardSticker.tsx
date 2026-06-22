@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import type { ScoreData, TeamKey } from '@/app/api/scoreboard/route'
 
@@ -53,10 +53,18 @@ export default function ScoreboardSticker({ ghost = false }: { ghost?: boolean }
   const [team, setTeam] = useState<TeamKey>('knicks')
   const [state, setState] = useState<State>({ status: 'loading' })
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimeLeft>>(null)
+  const [fading, setFading] = useState(false)
+  const switchingRef = useRef(false)
+
+  const handleTeamChange = (key: TeamKey) => {
+    if (key === team) return
+    switchingRef.current = true
+    setFading(true)
+    setTeam(key)
+  }
 
   useEffect(() => {
     let cancelled = false
-    setState({ status: 'loading' })
 
     const fetchData = () => {
       fetch(`/api/scoreboard?team=${team}`)
@@ -65,8 +73,17 @@ export default function ScoreboardSticker({ ghost = false }: { ghost?: boolean }
           if (cancelled) return
           setState(data)
           if (data.status === 'upcoming') setTimeLeft(getTimeLeft(data.gameTime))
+          if (switchingRef.current) {
+            switchingRef.current = false
+            setFading(false)
+          }
         })
-        .catch(() => { if (!cancelled) setState({ status: 'unknown' }) })
+        .catch(() => {
+          if (cancelled) return
+          setState({ status: 'unknown' })
+          switchingRef.current = false
+          setFading(false)
+        })
     }
 
     fetchData()
@@ -88,7 +105,7 @@ export default function ScoreboardSticker({ ghost = false }: { ghost?: boolean }
       {TEAM_ORDER.map((key) => (
         <button
           key={key}
-          onClick={(e) => { e.stopPropagation(); setTeam(key) }}
+          onClick={(e) => { e.stopPropagation(); handleTeamChange(key) }}
           aria-label={TEAM_META[key].name}
           className={`p-1 rounded-md transition-opacity ${team === key ? 'opacity-100 bg-black/5' : 'opacity-40 hover:opacity-70'}`}
         >
@@ -161,7 +178,9 @@ export default function ScoreboardSticker({ ghost = false }: { ghost?: boolean }
   return (
     <div className="bg-white shadow-lg overflow-hidden w-[200px]" style={{ borderRadius: '5px' }}>
       {tabs}
-      {body}
+      <div style={{ opacity: fading ? 0 : 1, transition: 'opacity 0.18s ease' }}>
+        {body}
+      </div>
     </div>
   )
 }
