@@ -40,6 +40,23 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   const playerDivRef = useRef<HTMLDivElement>(null)
   const currentIndexRef = useRef(0)
 
+  const [scroll, setScroll] = useState(false)
+  const [duration, setDuration] = useState(8)
+  const titleContainerRef = useRef<HTMLDivElement>(null)
+  const measureRef = useRef<HTMLSpanElement>(null)
+
+  const title = trackInfo?.title ?? 'Boombox'
+
+  useEffect(() => {
+    const c = titleContainerRef.current
+    const m = measureRef.current
+    if (!c || !m) return
+    const w = m.scrollWidth
+    const overflow = w > c.clientWidth + 1
+    setScroll(overflow)
+    if (overflow) setDuration(Math.max(6, (w + 32) / 35))
+  }, [title])
+
   useEffect(() => {
     const initPlayer = () => {
       if (!playerDivRef.current) return
@@ -131,8 +148,27 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
       >
         BOOMBOX
       </div>
-      <div className="text-sm font-bold text-white leading-tight line-clamp-1">
-        {trackInfo?.title ?? 'Boombox'}
+      <div
+        ref={titleContainerRef}
+        className={`relative overflow-hidden ${scroll ? '' : 'flex justify-center'}`}
+      >
+        {/* hidden measurement copy (no padding, never wraps) */}
+        <span
+          ref={measureRef}
+          aria-hidden
+          className="invisible absolute left-0 top-0 text-sm font-bold whitespace-nowrap"
+        >
+          {title}
+        </span>
+
+        {scroll ? (
+          <div className="marquee-track inline-flex whitespace-nowrap" style={{ animationDuration: `${duration}s` }}>
+            <span className="text-sm font-bold text-white leading-tight pr-8">{title}</span>
+            <span className="text-sm font-bold text-white leading-tight pr-8" aria-hidden>{title}</span>
+          </div>
+        ) : (
+          <span className="text-sm font-bold text-white leading-tight whitespace-nowrap">{title}</span>
+        )}
       </div>
       <div className="text-xs text-white/60 mt-0.5 line-clamp-1 h-4">
         {trackInfo ? trackInfo.author : ready ? '' : 'Loading...'}
