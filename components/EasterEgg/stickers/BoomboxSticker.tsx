@@ -54,7 +54,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
     const w = m.scrollWidth
     const overflow = w > c.clientWidth + 1
     setScroll(overflow)
-    if (overflow) setDuration(Math.max(6, (w + 32) / 35))
+    if (overflow) setDuration(Math.max(7.5, (w + 32) / 28))
   }, [title])
 
   useEffect(() => {
