@@ -88,10 +88,12 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
               setIsPlaying(true)
               const data = event.target.getVideoData()
               if (data.title) setTrackInfo({ title: data.title, author: data.author })
-            } else if (
-              event.data === window.YT.PlayerState.PAUSED ||
-              event.data === window.YT.PlayerState.ENDED
-            ) {
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+              // Auto-advance to the next track when the current one finishes
+              const next = (currentIndexRef.current + 1) % TRACKS.length
+              currentIndexRef.current = next
+              event.target.loadVideoById(TRACKS[next].id)
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
               setIsPlaying(false)
             }
           },
