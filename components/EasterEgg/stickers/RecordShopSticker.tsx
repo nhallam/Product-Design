@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'react-feather'
+import { ChevronLeft, ChevronRight, MapPin } from 'react-feather'
 
 const STORES = [
   { name: 'Ergot Records',           borough: 'Manhattan', hours: 'Mon–Thu 11 AM–7 PM; Fri–Sat 12–8 PM; Sun 12–6 PM',                                                                          address: '32 E 2nd St, New York, NY 10003' },
@@ -91,9 +91,9 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex-1 mx-1 py-1.5 rounded-md bg-black/5 text-[11px] font-semibold text-[#1C1C1C]/60 hover:bg-black/10 hover:text-[#1C1C1C] transition-colors text-center"
+            className="flex-1 mx-1 py-1.5 rounded-md bg-black/5 text-[#1C1C1C]/50 hover:bg-black/10 hover:text-[#1C1C1C] transition-colors flex items-center justify-center"
           >
-            Directions ↗
+            <MapPin size={14} strokeWidth={2} />
           </a>
           <button
             onClick={next}
