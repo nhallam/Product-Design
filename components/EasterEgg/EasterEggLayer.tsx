@@ -187,8 +187,12 @@ export default function EasterEggLayer() {
   useEffect(() => {
     if (!active || layerState.isDismissing) return
     const onClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('[data-sticker]') || target.closest('[data-egg-control]')) return
+      // Use composedPath (snapshot at click time) so it still works even if the
+      // clicked node was removed mid-click — e.g. a button swapping its icon.
+      const path = e.composedPath()
+      for (const el of path) {
+        if (el instanceof Element && (el.hasAttribute('data-sticker') || el.hasAttribute('data-egg-control'))) return
+      }
       handleDismiss()
     }
     // Defer so the same click that activated doesn't immediately dismiss
