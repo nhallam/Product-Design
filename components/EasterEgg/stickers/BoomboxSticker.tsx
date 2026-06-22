@@ -153,7 +153,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   }
 
   return (
-    <div className="relative bg-[#1C1C1C] shadow-lg px-5 py-4 w-[200px] text-center" style={{ borderRadius: '5px' }}>
+    <div className="relative bg-[#1C1C1C] shadow-lg px-4 py-4 w-[175px] text-center" style={{ borderRadius: '5px' }}>
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
         <div ref={playerDivRef} />
       </div>
