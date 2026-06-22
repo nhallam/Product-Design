@@ -120,7 +120,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   }
 
   return (
-    <div className="relative bg-[#1C1C1C] rounded-2xl shadow-lg px-5 py-4 w-[200px]">
+    <div className="relative bg-[#1C1C1C] shadow-lg px-5 py-4 w-[200px] text-center" style={{ borderRadius: '5px' }}>
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
         <div ref={playerDivRef} />
       </div>
@@ -138,7 +138,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         {trackInfo ? trackInfo.author : ready ? '' : 'Loading...'}
       </div>
 
-      <div className="flex items-center gap-4 mt-3">
+      <div className="flex items-center justify-center gap-4 mt-3">
         <button
           onClick={(e) => { e.stopPropagation(); togglePlay() }}
           disabled={!ready}
