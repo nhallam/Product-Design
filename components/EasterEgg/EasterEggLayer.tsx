@@ -290,7 +290,7 @@ export default function EasterEggLayer() {
 
           <div
             data-egg-control
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-[#1C1C1C] rounded-2xl p-1.5 pointer-events-auto transition-all duration-300 ${
               controlsVisible && !draggingId && !layerState.isDismissing
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-2 pointer-events-none'
