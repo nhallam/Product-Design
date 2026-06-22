@@ -147,9 +147,9 @@ export default function EasterEggLayer() {
     easterEggClearGhostsRef.current = null
   }, [])
 
-  // Auto-activate on mount so stickers appear at edges on page load
+  // Auto-activate after a short delay once the page has settled
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { activate() }, [])
+  useEffect(() => { const t = setTimeout(activate, 1500); return () => clearTimeout(t) }, [])
 
   // Click anywhere that isn't a sticker (or the Clear button) dismisses them
   useEffect(() => {

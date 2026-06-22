@@ -1,21 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { easterEggActivateRef } from '@/components/EasterEgg/EasterEggLayer'
+import { useEffect } from 'react'
 
 export default function HomeHero() {
-  const [shimmer, setShimmer] = useState(false)
-
-  useEffect(() => {
-    const trigger = () => {
-      setShimmer(true)
-      setTimeout(() => setShimmer(false), 1500)
-    }
-    const initial = setTimeout(trigger, 2500)
-    const interval = setInterval(trigger, 20000)
-    return () => { clearTimeout(initial); clearInterval(interval) }
-  }, [])
-
   useEffect(() => {
     const applySnap = () => {
       if (window.innerWidth >= 768) {
@@ -37,13 +24,7 @@ export default function HomeHero() {
       className="text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
       style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
     >
-      A product designer and founder based in{' '}
-      <button
-        onClick={() => easterEggActivateRef.current?.()}
-        className={`underline underline-offset-4 hover:text-[#555] transition-colors ${shimmer ? 'shimmer' : ''}`}
-      >
-        Brooklyn, NY.
-      </button>
+      A product designer and founder based in Brooklyn, NY.
     </h1>
   )
 }
