@@ -78,10 +78,10 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       </div>
 
       {!ghost && (
-        <div className="flex items-center border-t border-black/5 px-2 py-1.5">
+        <div className="flex items-center bg-[#1C1C1C] px-1.5 py-1.5 gap-0.5">
           <button
             onClick={prev}
-            className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors shrink-0"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors shrink-0"
             aria-label="Previous store"
           >
             <ChevronLeft size={15} />
@@ -91,13 +91,13 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex-1 mx-1 py-1.5 rounded-md bg-black/5 text-[#1C1C1C]/50 hover:bg-black/10 hover:text-[#1C1C1C] transition-colors flex items-center justify-center"
+            className="flex-1 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
           >
             <MapPin size={14} strokeWidth={2} />
           </a>
           <button
             onClick={next}
-            className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors shrink-0"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors shrink-0"
             aria-label="Next store"
           >
             <ChevronRight size={15} />
