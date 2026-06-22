@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, FastForward } from 'react-feather'
+import { Play, Pause, SkipForward } from 'react-feather'
 
 const TRACKS = [
   { id: 'd2FQCRvigBU' },
@@ -148,7 +148,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
           className="text-white/50 hover:text-white transition-colors disabled:opacity-30"
           aria-label="Next track"
         >
-          <FastForward size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />
+          <SkipForward size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />
         </button>
       </div>
     </div>
