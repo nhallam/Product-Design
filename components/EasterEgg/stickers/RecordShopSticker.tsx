@@ -62,10 +62,10 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
     <div className="bg-white shadow-lg overflow-hidden w-[220px] text-center" style={{ borderRadius: '5px' }}>
       <div className="px-4 pt-3 pb-2 border-b border-black/5">
         <div
-          className="text-sm font-bold uppercase tracking-wide text-[#1C1C1C]/50"
+          className="text-2xl font-black text-[#1C1C1C] leading-none"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
         >
-          💿 NYC Record Shops
+          NYC Record Shops
         </div>
       </div>
 
