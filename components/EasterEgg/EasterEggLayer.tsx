@@ -298,22 +298,32 @@ export default function EasterEggLayer() {
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <button
-              data-egg-control
-              onClick={() => { handleDismiss(); clearGhosts() }}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Clear stickers"
-            >
-              <X size={15} strokeWidth={2.5} />
-            </button>
-            <button
-              data-egg-control
-              onClick={handleShuffle}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Shuffle stickers"
-            >
-              <Shuffle size={15} strokeWidth={2.5} />
-            </button>
+            <div data-egg-control className="relative group">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 text-[11px] font-medium text-white/70 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+                Clear
+              </span>
+              <button
+                data-egg-control
+                onClick={() => { handleDismiss(); clearGhosts() }}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                aria-label="Clear stickers"
+              >
+                <X size={15} strokeWidth={2.5} />
+              </button>
+            </div>
+            <div data-egg-control className="relative group">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 text-[11px] font-medium text-white/70 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+                Shuffle
+              </span>
+              <button
+                data-egg-control
+                onClick={handleShuffle}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                aria-label="Shuffle stickers"
+              >
+                <Shuffle size={15} strokeWidth={2.5} />
+              </button>
+            </div>
           </div>
 
           <div
