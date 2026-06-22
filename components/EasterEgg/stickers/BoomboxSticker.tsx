@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Play, Pause, SkipForward } from 'react-feather'
 
 const TRACKS = [
   { id: 'd2FQCRvigBU' },
@@ -136,18 +137,18 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         <button
           onClick={(e) => { e.stopPropagation(); togglePlay() }}
           disabled={!ready}
-          className="text-white hover:text-white/70 transition-colors disabled:opacity-30 text-base leading-none"
+          className="text-white hover:text-white/70 transition-colors disabled:opacity-30"
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
-          {isPlaying ? '⏸' : '▶'}
+          {isPlaying ? <Pause size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" /> : <Play size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />}
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); nextTrack() }}
           disabled={!ready}
-          className="text-white/50 hover:text-white transition-colors disabled:opacity-30 text-base leading-none"
+          className="text-white/50 hover:text-white transition-colors disabled:opacity-30"
           aria-label="Next track"
         >
-          ⏭
+          <SkipForward size={16} strokeWidth={2.5} fill="currentColor" stroke="currentColor" />
         </button>
       </div>
     </div>
