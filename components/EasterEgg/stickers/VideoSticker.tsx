@@ -20,7 +20,7 @@ export default function VideoSticker({ ghost = false }: { ghost?: boolean }) {
   return (
     <div
       className="relative bg-[#1C1C1C] shadow-lg w-[220px] overflow-hidden"
-      style={{ borderRadius: '5px' }}
+      style={{ borderRadius: '12px' }}
     >
       {ghost ? (
         <div className="w-full" style={{ aspectRatio: '16 / 9', background: '#000' }} />
