@@ -68,21 +68,46 @@ const stickers = [
 ]
 
 const VISIBLE = 0.2
+const GAP = 24
 const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
+function overlaps(
+  a: { x: number; y: number; w: number; h: number },
+  b: { x: number; y: number; w: number; h: number }
+): boolean {
+  return (
+    a.x < b.x + b.w + GAP &&
+    a.x + a.w + GAP > b.x &&
+    a.y < b.y + b.h + GAP &&
+    a.y + a.h + GAP > b.y
+  )
+}
+
+function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, viewW: number, viewH: number) {
+  switch (edge) {
+    case 'left':
+      return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
+    case 'right':
+      return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
+    case 'top':
+      return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
+    case 'bottom':
+      return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
+  }
+}
+
 function generateEdgePositions(viewW: number, viewH: number): { x: number; y: number }[] {
+  const placed: { x: number; y: number; w: number; h: number }[] = []
+
   return stickers.map((s) => {
-    const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
-    switch (edge) {
-      case 'left':
-        return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
-      case 'right':
-        return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
-      case 'top':
-        return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
-      case 'bottom':
-        return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
+    let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
+    for (let attempt = 0; attempt < 60; attempt++) {
+      const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
+      pos = edgePosition(edge, s, viewW, viewH)
+      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
     }
+    placed.push({ ...pos, w: s.w, h: s.h })
+    return pos
   })
 }
 
