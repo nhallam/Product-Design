@@ -68,21 +68,46 @@ const stickers = [
 ]
 
 const VISIBLE = 0.2
+const GAP = 24
 const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
+function overlaps(
+  a: { x: number; y: number; w: number; h: number },
+  b: { x: number; y: number; w: number; h: number }
+): boolean {
+  return (
+    a.x < b.x + b.w + GAP &&
+    a.x + a.w + GAP > b.x &&
+    a.y < b.y + b.h + GAP &&
+    a.y + a.h + GAP > b.y
+  )
+}
+
+function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, viewW: number, viewH: number) {
+  switch (edge) {
+    case 'left':
+      return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
+    case 'right':
+      return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
+    case 'top':
+      return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
+    case 'bottom':
+      return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
+  }
+}
+
 function generateEdgePositions(viewW: number, viewH: number): { x: number; y: number }[] {
+  const placed: { x: number; y: number; w: number; h: number }[] = []
+
   return stickers.map((s) => {
-    const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
-    switch (edge) {
-      case 'left':
-        return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
-      case 'right':
-        return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
-      case 'top':
-        return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
-      case 'bottom':
-        return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
+    let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
+    for (let attempt = 0; attempt < 60; attempt++) {
+      const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
+      pos = edgePosition(edge, s, viewW, viewH)
+      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
     }
+    placed.push({ ...pos, w: s.w, h: s.h })
+    return pos
   })
 }
 
@@ -147,9 +172,23 @@ export default function EasterEggLayer() {
     easterEggClearGhostsRef.current = null
   }, [])
 
-  // Auto-activate on mount so stickers appear at edges on page load
+  // Auto-activate after a short delay once the page has settled
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { activate() }, [])
+  useEffect(() => { const t = setTimeout(activate, 1500); return () => clearTimeout(t) }, [])
+
+  // Click anywhere that isn't a sticker (or the Clear button) dismisses them
+  useEffect(() => {
+    if (!active || layerState.isDismissing) return
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('[data-sticker]') || target.closest('[data-egg-control]')) return
+      handleDismiss()
+    }
+    // Defer so the same click that activated doesn't immediately dismiss
+    const id = setTimeout(() => document.addEventListener('click', onClick), 0)
+    return () => { clearTimeout(id); document.removeEventListener('click', onClick) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, layerState.isDismissing])
 
   return (
     <>
@@ -214,6 +253,7 @@ export default function EasterEggLayer() {
             ))}
 
           <button
+            data-egg-control
             onClick={() => { handleDismiss(); clearGhosts() }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#1C1C1C] text-white text-sm px-5 py-2 rounded-full pointer-events-auto transition-all duration-200 hover:bg-[#333] ${
               draggingId || layerState.isDismissing ? 'opacity-0 pointer-events-none' : 'opacity-100'
