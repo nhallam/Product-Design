@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause } from 'react-feather'
+import { Play, Pause, Volume2, VolumeX } from 'react-feather'
 
 const TRACKS = [
   { id: 'd2FQCRvigBU' },
@@ -15,6 +15,8 @@ interface YTPlayer {
   playVideo(): void
   loadVideoById(id: string): void
   getVideoData(): { title: string; author: string }
+  mute(): void
+  unMute(): void
 }
 
 interface YTEvent {
@@ -34,6 +36,7 @@ declare global {
 
 export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
   const [trackInfo, setTrackInfo] = useState<{ title: string; author: string } | null>(null)
   const [ready, setReady] = useState(false)
   const playerRef = useRef<YTPlayer | null>(null)
@@ -54,7 +57,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
     const w = m.scrollWidth
     const overflow = w > c.clientWidth + 1
     setScroll(overflow)
-    if (overflow) setDuration(Math.max(6, (w + 32) / 35))
+    if (overflow) setDuration(Math.max(7.5, (w + 32) / 28))
   }, [title])
 
   useEffect(() => {
@@ -85,10 +88,12 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
               setIsPlaying(true)
               const data = event.target.getVideoData()
               if (data.title) setTrackInfo({ title: data.title, author: data.author })
-            } else if (
-              event.data === window.YT.PlayerState.PAUSED ||
-              event.data === window.YT.PlayerState.ENDED
-            ) {
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+              // Auto-advance to the next track when the current one finishes
+              const next = (currentIndexRef.current + 1) % TRACKS.length
+              currentIndexRef.current = next
+              event.target.loadVideoById(TRACKS[next].id)
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
               setIsPlaying(false)
             }
           },
@@ -125,6 +130,17 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
       playerRef.current.pauseVideo()
     } else {
       playerRef.current.playVideo()
+    }
+  }
+
+  const toggleMute = () => {
+    if (!ready || !playerRef.current) return
+    if (isMuted) {
+      playerRef.current.unMute()
+      setIsMuted(false)
+    } else {
+      playerRef.current.mute()
+      setIsMuted(true)
     }
   }
 
@@ -175,6 +191,14 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
       </div>
 
       <div className="flex items-center justify-center gap-4 mt-3">
+        <button
+          onClick={(e) => { e.stopPropagation(); toggleMute() }}
+          disabled={!ready}
+          className="text-white/50 hover:text-white transition-colors disabled:opacity-30"
+          aria-label={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? <VolumeX size={16} strokeWidth={2} /> : <Volume2 size={16} strokeWidth={2} />}
+        </button>
         <button
           onClick={(e) => { e.stopPropagation(); togglePlay() }}
           disabled={!ready}
