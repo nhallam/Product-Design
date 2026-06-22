@@ -102,11 +102,16 @@ function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, v
 }
 
 const MOBILE_BREAKPOINT = 768
-const MOBILE_MAX_STICKERS = 5
+const MOBILE_MAX_STICKERS = 7
 
-function generateEdgePositions(viewW: number, viewH: number): { x: number; y: number }[] {
+function selectPool(viewW: number) {
+  if (viewW >= MOBILE_BREAKPOINT) return stickers
+  const shuffled = [...stickers].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, MOBILE_MAX_STICKERS)
+}
+
+function generateEdgePositions(pool: typeof stickers, viewW: number, viewH: number): { x: number; y: number }[] {
   const placed: { x: number; y: number; w: number; h: number }[] = []
-  const pool = viewW < MOBILE_BREAKPOINT ? stickers.slice(0, MOBILE_MAX_STICKERS) : stickers
 
   return pool.map((s) => {
     let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
@@ -130,9 +135,10 @@ function withGhostProp(content: ReactElement | React.ReactNode): React.ReactNode
 export default function EasterEggLayer() {
   const [active, setActive] = useState(false)
   const [layerState, setLayerState] = useState<{
+    pool: typeof stickers
     positions: { x: number; y: number }[]
     isDismissing: boolean
-  }>({ positions: [], isDismissing: false })
+  }>({ pool: [], positions: [], isDismissing: false })
   const [ghostPositions, setGhostPositions] = useState<{ x: number; y: number }[] | null>(null)
   const [ghostFading, setGhostFading] = useState(false)
   const [draggingId, setDraggingId] = useState<string | null>(null)
@@ -144,10 +150,10 @@ export default function EasterEggLayer() {
   const livePositionsRef = useRef<Record<string, { x: number; y: number }>>({})
   const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const scheduleControls = (count: number) => {
+  const scheduleControls = (pool: typeof stickers) => {
     if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
     setControlsVisible(false)
-    const maxDelay = Math.max(...stickers.slice(0, count).map((s) => s.delay))
+    const maxDelay = Math.max(...pool.map((s) => s.delay))
     controlsTimerRef.current = setTimeout(() => setControlsVisible(true), (maxDelay + 0.7) * 1000)
   }
 
@@ -156,17 +162,19 @@ export default function EasterEggLayer() {
     setGhostFading(false)
     notifyGhostListeners(false)
     setDeletedIds(new Set())
-    const positions = generateEdgePositions(window.innerWidth, window.innerHeight)
-    positions.forEach((pos, i) => { livePositionsRef.current[stickers[i].id] = pos })
-    setLayerState({ positions, isDismissing: false })
+    const pool = selectPool(window.innerWidth)
+    const positions = generateEdgePositions(pool, window.innerWidth, window.innerHeight)
+    pool.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
+    setLayerState({ pool, positions, isDismissing: false })
     setActive(true)
-    scheduleControls(positions.length)
+    scheduleControls(pool)
   }
 
   const handleShuffle = () => {
-    const positions = generateEdgePositions(window.innerWidth, window.innerHeight)
-    positions.forEach((pos, i) => { livePositionsRef.current[stickers[i].id] = pos })
-    setLayerState({ positions, isDismissing: false })
+    const pool = selectPool(window.innerWidth)
+    const positions = generateEdgePositions(pool, window.innerWidth, window.innerHeight)
+    pool.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
+    setLayerState({ pool, positions, isDismissing: false })
     setDeletedIds(new Set())
     setShuffleKey((k) => k + 1)
   }
@@ -174,12 +182,11 @@ export default function EasterEggLayer() {
   const handleDismiss = () => {
     if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
     setControlsVisible(false)
-    const activeStickers = stickers.slice(0, layerState.positions.length)
-    const ghostPos = activeStickers.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
+    const ghostPos = layerState.pool.map((s) => livePositionsRef.current[s.id] ?? { x: 0, y: 0 })
     setGhostPositions(ghostPos)
     notifyGhostListeners(true)
     setLayerState((s) => ({ ...s, isDismissing: true }))
-    const maxDelay = Math.max(...activeStickers.map((s) => s.delay)) * 0.4
+    const maxDelay = Math.max(...layerState.pool.map((s) => s.delay)) * 0.4
     setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
   }
 
@@ -237,7 +244,7 @@ export default function EasterEggLayer() {
             transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',
           }}
         >
-          {ghostPositions.map((pos, i) => { const s = stickers[i]; return (
+          {ghostPositions.map((pos, i) => { const s = layerState.pool[i]; if (!s) return null; return (
             <div
               key={s.id}
               className="absolute"
@@ -260,8 +267,7 @@ export default function EasterEggLayer() {
 
       {active && layerState.positions.length > 0 && (
         <div className="fixed inset-0 z-[100] pointer-events-none">
-          {stickers
-            .slice(0, layerState.positions.length)
+          {layerState.pool
             .map((s, i) => ({ ...s, position: layerState.positions[i] }))
             .filter((s) => !deletedIds.has(s.id))
             .map((s) => (
