@@ -78,37 +78,31 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       </div>
 
       {!ghost && (
-        <>
+        <div className="flex items-center border-t border-black/5 px-2 py-1.5">
+          <button
+            onClick={prev}
+            className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors shrink-0"
+            aria-label="Previous store"
+          >
+            <ChevronLeft size={15} />
+          </button>
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="block mx-4 mb-3 py-1.5 rounded-md bg-black/5 text-[11px] font-semibold text-[#1C1C1C]/60 hover:bg-black/10 hover:text-[#1C1C1C] transition-colors"
+            className="flex-1 mx-1 py-1.5 rounded-md bg-black/5 text-[11px] font-semibold text-[#1C1C1C]/60 hover:bg-black/10 hover:text-[#1C1C1C] transition-colors text-center"
           >
             Directions ↗
           </a>
-
-          <div className="flex items-center border-t border-black/5 px-2 py-1.5">
-            <button
-              onClick={prev}
-              className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors"
-              aria-label="Previous store"
-            >
-              <ChevronLeft size={15} />
-            </button>
-            <span className="flex-1 text-center text-[10px] text-[#1C1C1C]/25 font-medium tabular-nums">
-              {index + 1} / {STORES.length}
-            </span>
-            <button
-              onClick={next}
-              className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors"
-              aria-label="Next store"
-            >
-              <ChevronRight size={15} />
-            </button>
-          </div>
-        </>
+          <button
+            onClick={next}
+            className="w-7 h-7 flex items-center justify-center rounded-md text-[#1C1C1C]/30 hover:text-[#1C1C1C] hover:bg-black/5 transition-colors shrink-0"
+            aria-label="Next store"
+          >
+            <ChevronRight size={15} />
+          </button>
+        </div>
       )}
     </div>
   )
