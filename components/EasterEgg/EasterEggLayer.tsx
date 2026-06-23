@@ -313,16 +313,6 @@ export default function EasterEggLayer() {
             </span>
             <button
               data-egg-control
-              onClick={() => { handleDismiss(); clearGhosts() }}
-              onMouseEnter={() => setButtonLabel('Clear')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Clear stickers"
-            >
-              <X size={15} strokeWidth={2.5} />
-            </button>
-            <button
-              data-egg-control
               onClick={handleShuffle}
               onMouseEnter={() => setButtonLabel('Shuffle')}
               onMouseLeave={() => setButtonLabel(null)}
@@ -330,6 +320,16 @@ export default function EasterEggLayer() {
               aria-label="Shuffle stickers"
             >
               <Shuffle size={15} strokeWidth={2.5} />
+            </button>
+            <button
+              data-egg-control
+              onClick={() => { handleDismiss(); clearGhosts() }}
+              onMouseEnter={() => setButtonLabel('Clear')}
+              onMouseLeave={() => setButtonLabel(null)}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Clear stickers"
+            >
+              <X size={15} strokeWidth={2.5} />
             </button>
           </div>
 
