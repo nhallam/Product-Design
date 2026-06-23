@@ -50,7 +50,6 @@ function getTodayHours(hours: string): string {
 }
 
 const LABEL_SIZE = 30
-const HEIGHTS = { name: 70, borough: 28, today: 28 }
 const MAX_SIZE = 35
 const MIN_SIZE = 10
 
@@ -60,7 +59,6 @@ const base: React.CSSProperties = {
   lineHeight: 1.15,
   letterSpacing: '0.01em',
   textAlign: 'center',
-  overflow: 'hidden',
 }
 
 export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
@@ -69,6 +67,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   const todayHours = getTodayHours(store.hours)
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(store.address)}`
 
+  const cardRef    = useRef<HTMLDivElement>(null)
   const nameRef    = useRef<HTMLDivElement>(null)
   const boroughRef = useRef<HTMLDivElement>(null)
   const todayRef   = useRef<HTMLDivElement>(null)
@@ -76,20 +75,18 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   const [fontSize, setFontSize] = useState(MAX_SIZE)
 
   useLayoutEffect(() => {
-    const entries = [
-      { ref: nameRef,    height: HEIGHTS.name },
-      { ref: boroughRef, height: HEIGHTS.borough },
-      { ref: todayRef,   height: HEIGHTS.today },
-    ]
+    const card = cardRef.current
+    if (!card) return
+    const varRefs = [nameRef, boroughRef, todayRef]
 
     let s = MAX_SIZE
-    const apply   = () => entries.forEach(({ ref }) => { if (ref.current) ref.current.style.fontSize = `${s}px` })
-    const allFit  = () => entries.every(({ ref, height }) => !ref.current || ref.current.scrollHeight <= height + 1)
+    const apply = () => varRefs.forEach(r => { if (r.current) r.current.style.fontSize = `${s}px` })
+    const fits  = () => card.scrollHeight <= card.clientHeight + 1
 
     apply()
-    while (!allFit() && s > MIN_SIZE) { s -= 0.5; apply() }
+    while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
     setFontSize(s)
-  }, [index])
+  }, [index, ghost])
 
   const varStyle: React.CSSProperties  = { ...base, fontSize: `${fontSize}px` }
   const fixStyle: React.CSSProperties  = { ...base, fontSize: `${LABEL_SIZE}px` }
@@ -98,15 +95,16 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
   return (
     <div
-      className="bg-white shadow-lg w-[160px] overflow-hidden flex flex-col"
-      style={{ borderRadius: '4px', height: '250px', padding: '12px 14px' }}
+      ref={cardRef}
+      className="bg-white shadow-lg w-[160px] flex flex-col"
+      style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
-      <div style={{ ...fixStyle, height: '36px' }}>BEST RECORD SHOPS NYC</div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-        <div ref={nameRef} style={{ ...varStyle, height: `${HEIGHTS.name}px`, width: '100%' }}>{store.name.toUpperCase()}</div>
+      <div style={fixStyle}>BEST RECORD SHOPS NYC</div>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', minHeight: 0 }}>
+        <div ref={nameRef} style={{ ...varStyle, width: '100%' }}>{store.name.toUpperCase()}</div>
       </div>
-      <div ref={boroughRef} style={{ ...varStyle, height: `${HEIGHTS.borough}px` }}>{store.borough.toUpperCase()}</div>
-      <div ref={todayRef}   style={{ ...varStyle, height: `${HEIGHTS.today}px` }}>{`TODAY ${todayHours.toUpperCase()}`}</div>
+      <div ref={boroughRef} style={varStyle}>{store.borough.toUpperCase()}</div>
+      <div ref={todayRef}   style={varStyle}>{`TODAY ${todayHours.toUpperCase()}`}</div>
       {!ghost && (
         <>
           <a
@@ -117,10 +115,10 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             className="hover:opacity-50 transition-opacity"
             style={{ display: 'block' }}
           >
-            <div style={{ ...fixStyle, height: '36px' }}>DIRECTIONS</div>
+            <div style={fixStyle}>DIRECTIONS</div>
           </a>
           <button onClick={next} className="hover:opacity-50 transition-opacity w-full">
-            <div style={{ ...fixStyle, height: '36px' }}>NEXT</div>
+            <div style={fixStyle}>NEXT</div>
           </button>
         </>
       )}
