@@ -50,6 +50,7 @@ function getTodayHours(hours: string): string {
 }
 
 const INFO_RATIO = 0.55
+const LABEL_SIZE = 36
 const MAX_SIZE = 40
 const MIN_SIZE = 8
 
@@ -67,35 +68,31 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   const today  = getTodayHours(store.hours)
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(store.address)}`
 
-  const cardRef       = useRef<HTMLDivElement>(null)
-  const headerRef     = useRef<HTMLDivElement>(null)
-  const nameRef       = useRef<HTMLDivElement>(null)
-  const infoRef       = useRef<HTMLDivElement>(null)
-  const nextRef       = useRef<HTMLDivElement>(null)
-  const directionsRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLDivElement>(null)
+  const infoRef = useRef<HTMLDivElement>(null)
 
-  const [mainSize, setMainSize] = useState(MAX_SIZE)
+  const [nameSize, setNameSize] = useState(MAX_SIZE)
 
   useLayoutEffect(() => {
     const card = cardRef.current
     if (!card) return
 
-    const mainRefs = [headerRef, nameRef, nextRef, directionsRef].filter(r => r.current)
-
     let s = MAX_SIZE
     const apply = () => {
-      mainRefs.forEach(r => { if (r.current) r.current.style.fontSize = `${s}px` })
+      if (nameRef.current) nameRef.current.style.fontSize = `${s}px`
       if (infoRef.current) infoRef.current.style.fontSize = `${s * INFO_RATIO}px`
     }
     const fits = () => card.scrollHeight <= card.clientHeight + 1
 
     apply()
     while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
-    setMainSize(s)
+    setNameSize(s)
   }, [index, ghost])
 
-  const ms: React.CSSProperties = { ...base, fontSize: `${mainSize}px` }
-  const is: React.CSSProperties = { ...base, fontSize: `${mainSize * INFO_RATIO}px` }
+  const ls: React.CSSProperties = { ...base, fontSize: `${LABEL_SIZE}px` }
+  const ms: React.CSSProperties = { ...base, fontSize: `${nameSize}px` }
+  const is: React.CSSProperties = { ...base, fontSize: `${nameSize * INFO_RATIO}px` }
 
   const next = (e: React.MouseEvent) => { e.stopPropagation(); setIndex(i => (i + 1) % STORES.length) }
 
@@ -106,7 +103,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
       {/* Header */}
-      <div ref={headerRef} style={{ ...ms, whiteSpace: 'pre-line' }}>{'BEST NYC\nRECORD STORES'}</div>
+      <div style={{ ...ls, whiteSpace: 'pre-line' }}>{'BEST NYC\nRECORD STORES'}</div>
 
       <div style={{ flex: 1 }} />
 
@@ -120,7 +117,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       {!ghost && (
         <>
           <button onClick={next} className="hover:opacity-50 transition-opacity w-full">
-            <div ref={nextRef} style={ms}>NEXT STORE</div>
+            <div style={ls}>NEXT STORE</div>
           </button>
           <a
             href={mapsUrl}
@@ -130,7 +127,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             className="hover:opacity-50 transition-opacity"
             style={{ display: 'block' }}
           >
-            <div ref={directionsRef} style={ms}>DIRECTIONS</div>
+            <div style={ls}>DIRECTIONS</div>
           </a>
         </>
       )}
