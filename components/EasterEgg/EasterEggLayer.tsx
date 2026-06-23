@@ -391,7 +391,7 @@ export default function EasterEggLayer() {
                 width: binActive ? 44 : 78,
                 left: 0,
                 transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})`,
-                backgroundColor: overBin ? '#D12525' : '#1C1C1C',
+                backgroundColor: overBin ? '#D12525' : 'var(--text)',
               }}
             />
 
@@ -407,7 +407,7 @@ export default function EasterEggLayer() {
                 onClick={handleShuffle}
                 onMouseEnter={() => setButtonLabel('Refresh')}
                 onMouseLeave={() => setButtonLabel(null)}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--bg)] hover:bg-[var(--bg)]/20 transition-colors"
                 aria-label="Refresh stickers"
               >
                 <RefreshCw size={15} strokeWidth={2.5} />
@@ -417,7 +417,7 @@ export default function EasterEggLayer() {
                 onClick={() => { handleDismiss(); clearGhosts() }}
                 onMouseEnter={() => setButtonLabel('Clear')}
                 onMouseLeave={() => setButtonLabel(null)}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--bg)] hover:bg-[var(--bg)]/20 transition-colors"
                 aria-label="Clear stickers"
               >
                 <X size={15} strokeWidth={2.5} />
@@ -427,7 +427,7 @@ export default function EasterEggLayer() {
             {/* Dragging state: single trash target (fixed 44px, centered on anchor) */}
             <div
               ref={binRef}
-              className={`absolute top-0 h-full flex items-center justify-center text-white pointer-events-none transition-[opacity,transform] duration-200 ${
+              className={`absolute top-0 h-full flex items-center justify-center text-[var(--bg)] pointer-events-none transition-[opacity,transform] duration-200 ${
                 binActive ? 'opacity-100' : 'opacity-0'
               }`}
               style={{ width: 44, left: 0, transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})` }}
