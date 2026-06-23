@@ -49,9 +49,9 @@ function getTodayHours(hours: string): string {
   return '—'
 }
 
-const LABEL_SIZE = 30
-const MAX_SIZE = 35
-const MIN_SIZE = 10
+const INFO_RATIO = 0.55
+const MAX_SIZE = 40
+const MIN_SIZE = 8
 
 const base: React.CSSProperties = {
   fontFamily: GROTESK,
@@ -63,35 +63,41 @@ const base: React.CSSProperties = {
 
 export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
-  const store = STORES[index]
-  const todayHours = getTodayHours(store.hours)
+  const store  = STORES[index]
+  const today  = getTodayHours(store.hours)
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(store.address)}`
 
-  const cardRef    = useRef<HTMLDivElement>(null)
-  const nameRef    = useRef<HTMLDivElement>(null)
-  const boroughRef = useRef<HTMLDivElement>(null)
-  const todayRef   = useRef<HTMLDivElement>(null)
+  const cardRef       = useRef<HTMLDivElement>(null)
+  const headerRef     = useRef<HTMLDivElement>(null)
+  const nameRef       = useRef<HTMLDivElement>(null)
+  const infoRef       = useRef<HTMLDivElement>(null)
+  const nextRef       = useRef<HTMLDivElement>(null)
+  const directionsRef = useRef<HTMLDivElement>(null)
 
-  const [fontSize, setFontSize] = useState(MAX_SIZE)
+  const [mainSize, setMainSize] = useState(MAX_SIZE)
 
   useLayoutEffect(() => {
     const card = cardRef.current
     if (!card) return
-    const varRefs = [nameRef, boroughRef, todayRef]
+
+    const mainRefs = [headerRef, nameRef, nextRef, directionsRef].filter(r => r.current)
 
     let s = MAX_SIZE
-    const apply = () => varRefs.forEach(r => { if (r.current) r.current.style.fontSize = `${s}px` })
-    const fits  = () => card.scrollHeight <= card.clientHeight + 1
+    const apply = () => {
+      mainRefs.forEach(r => { if (r.current) r.current.style.fontSize = `${s}px` })
+      if (infoRef.current) infoRef.current.style.fontSize = `${s * INFO_RATIO}px`
+    }
+    const fits = () => card.scrollHeight <= card.clientHeight + 1
 
     apply()
     while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
-    setFontSize(s)
+    setMainSize(s)
   }, [index, ghost])
 
-  const varStyle: React.CSSProperties  = { ...base, fontSize: `${fontSize}px` }
-  const fixStyle: React.CSSProperties  = { ...base, fontSize: `${LABEL_SIZE}px` }
+  const ms: React.CSSProperties = { ...base, fontSize: `${mainSize}px` }
+  const is: React.CSSProperties = { ...base, fontSize: `${mainSize * INFO_RATIO}px` }
 
-  const next = (e: React.MouseEvent) => { e.stopPropagation(); setIndex((i) => (i + 1) % STORES.length) }
+  const next = (e: React.MouseEvent) => { e.stopPropagation(); setIndex(i => (i + 1) % STORES.length) }
 
   return (
     <div
@@ -99,14 +105,23 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       className="bg-white shadow-lg w-[160px] flex flex-col"
       style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
-      <div style={{ ...fixStyle, whiteSpace: 'pre-line' }}>{'BEST RECORDS\nSHOPS NYC'}</div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', minHeight: 0 }}>
-        <div ref={nameRef} style={{ ...varStyle, width: '100%' }}>{store.name.toUpperCase()}</div>
-      </div>
-      <div ref={boroughRef} style={varStyle}>{store.borough.toUpperCase()}</div>
-      <div ref={todayRef}   style={varStyle}>{`TODAY ${todayHours.toUpperCase()}`}</div>
+      {/* Header */}
+      <div ref={headerRef} style={{ ...ms, whiteSpace: 'pre-line' }}>{'BEST NYC\nRECORD STORES'}</div>
+
+      <div style={{ flex: 1 }} />
+
+      {/* Store info */}
+      <div ref={nameRef} style={ms}>{store.name.toUpperCase()}</div>
+      <div ref={infoRef} style={is}>{store.borough.toUpperCase()} – TODAY {today.toUpperCase()}</div>
+
+      <div style={{ flex: 1 }} />
+
+      {/* Actions */}
       {!ghost && (
         <>
+          <button onClick={next} className="hover:opacity-50 transition-opacity w-full">
+            <div ref={nextRef} style={ms}>NEXT STORE</div>
+          </button>
           <a
             href={mapsUrl}
             target="_blank"
@@ -115,11 +130,8 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             className="hover:opacity-50 transition-opacity"
             style={{ display: 'block' }}
           >
-            <div style={fixStyle}>DIRECTIONS</div>
+            <div ref={directionsRef} style={ms}>DIRECTIONS</div>
           </a>
-          <button onClick={next} className="hover:opacity-50 transition-opacity w-full">
-            <div style={fixStyle}>NEXT</div>
-          </button>
         </>
       )}
     </div>
