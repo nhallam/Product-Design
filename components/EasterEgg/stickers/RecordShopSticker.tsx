@@ -59,7 +59,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
   return (
     <div
-      className="bg-white shadow-lg w-[200px] text-center overflow-hidden flex flex-col"
+      className="bg-white shadow-lg w-[160px] text-center overflow-hidden flex flex-col"
       style={{ borderRadius: '4px', height: '300px' }}
     >
       {/* Title */}
