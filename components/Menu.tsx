@@ -62,9 +62,11 @@ export default function Menu({ open, onClose }: MenuProps) {
     <div onClick={onClose} className={`fixed inset-0 z-50 bg-[#f0f0f0]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
-      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4 flex justify-between items-center">
+      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
-        {hasGhosts && (
+      </div>
+      {hasGhosts && (
+        <div className="max-w-2xl mx-auto w-full px-6 flex justify-end">
           <div
             className="transition-[opacity,transform] duration-300 ease-out"
             style={{
@@ -80,8 +82,8 @@ export default function Menu({ open, onClose }: MenuProps) {
               Clear stickers
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
         <div className="flex-1 flex items-center">
