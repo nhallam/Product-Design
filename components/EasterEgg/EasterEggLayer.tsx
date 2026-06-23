@@ -60,7 +60,7 @@ const stickers = [
   },
   { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
   { id: 'kelloggs', w: 220, h: 80, rotation: -3, delay: 0.49, content: <KelloggsSticker /> },
-  { id: 'records', w: 220, h: 240, rotation: -4, delay: 0.56, content: <RecordShopSticker /> },
+  { id: 'records', w: 160, h: 300, rotation: -4, delay: 0.56, content: <RecordShopSticker /> },
   {
     id: 'anti', w: 160, h: 156, rotation: 3, delay: 0.63,
     content: (
@@ -306,7 +306,7 @@ export default function EasterEggLayer() {
             }`}
           >
             <span
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-500 ease-in-out"
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
               style={{ opacity: buttonLabel ? 1 : 0 }}
             >
               {buttonLabel ?? ''}

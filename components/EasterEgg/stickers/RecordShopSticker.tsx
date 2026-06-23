@@ -59,27 +59,27 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
   return (
     <div
-      className="bg-white shadow-lg w-[220px] text-center overflow-hidden flex flex-col"
-      style={{ borderRadius: '5px', height: '240px' }}
+      className="bg-white shadow-lg w-[160px] text-center overflow-hidden flex flex-col"
+      style={{ borderRadius: '4px', height: '300px' }}
     >
       {/* Title */}
       <div style={{ padding: '10px 16px 8px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           BEST RECORD SHOPS IN NYC
         </div>
       </div>
 
       <div className="flex-1 flex flex-col justify-center" style={{ padding: '4px 16px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           {store.name.toUpperCase()}
         </div>
       </div>
 
       <div style={{ padding: '4px 16px 8px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           {store.borough.toUpperCase()}
         </div>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           TODAY {todayHours.toUpperCase()}
         </div>
       </div>
@@ -93,12 +93,12 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             onClick={(e) => e.stopPropagation()}
             className="block w-full text-center hover:opacity-50 transition-opacity"
           >
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
               DIRECTIONS
             </span>
           </a>
           <button onClick={next} className="block w-full text-center hover:opacity-50 transition-opacity">
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '20px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
+            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
               NEXT
             </span>
           </button>
