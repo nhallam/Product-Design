@@ -5,10 +5,12 @@ import { Play, Pause, Volume2, VolumeX } from 'react-feather'
 
 // `cover` is optional — drop a square image in /public and reference it here
 // to override the album art. Falls back to the YouTube thumbnail otherwise.
-const TRACKS: { id: string; cover?: string }[] = [
-  { id: 'd2FQCRvigBU', cover: '/Action_Bronson_Mr._Wonderful.jpg' },
-  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg' },
-  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg' },
+// `artist` overrides the author name pulled from YouTube; `cover` overrides
+// the album art (otherwise the YouTube thumbnail is used).
+const TRACKS: { id: string; cover?: string; artist?: string }[] = [
+  { id: 'd2FQCRvigBU', cover: '/Action_Bronson_Mr._Wonderful.jpg', artist: 'Action Bronson' },
+  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg', artist: 'The Notorious B.I.G.' },
+  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg', artist: 'LCD Soundsystem' },
 ]
 
 const coverFor = (i: number) =>
@@ -208,7 +210,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         )}
       </div>
       <div className="text-xs text-white/60 mt-0.5 line-clamp-1 h-4">
-        {trackInfo ? trackInfo.author : ready ? '' : 'Loading...'}
+        {TRACKS[currentIndex].artist ?? (trackInfo ? trackInfo.author : ready ? '' : 'Loading...')}
       </div>
 
       <div className="flex items-center justify-center gap-4 mt-3">

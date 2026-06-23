@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react'
 
-type Status = 'running' | 'delayed' | 'suspended' | 'loading' | 'unknown'
+type Status = 'running' | 'planned' | 'reduced' | 'delays' | 'suspended' | 'loading' | 'unknown'
 
 const STATUS_CONFIG: Record<Status, { color: string; label: string }> = {
-  running:   { color: '#6DBA4A', label: 'Normal service' },
-  delayed:   { color: '#D8A500', label: 'Delays' },
-  suspended: { color: '#D12525', label: 'No service' },
+  running:   { color: '#6DBA4A', label: 'Normal Service' },
+  planned:   { color: '#4784FF', label: 'Planned Outage' },
+  reduced:   { color: '#E8820E', label: 'Reduced Service' },
+  delays:    { color: '#D8A500', label: 'Significant Delays' },
+  suspended: { color: '#D12525', label: 'Suspended' },
   loading:   { color: '#6DBA4A', label: 'Checking...' },
   unknown:   { color: '#6DBA4A', label: 'Status unknown' },
 }
@@ -26,15 +28,15 @@ export default function GTrainSticker() {
 
   return (
     <svg
-      width="170"
+      width="230"
       height="68"
-      viewBox="0 0 170 68"
+      viewBox="0 0 230 68"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="select-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]"
     >
-      <rect width="170" height="68" rx="10" fill="#1D1D1D" />
-      <line x1="0" y1="16.5" x2="170" y2="16.5" stroke="white" strokeWidth="3" />
+      <rect width="230" height="68" rx="10" fill="#1D1D1D" />
+      <line x1="0" y1="16.5" x2="230" y2="16.5" stroke="white" strokeWidth="3" />
 
       <style>{`
         @keyframes gtrain-pulse {
@@ -43,8 +45,8 @@ export default function GTrainSticker() {
         }
         .gtrain-pulse { animation: gtrain-pulse 2s ease-out infinite; }
       `}</style>
-      <circle cx="158" cy="8" r="4" fill={color} />
-      <circle cx="158" cy="8" r="4" fill={color} className="gtrain-pulse" />
+      <circle cx="218" cy="8" r="4" fill={color} />
+      <circle cx="218" cy="8" r="4" fill={color} className="gtrain-pulse" />
 
       {/* G circle at 44% of original size, centered at (38, 42) */}
       <circle cx="38" cy="42" r="22" fill={color} />

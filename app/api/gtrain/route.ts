@@ -19,19 +19,28 @@ export async function GET() {
       e.alert?.informedEntity?.some((ie) => ie.routeId === 'G')
     )
 
-    // GTFS effect enum: 1=NO_SERVICE, 2=REDUCED_SERVICE, 3=SIGNIFICANT_DELAYS
-    let status: 'running' | 'delayed' | 'suspended' = 'running'
+    // GTFS effect enum → our status. 1=NO_SERVICE, 2=REDUCED_SERVICE,
+    // 3=SIGNIFICANT_DELAYS, 4=DETOUR, 6=MODIFIED_SERVICE (planned work).
+    // When several alerts are active, the most severe one wins.
+    type Status = 'running' | 'planned' | 'reduced' | 'delays' | 'suspended'
+    const RANK: Record<Status, number> = { running: 0, planned: 1, reduced: 2, delays: 3, suspended: 4 }
+    const effectStatus = (effect?: number | null): Status | null => {
+      switch (effect) {
+        case 1: return 'suspended'
+        case 2: return 'reduced'
+        case 3: return 'delays'
+        case 4:
+        case 6: return 'planned'
+        default: return null
+      }
+    }
+
+    let status: Status = 'running'
     const alerts: string[] = []
 
     for (const entity of gAlerts) {
-      const effect = entity.alert?.effect
-      if (effect === 1) {
-        status = 'suspended'
-      } else if (effect === 3 && status !== 'suspended') {
-        status = 'delayed'
-      } else if (effect === 2 && status === 'running') {
-        status = 'delayed'
-      }
+      const s = effectStatus(entity.alert?.effect)
+      if (s && RANK[s] > RANK[status]) status = s
 
       const text = entity.alert?.headerText?.translation?.[0]?.text
       if (text) alerts.push(text)
