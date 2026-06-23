@@ -342,7 +342,7 @@ export default function EasterEggLayer() {
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
-            style={{ width: draggingId ? 44 : 78 }}
+            style={{ width: draggingId ? 44 : 78, overflow: 'hidden' }}
           >
             <span
               className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
@@ -351,11 +351,12 @@ export default function EasterEggLayer() {
               {buttonLabel ?? ''}
             </span>
 
-            {/* Default state: Refresh + Clear */}
+            {/* Default state: Refresh + Clear — fixed 78px so icons don't move during pill resize */}
             <div
-              className={`absolute inset-0 flex items-center justify-center gap-0.5 transition-opacity duration-200 ${
+              className={`absolute top-0 h-full flex items-center justify-center gap-0.5 transition-opacity duration-200 ${
                 draggingId ? 'opacity-0 pointer-events-none' : 'opacity-100'
               }`}
+              style={{ width: 78, left: '50%', transform: 'translateX(-50%)' }}
             >
               <button
                 data-egg-control
@@ -379,12 +380,13 @@ export default function EasterEggLayer() {
               </button>
             </div>
 
-            {/* Dragging state: single trash target */}
+            {/* Dragging state: single trash target — fixed 44px, centered */}
             <div
               ref={binRef}
-              className={`absolute inset-0 flex items-center justify-center text-white transition-opacity duration-200 ${
+              className={`absolute top-0 h-full flex items-center justify-center text-white transition-opacity duration-200 ${
                 draggingId ? 'opacity-100' : 'opacity-0'
               }`}
+              style={{ width: 44, left: '50%', transform: 'translateX(-50%)' }}
               aria-label="Drop to delete"
             >
               <Trash2 size={16} strokeWidth={2.5} />
