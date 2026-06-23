@@ -306,7 +306,7 @@ export default function EasterEggLayer() {
             }`}
           >
             <span
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-150"
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-500 ease-in-out"
               style={{ opacity: buttonLabel ? 1 : 0 }}
             >
               {buttonLabel ?? ''}
