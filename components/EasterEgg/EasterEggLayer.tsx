@@ -74,18 +74,48 @@ const stickers = [
 
 const VISIBLE = 0.3
 const GAP = 24
+// Stickers may sit close to UI elements (nav, controls) but must not touch them.
+const EXCLUSION_GAP = 12
 const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
-function overlaps(
-  a: { x: number; y: number; w: number; h: number },
-  b: { x: number; y: number; w: number; h: number }
-): boolean {
+type Rect = { x: number; y: number; w: number; h: number }
+
+function overlaps(a: Rect, b: Rect, gap = GAP): boolean {
   return (
-    a.x < b.x + b.w + GAP &&
-    a.x + a.w + GAP > b.x &&
-    a.y < b.y + b.h + GAP &&
-    a.y + a.h + GAP > b.y
+    a.x < b.x + b.w + gap &&
+    a.x + a.w + gap > b.x &&
+    a.y < b.y + b.h + gap &&
+    a.y + a.h + gap > b.y
   )
+}
+
+// Areas the stickers must keep clear of: the nav items (Nick Hallam / Menu)
+// and the bottom-center control pill (incl. its hover label).
+function getExclusionZones(viewW: number, viewH: number): Rect[] {
+  const zones: Rect[] = []
+
+  const nav = typeof document !== 'undefined' ? document.querySelector('nav') : null
+  if (nav) {
+    for (const child of Array.from(nav.children)) {
+      const r = child.getBoundingClientRect()
+      if (r.width > 0 && r.height > 0) zones.push({ x: r.left, y: r.top, w: r.width, h: r.height })
+    }
+  }
+
+  // Control pill footprint: ~100px wide, ~44px tall, 32px above the bottom,
+  // plus ~22px for the hover label that appears above it.
+  const pillW = 100
+  const pillH = 44
+  const labelH = 22
+  const bottomGap = 32
+  zones.push({
+    x: viewW / 2 - pillW / 2,
+    y: viewH - bottomGap - pillH - labelH,
+    w: pillW,
+    h: pillH + labelH,
+  })
+
+  return zones
 }
 
 function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, viewW: number, viewH: number) {
@@ -111,14 +141,19 @@ function selectPool(viewW: number) {
 }
 
 function generateEdgePositions(pool: typeof stickers, viewW: number, viewH: number): { x: number; y: number }[] {
-  const placed: { x: number; y: number; w: number; h: number }[] = []
+  const placed: Rect[] = []
+  const exclusions = getExclusionZones(viewW, viewH)
+
+  const clears = (rect: Rect) =>
+    !placed.some((p) => overlaps(rect, p)) &&
+    !exclusions.some((z) => overlaps(rect, z, EXCLUSION_GAP))
 
   return pool.map((s) => {
     let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
-    for (let attempt = 0; attempt < 60; attempt++) {
+    for (let attempt = 0; attempt < 80; attempt++) {
       const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
       pos = edgePosition(edge, s, viewW, viewH)
-      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
+      if (clears({ ...pos, w: s.w, h: s.h })) break
     }
     placed.push({ ...pos, w: s.w, h: s.h })
     return pos
