@@ -60,7 +60,7 @@ const stickers = [
   },
   { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
   { id: 'kelloggs', w: 220, h: 80, rotation: -3, delay: 0.49, content: <KelloggsSticker /> },
-  { id: 'records', w: 220, h: 230, rotation: -4, delay: 0.56, content: <RecordShopSticker /> },
+  { id: 'records', w: 220, h: 240, rotation: -4, delay: 0.56, content: <RecordShopSticker /> },
   {
     id: 'anti', w: 160, h: 156, rotation: 3, delay: 0.63,
     content: (
@@ -313,16 +313,6 @@ export default function EasterEggLayer() {
             </span>
             <button
               data-egg-control
-              onClick={() => { handleDismiss(); clearGhosts() }}
-              onMouseEnter={() => setButtonLabel('Clear')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Clear stickers"
-            >
-              <X size={15} strokeWidth={2.5} />
-            </button>
-            <button
-              data-egg-control
               onClick={handleShuffle}
               onMouseEnter={() => setButtonLabel('Shuffle')}
               onMouseLeave={() => setButtonLabel(null)}
@@ -330,6 +320,16 @@ export default function EasterEggLayer() {
               aria-label="Shuffle stickers"
             >
               <Shuffle size={15} strokeWidth={2.5} />
+            </button>
+            <button
+              data-egg-control
+              onClick={() => { handleDismiss(); clearGhosts() }}
+              onMouseEnter={() => setButtonLabel('Clear')}
+              onMouseLeave={() => setButtonLabel(null)}
+              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+              aria-label="Clear stickers"
+            >
+              <X size={15} strokeWidth={2.5} />
             </button>
           </div>
 
