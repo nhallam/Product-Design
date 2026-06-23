@@ -56,7 +56,7 @@ const MIN_SIZE = 10
 const base: React.CSSProperties = {
   fontFamily: GROTESK,
   fontWeight: 900,
-  lineHeight: 1.15,
+  lineHeight: 1,
   letterSpacing: '0.01em',
   textAlign: 'center',
 }
