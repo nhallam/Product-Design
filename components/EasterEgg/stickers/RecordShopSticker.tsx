@@ -100,7 +100,7 @@ function isOpenNow(hours: string): boolean {
 }
 
 const INFO_RATIO = 0.55
-const LABEL_SIZE = 36
+const LABEL_SIZE = 32
 const MAX_SIZE = 30
 const MIN_SIZE = 8
 
