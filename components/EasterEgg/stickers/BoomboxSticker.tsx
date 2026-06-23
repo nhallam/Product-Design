@@ -6,9 +6,9 @@ import { Play, Pause, Volume2, VolumeX } from 'react-feather'
 // `cover` is optional — drop a square image in /public and reference it here
 // to override the album art. Falls back to the YouTube thumbnail otherwise.
 const TRACKS: { id: string; cover?: string }[] = [
-  { id: 'd2FQCRvigBU' },
-  { id: 'e4oB6wYMcrI' },
-  { id: 'aygY5OqMuKE' },
+  { id: 'd2FQCRvigBU', cover: '/Action_Bronson_Mr._Wonderful.jpg' },
+  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg' },
+  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg' },
 ]
 
 const coverFor = (i: number) =>
