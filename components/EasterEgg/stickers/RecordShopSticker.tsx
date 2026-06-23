@@ -49,6 +49,38 @@ function getTodayHours(hours: string): string {
   return '—'
 }
 
+// Parse "11 AM", "12", "6:30 PM" into minutes since midnight.
+// If no AM/PM is present, inherit the supplied fallback meridiem.
+function parseClock(str: string, fallback: 'AM' | 'PM'): number | null {
+  const m = str.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/i)
+  if (!m) return null
+  let hour = parseInt(m[1], 10)
+  const minute = m[2] ? parseInt(m[2], 10) : 0
+  const meridiem = (m[3]?.toUpperCase() as 'AM' | 'PM') ?? fallback
+  if (meridiem === 'PM' && hour !== 12) hour += 12
+  if (meridiem === 'AM' && hour === 12) hour = 0
+  return hour * 60 + minute
+}
+
+// Returns true if the store is open at the current day/time.
+function isOpenNow(hours: string): boolean {
+  const range = getTodayHours(hours)
+  if (range === 'Closed' || range === '—') return false
+
+  const [startStr, endStr] = range.split('–')
+  if (!startStr || !endStr) return false
+
+  // The closing time always carries AM/PM; the opening time may inherit it.
+  const endMeridiem = /PM/i.test(endStr) ? 'PM' : 'AM'
+  const open = parseClock(startStr, endMeridiem)
+  const close = parseClock(endStr, endMeridiem)
+  if (open === null || close === null) return false
+
+  const now = new Date()
+  const mins = now.getHours() * 60 + now.getMinutes()
+  return close >= open ? mins >= open && mins < close : mins >= open || mins < close
+}
+
 const INFO_RATIO = 0.55
 const LABEL_SIZE = 36
 const MAX_SIZE = 40
@@ -65,7 +97,7 @@ const base: React.CSSProperties = {
 export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
   const store  = STORES[index]
-  const today  = getTodayHours(store.hours)
+  const openLabel = isOpenNow(store.hours) ? 'OPEN' : 'CLOSED'
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(store.address)}`
 
   const cardRef = useRef<HTMLDivElement>(null)
@@ -109,7 +141,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
       {/* Store info */}
       <div ref={nameRef} style={ms}>{store.name.toUpperCase()}</div>
-      <div ref={infoRef} style={is}>{store.borough.toUpperCase()} – TODAY {today.toUpperCase()}</div>
+      <div ref={infoRef} style={is}>{store.borough.toUpperCase()} – {openLabel}</div>
 
       <div style={{ flex: 1 }} />
 
