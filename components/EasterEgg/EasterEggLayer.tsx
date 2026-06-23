@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, cloneElement, isValidElement, ReactElement } from 'react'
 import { PanInfo } from 'framer-motion'
-import { X, RefreshCw } from 'react-feather'
+import { X, RefreshCw, Trash2 } from 'react-feather'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
@@ -74,18 +74,48 @@ const stickers = [
 
 const VISIBLE = 0.3
 const GAP = 24
+// Stickers may sit close to UI elements (nav, controls) but must not touch them.
+const EXCLUSION_GAP = 12
 const EDGES = ['left', 'right', 'top', 'bottom'] as const
 
-function overlaps(
-  a: { x: number; y: number; w: number; h: number },
-  b: { x: number; y: number; w: number; h: number }
-): boolean {
+type Rect = { x: number; y: number; w: number; h: number }
+
+function overlaps(a: Rect, b: Rect, gap = GAP): boolean {
   return (
-    a.x < b.x + b.w + GAP &&
-    a.x + a.w + GAP > b.x &&
-    a.y < b.y + b.h + GAP &&
-    a.y + a.h + GAP > b.y
+    a.x < b.x + b.w + gap &&
+    a.x + a.w + gap > b.x &&
+    a.y < b.y + b.h + gap &&
+    a.y + a.h + gap > b.y
   )
+}
+
+// Areas the stickers must keep clear of: the nav items (Nick Hallam / Menu)
+// and the bottom-center control pill (incl. its hover label).
+function getExclusionZones(viewW: number, viewH: number): Rect[] {
+  const zones: Rect[] = []
+
+  const nav = typeof document !== 'undefined' ? document.querySelector('nav') : null
+  if (nav) {
+    for (const child of Array.from(nav.children)) {
+      const r = child.getBoundingClientRect()
+      if (r.width > 0 && r.height > 0) zones.push({ x: r.left, y: r.top, w: r.width, h: r.height })
+    }
+  }
+
+  // Control pill footprint: ~100px wide, ~44px tall, 32px above the bottom,
+  // plus ~22px for the hover label that appears above it.
+  const pillW = 100
+  const pillH = 44
+  const labelH = 22
+  const bottomGap = 32
+  zones.push({
+    x: viewW / 2 - pillW / 2,
+    y: viewH - bottomGap - pillH - labelH,
+    w: pillW,
+    h: pillH + labelH,
+  })
+
+  return zones
 }
 
 function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, viewW: number, viewH: number) {
@@ -111,14 +141,19 @@ function selectPool(viewW: number) {
 }
 
 function generateEdgePositions(pool: typeof stickers, viewW: number, viewH: number): { x: number; y: number }[] {
-  const placed: { x: number; y: number; w: number; h: number }[] = []
+  const placed: Rect[] = []
+  const exclusions = getExclusionZones(viewW, viewH)
+
+  const clears = (rect: Rect) =>
+    !placed.some((p) => overlaps(rect, p)) &&
+    !exclusions.some((z) => overlaps(rect, z, EXCLUSION_GAP))
 
   return pool.map((s) => {
     let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
-    for (let attempt = 0; attempt < 60; attempt++) {
+    for (let attempt = 0; attempt < 80; attempt++) {
       const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
       pos = edgePosition(edge, s, viewW, viewH)
-      if (!placed.some((p) => overlaps({ ...pos, w: s.w, h: s.h }, p))) break
+      if (clears({ ...pos, w: s.w, h: s.h })) break
     }
     placed.push({ ...pos, w: s.w, h: s.h })
     return pos
@@ -284,9 +319,12 @@ export default function EasterEggLayer() {
                   setDraggingId(null)
                   if (binRef.current) {
                     const bin = binRef.current.getBoundingClientRect()
+                    // Pad the hit area so the compact trash target is easier to
+                    // hit, especially on touch.
+                    const m = 32
                     if (
-                      info.point.x >= bin.left && info.point.x <= bin.right &&
-                      info.point.y >= bin.top && info.point.y <= bin.bottom
+                      info.point.x >= bin.left - m && info.point.x <= bin.right + m &&
+                      info.point.y >= bin.top - m && info.point.y <= bin.bottom + m
                     ) {
                       setDeletedIds((prev) => new Set([...prev, s.id]))
                     }
@@ -299,47 +337,50 @@ export default function EasterEggLayer() {
 
           <div
             data-egg-control
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
-              controlsVisible && !draggingId && !layerState.isDismissing
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
+              (controlsVisible || draggingId) && !layerState.isDismissing
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <span
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
-              style={{ opacity: buttonLabel ? 1 : 0 }}
-            >
-              {buttonLabel ?? ''}
-            </span>
-            <button
-              data-egg-control
-              onClick={handleShuffle}
-              onMouseEnter={() => setButtonLabel('Refresh')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Refresh stickers"
-            >
-              <RefreshCw size={15} strokeWidth={2.5} />
-            </button>
-            <button
-              data-egg-control
-              onClick={() => { handleDismiss(); clearGhosts() }}
-              onMouseEnter={() => setButtonLabel('Clear')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Clear stickers"
-            >
-              <X size={15} strokeWidth={2.5} />
-            </button>
-          </div>
-
-          <div
-            ref={binRef}
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
-              draggingId && !layerState.isDismissing ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-            }`}
-          >
-            🗑
+            {draggingId ? (
+              <div
+                ref={binRef}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-white"
+                aria-label="Drop to delete"
+              >
+                <Trash2 size={16} strokeWidth={2.5} />
+              </div>
+            ) : (
+              <>
+                <span
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
+                  style={{ opacity: buttonLabel ? 1 : 0 }}
+                >
+                  {buttonLabel ?? ''}
+                </span>
+                <button
+                  data-egg-control
+                  onClick={handleShuffle}
+                  onMouseEnter={() => setButtonLabel('Refresh')}
+                  onMouseLeave={() => setButtonLabel(null)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                  aria-label="Refresh stickers"
+                >
+                  <RefreshCw size={15} strokeWidth={2.5} />
+                </button>
+                <button
+                  data-egg-control
+                  onClick={() => { handleDismiss(); clearGhosts() }}
+                  onMouseEnter={() => setButtonLabel('Clear')}
+                  onMouseLeave={() => setButtonLabel(null)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                  aria-label="Clear stickers"
+                >
+                  <X size={15} strokeWidth={2.5} />
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
