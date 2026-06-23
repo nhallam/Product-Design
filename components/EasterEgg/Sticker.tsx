@@ -56,7 +56,7 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
             opacity: { duration: 0.18, times: [0, 0.6,  1] },
           }
         : isDismissing
-        ? { type: 'spring', stiffness: 400, damping: 25, delay: delay * 0.4 }
+        ? { duration: 0.16, ease: [0.4, 0, 1, 0.6], delay: delay * 0.4 }
         : { type: 'spring', stiffness: 350, damping: 18, delay }
       }
       whileDrag={{ scale: 1.06, cursor: 'grabbing' }}
