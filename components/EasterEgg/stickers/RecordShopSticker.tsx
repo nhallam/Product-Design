@@ -63,21 +63,19 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       style={{ borderRadius: '5px' }}
     >
       {/* Title */}
-      <div style={{ borderBottom: '2px solid #1C1C1C', padding: '10px 16px 8px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '13px', lineHeight: 1.1, letterSpacing: '0.01em' }}>
+      <div style={{ padding: '10px 16px 8px' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           BEST RECORD SHOPS IN NYC
         </div>
       </div>
 
-      {/* Store name */}
-      <div style={{ padding: '12px 16px 4px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '28px', lineHeight: 1, letterSpacing: '0.01em' }}>
+      <div style={{ padding: '4px 16px' }}>
+        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           {store.name.toUpperCase()}
         </div>
       </div>
 
-      {/* Borough + hours */}
-      <div style={{ padding: '8px 16px 12px' }}>
+      <div style={{ padding: '4px 16px 8px' }}>
         <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
           {store.borough.toUpperCase()}
         </div>
@@ -86,27 +84,21 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
         </div>
       </div>
 
-      {/* Actions */}
       {!ghost && (
-        <div style={{ borderTop: '2px solid #1C1C1C' }}>
+        <div style={{ padding: '4px 16px 10px' }}>
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="block w-full hover:bg-black/5 transition-colors"
-            style={{ padding: '9px 16px', borderBottom: '1.5px solid #1C1C1C' }}
+            className="block hover:opacity-50 transition-opacity"
           >
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', letterSpacing: '0.01em' }}>
+            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
               DIRECTIONS
             </span>
           </a>
-          <button
-            onClick={next}
-            className="block w-full hover:bg-black/5 transition-colors"
-            style={{ padding: '9px 16px' }}
-          >
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', letterSpacing: '0.01em' }}>
+          <button onClick={next} className="block hover:opacity-50 transition-opacity">
+            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '15px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
               NEXT
             </span>
           </button>
