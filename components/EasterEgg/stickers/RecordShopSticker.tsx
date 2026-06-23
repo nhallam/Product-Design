@@ -99,7 +99,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       className="bg-white shadow-lg w-[160px] flex flex-col"
       style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
-      <div style={fixStyle}>BEST RECORD SHOPS NYC</div>
+      <div style={{ ...fixStyle, whiteSpace: 'pre-line' }}>{'BEST RECORDS\nSHOPS NYC'}</div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', minHeight: 0 }}>
         <div ref={nameRef} style={{ ...varStyle, width: '100%' }}>{store.name.toUpperCase()}</div>
       </div>
