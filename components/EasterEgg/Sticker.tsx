@@ -30,13 +30,25 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
       dragElastic={0.05}
       initial={{ scale: 0, rotate: rotation - 15, opacity: 0 }}
       animate={deleting && deleteTarget
-        ? { x: deleteTarget.x, y: deleteTarget.y, scale: 0, opacity: 0, rotate: rotation }
+        ? {
+            x: deleteTarget.x,
+            y: deleteTarget.y,
+            scaleX: [1, 0.04, 0],   // sides pinch in fast
+            scaleY: [1, 0.55, 0],   // top/bottom lag behind
+            opacity: [1, 0.9, 0],
+          }
         : isDismissing
         ? { scale: 0, rotate: rotation + 15, opacity: 0 }
         : { scale: 1, rotate: rotation, opacity: 1 }
       }
       transition={deleting
-        ? { type: 'tween', duration: 0.32, ease: [0.4, 0, 0.6, 1] }
+        ? {
+            x:       { duration: 0.18, ease: [0.55, 0, 1, 0.45] },
+            y:       { duration: 0.18, ease: [0.55, 0, 1, 0.45] },
+            scaleX:  { duration: 0.18, times: [0, 0.45, 1], ease: 'easeIn' },
+            scaleY:  { duration: 0.18, times: [0, 0.45, 1], ease: 'easeIn' },
+            opacity: { duration: 0.18, times: [0, 0.6,  1] },
+          }
         : isDismissing
         ? { type: 'spring', stiffness: 400, damping: 25, delay: delay * 0.4 }
         : { type: 'spring', stiffness: 350, damping: 18, delay }
