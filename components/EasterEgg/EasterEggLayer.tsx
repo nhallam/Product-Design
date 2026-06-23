@@ -319,9 +319,12 @@ export default function EasterEggLayer() {
                   setDraggingId(null)
                   if (binRef.current) {
                     const bin = binRef.current.getBoundingClientRect()
+                    // Pad the hit area so the compact trash target is easier to
+                    // hit, especially on touch.
+                    const m = 32
                     if (
-                      info.point.x >= bin.left && info.point.x <= bin.right &&
-                      info.point.y >= bin.top && info.point.y <= bin.bottom
+                      info.point.x >= bin.left - m && info.point.x <= bin.right + m &&
+                      info.point.y >= bin.top - m && info.point.y <= bin.bottom + m
                     ) {
                       setDeletedIds((prev) => new Set([...prev, s.id]))
                     }
