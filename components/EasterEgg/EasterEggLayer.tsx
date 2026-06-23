@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, cloneElement, isValidElement, ReactElement } from 'react'
 import { PanInfo } from 'framer-motion'
-import { X, Shuffle } from 'react-feather'
+import { X, RefreshCw } from 'react-feather'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
@@ -314,12 +314,12 @@ export default function EasterEggLayer() {
             <button
               data-egg-control
               onClick={handleShuffle}
-              onMouseEnter={() => setButtonLabel('Shuffle')}
+              onMouseEnter={() => setButtonLabel('Refresh')}
               onMouseLeave={() => setButtonLabel(null)}
               className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Shuffle stickers"
+              aria-label="Refresh stickers"
             >
-              <Shuffle size={15} strokeWidth={2.5} />
+              <RefreshCw size={15} strokeWidth={2.5} />
             </button>
             <button
               data-egg-control

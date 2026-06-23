@@ -100,8 +100,8 @@ function isOpenNow(hours: string): boolean {
 }
 
 const INFO_RATIO = 0.55
-const LABEL_SIZE = 36
-const MAX_SIZE = 40
+const LABEL_SIZE = 32
+const MAX_SIZE = 32
 const MIN_SIZE = 8
 
 const base: React.CSSProperties = {
