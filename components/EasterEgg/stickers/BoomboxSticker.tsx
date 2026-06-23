@@ -3,11 +3,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { Play, Pause, Volume2, VolumeX } from 'react-feather'
 
-const TRACKS = [
-  { id: 'd2FQCRvigBU' },
-  { id: 'e4oB6wYMcrI' },
-  { id: 'aygY5OqMuKE' },
+// `cover` is optional — drop a square image in /public and reference it here
+// to override the album art. Falls back to the YouTube thumbnail otherwise.
+const TRACKS: { id: string; cover?: string }[] = [
+  { id: 'd2FQCRvigBU', cover: '/Action_Bronson_Mr._Wonderful.jpg' },
+  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg' },
+  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg' },
 ]
+
+const coverFor = (i: number) =>
+  TRACKS[i].cover ?? `https://img.youtube.com/vi/${TRACKS[i].id}/hqdefault.jpg`
 
 interface YTPlayer {
   destroy(): void
@@ -42,6 +47,8 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   const playerRef = useRef<YTPlayer | null>(null)
   const playerDivRef = useRef<HTMLDivElement>(null)
   const currentIndexRef = useRef(0)
+  // Mirrors currentIndexRef in state so the album cover re-renders on change.
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const [scroll, setScroll] = useState(false)
   const [duration, setDuration] = useState(8)
@@ -92,6 +99,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
               // Auto-advance to the next track when the current one finishes
               const next = (currentIndexRef.current + 1) % TRACKS.length
               currentIndexRef.current = next
+              setCurrentIndex(next)
               event.target.loadVideoById(TRACKS[next].id)
             } else if (event.data === window.YT.PlayerState.PAUSED) {
               setIsPlaying(false)
@@ -148,6 +156,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
     if (!ready || !playerRef.current) return
     const next = (currentIndexRef.current + 1) % TRACKS.length
     currentIndexRef.current = next
+    setCurrentIndex(next)
     playerRef.current.loadVideoById(TRACKS[next].id)
     setIsPlaying(true)
   }
@@ -164,6 +173,18 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
       >
         BOOMBOX
       </div>
+
+      {/* Album cover */}
+      <div className="w-full aspect-square mb-2 overflow-hidden rounded-[3px] bg-white/10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={coverFor(currentIndex)}
+          alt=""
+          draggable={false}
+          className="w-full h-full object-cover pointer-events-none"
+        />
+      </div>
+
       <div
         ref={titleContainerRef}
         className={`relative overflow-hidden ${scroll ? '' : 'flex justify-center'}`}
