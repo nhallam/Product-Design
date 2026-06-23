@@ -66,7 +66,7 @@ export default function Menu({ open, onClose }: MenuProps) {
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
       </div>
       {hasGhosts && (
-        <div className="max-w-2xl mx-auto w-full px-6 flex justify-end">
+        <div className="max-w-2xl mx-auto w-full px-6 flex justify-end -mt-3">
           <div
             className="transition-[opacity,transform] duration-300 ease-out"
             style={{
