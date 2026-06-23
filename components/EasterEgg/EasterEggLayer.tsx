@@ -300,7 +300,7 @@ export default function EasterEggLayer() {
             transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',
           }}
         >
-          {ghostPositions.map((pos, i) => { const s = layerState.pool[i]; if (!s) return null; return (
+          {ghostPositions.map((pos, i) => { const s = layerState.pool[i]; if (!s || deletedIds.has(s.id)) return null; return (
             <div
               key={s.id}
               className="absolute"
