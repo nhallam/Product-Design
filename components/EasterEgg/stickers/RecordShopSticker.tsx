@@ -21,6 +21,25 @@ const STORES = [
 
 const DAY_ABBREVS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+// Current day-of-week (0=Sun) and minutes-since-midnight in NYC time,
+// regardless of the visitor's local timezone.
+function nycNow(): { day: number; minutes: number } {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date())
+
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? ''
+  const day = DAY_ABBREVS.indexOf(get('weekday'))
+  let hour = parseInt(get('hour'), 10)
+  if (hour === 24) hour = 0 // some engines emit "24" for midnight
+  const minute = parseInt(get('minute'), 10)
+  return { day, minutes: hour * 60 + minute }
+}
+
 function dayInRange(today: number, startAbbrev: string, endAbbrev: string): boolean {
   const s = DAY_ABBREVS.indexOf(startAbbrev)
   const e = DAY_ABBREVS.indexOf(endAbbrev)
@@ -30,7 +49,7 @@ function dayInRange(today: number, startAbbrev: string, endAbbrev: string): bool
 }
 
 function getTodayHours(hours: string): string {
-  const today = new Date().getDay()
+  const today = nycNow().day
   for (const segment of hours.split('; ')) {
     if (/^daily/i.test(segment)) return segment.replace(/^daily\s*/i, '')
     const match = segment.match(/^(.+?)\s+([\d:].+|closed)$/i)
@@ -76,8 +95,7 @@ function isOpenNow(hours: string): boolean {
   const close = parseClock(endStr, endMeridiem)
   if (open === null || close === null) return false
 
-  const now = new Date()
-  const mins = now.getHours() * 60 + now.getMinutes()
+  const mins = nycNow().minutes
   return close >= open ? mins >= open && mins < close : mins >= open || mins < close
 }
 
