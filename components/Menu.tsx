@@ -77,7 +77,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
               className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
             >
-              Clean up the stickers 🍕
+              Clear stickers
             </button>
           </div>
         )}
