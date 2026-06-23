@@ -9,8 +9,8 @@ import { Play, Pause, Volume2, VolumeX } from 'react-feather'
 // the album art (otherwise the YouTube thumbnail is used).
 const TRACKS: { id: string; cover?: string; artist?: string }[] = [
   { id: 'd2FQCRvigBU', cover: '/Action_Bronson_Mr._Wonderful.jpg', artist: 'Action Bronson' },
-  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg' },
-  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg' },
+  { id: 'e4oB6wYMcrI', cover: '/Biggie.jpg', artist: 'The Notorious B.I.G.' },
+  { id: 'aygY5OqMuKE', cover: '/LCD_Soundsystem_-_All_My_Friends.jpg', artist: 'LCD Soundsystem' },
 ]
 
 const coverFor = (i: number) =>
