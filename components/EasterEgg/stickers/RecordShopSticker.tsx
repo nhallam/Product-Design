@@ -176,7 +176,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
       {/* Store info */}
       <div ref={nameRef} style={ms}>{store.name.toUpperCase()}</div>
-      <div ref={infoRef} style={is}>{store.borough.toUpperCase()} – {openLabel}</div>
+      <div ref={infoRef} style={is}>{store.borough.toUpperCase()}</div>
 
       <div style={{ flex: 1 }} />
 
