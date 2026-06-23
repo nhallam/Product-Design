@@ -121,8 +121,24 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   const cardRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const infoRef = useRef<HTMLDivElement>(null)
+  const labelRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const [nameSize, setNameSize] = useState(MAX_SIZE)
+  const [labelSize, setLabelSize] = useState(LABEL_SIZE)
+
+  // Shrink the fixed labels just enough that each stays on a single line.
+  useLayoutEffect(() => {
+    const labels = labelRefs.current.filter(Boolean) as HTMLDivElement[]
+    if (!labels.length) return
+
+    let s = LABEL_SIZE
+    const apply = () => labels.forEach((el) => { el.style.fontSize = `${s}px` })
+    const fits = () => labels.every((el) => el.scrollWidth <= el.clientWidth + 1)
+
+    apply()
+    while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
+    setLabelSize(s)
+  }, [ghost])
 
   useLayoutEffect(() => {
     const card = cardRef.current
@@ -138,9 +154,9 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
     apply()
     while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
     setNameSize(s)
-  }, [index, ghost])
+  }, [index, ghost, labelSize])
 
-  const ls: React.CSSProperties = { ...base, fontSize: `${LABEL_SIZE}px` }
+  const ls: React.CSSProperties = { ...base, fontSize: `${labelSize}px`, whiteSpace: 'nowrap' }
   const ms: React.CSSProperties = { ...base, fontSize: `${nameSize}px` }
   const is: React.CSSProperties = { ...base, fontSize: `${nameSize * INFO_RATIO}px` }
 
@@ -153,7 +169,8 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
       {/* Header */}
-      <div style={{ ...ls, whiteSpace: 'pre-line' }}>{'BEST NYC\nRECORD STORES'}</div>
+      <div ref={(el) => { labelRefs.current[0] = el }} style={ls}>BEST NYC</div>
+      <div ref={(el) => { labelRefs.current[1] = el }} style={ls}>RECORD STORES</div>
 
       <div style={{ flex: 1 }} />
 
@@ -167,7 +184,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       {!ghost && (
         <>
           <button onClick={next} className="hover:opacity-50 transition-opacity w-full">
-            <div style={ls}>NEXT STORE</div>
+            <div ref={(el) => { labelRefs.current[2] = el }} style={ls}>NEXT STORE</div>
           </button>
           <a
             href={mapsUrl}
@@ -177,7 +194,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
             className="hover:opacity-50 transition-opacity"
             style={{ display: 'block' }}
           >
-            <div style={ls}>DIRECTIONS</div>
+            <div ref={(el) => { labelRefs.current[3] = el }} style={ls}>DIRECTIONS</div>
           </a>
         </>
       )}
