@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+:root {
+  --bg: #f0f0f0;
+  --surface: #ffffff;
+  --text: #1C1C1C;
+  --text-strong: #242424;
+  --muted: #888888;
+  --hover: #555555;
+  --faint: #aaaaaa;
+  --muted2: #666666;
+  --border: #E0E0E0;
+  --surface-hover: #E8E8E8;
+}
+
+[data-theme="dark"] {
+  --bg: #1C1C1C;
+  --surface: #232323;
+  --text: #f0f0f0;
+  --text-strong: #ededed;
+  --muted: #8a8a8a;
+  --hover: #b0b0b0;
+  --faint: #5a5a5a;
+  --muted2: #9a9a9a;
+  --border: #333333;
+  --surface-hover: #2a2a2a;
+}
+
 @font-face {
   font-family: 'AmericanGroteskCondensed';
   src: url('./fonts/TestAmericanGroteskCondensed-Bold.otf') format('opentype');
@@ -9,10 +35,11 @@
 }
 
 body {
-  background: #f0f0f0;
-  color: #1C1C1C;
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Inter', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::view-transition-group(site-nav) {
@@ -69,18 +96,18 @@ body {
 .shimmer {
   background: linear-gradient(
     90deg,
-    #1C1C1C 0%,
-    #1C1C1C 35%,
+    var(--text) 0%,
+    var(--text) 35%,
     #F97316 50%,
-    #1C1C1C 65%,
-    #1C1C1C 100%
+    var(--text) 65%,
+    var(--text) 100%
   );
   background-size: 300% auto;
   background-repeat: no-repeat;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-decoration-color: #1C1C1C;
+  text-decoration-color: var(--text);
   animation: text-shimmer 1.5s ease-in-out;
 }
 

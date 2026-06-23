@@ -48,15 +48,15 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
   return (
     <nav className="sticky top-0 z-[51] flex justify-between items-center px-6 pt-6 pb-4" style={{ viewTransitionName: 'site-nav' }}>
       {isArticle ? (
-        <Link href="/writing" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+        <Link href="/writing" className="text-base text-[var(--text)] hover:text-[var(--muted)] transition-colors">
           ← All writing
         </Link>
       ) : isProject ? (
-        <Link href="/projects" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+        <Link href="/projects" className="text-base text-[var(--text)] hover:text-[var(--muted)] transition-colors">
           ← All projects
         </Link>
       ) : isNewsletter ? (
-        <Link href="/writing" className="text-base text-[#1C1C1C] hover:text-[#888] transition-colors">
+        <Link href="/writing" className="text-base text-[var(--text)] hover:text-[var(--muted)] transition-colors">
           ← All writing
         </Link>
       ) : (
@@ -67,7 +67,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
           onMouseLeave={() => scrambleTo('Nick Hallam')}
           onTouchStart={() => scrambleTo('nhallam.design')}
           onTouchEnd={() => setTimeout(() => scrambleTo('Nick Hallam'), 600)}
-          className="text-base text-[#1C1C1C] transition-colors"
+          className="text-base text-[var(--text)] transition-colors"
         >
           {text}
         </Link>
@@ -75,7 +75,7 @@ export default function Nav({ menuOpen, onToggle }: NavProps) {
       {!isArticle && !isProject && !isNewsletter && (
         <button
           onClick={() => { easterEggDismissRef.current?.(); onToggle() }}
-          className="relative text-base text-[#1C1C1C] hover:text-[#888] transition-colors cursor-pointer"
+          className="relative text-base text-[var(--text)] hover:text-[var(--muted)] transition-colors cursor-pointer"
         >
           <span className={`block transition-opacity duration-200 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>
             Menu

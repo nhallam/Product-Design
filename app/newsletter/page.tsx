@@ -16,15 +16,15 @@ export default async function NewsletterPage() {
         </h1>
       </div>
 
-      <div className="mt-[10vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+      <div className="mt-[10vh] divide-y divide-[var(--border)] border-b border-[var(--border)]">
         {campaigns.map((c) => (
           <Link
             key={c.id}
             href={`/newsletter/${c.id}`}
-            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
+            className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
           >
-            <span className="text-base font-medium text-[#1C1C1C]">{c.subject}</span>
-            <span className="text-sm text-[#888] shrink-0 ml-6">{formatCampaignDate(c.sent_at)}</span>
+            <span className="text-base font-medium text-[var(--text)]">{c.subject}</span>
+            <span className="text-sm text-[var(--muted)] shrink-0 ml-6">{formatCampaignDate(c.sent_at)}</span>
           </Link>
         ))}
       </div>

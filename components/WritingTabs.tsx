@@ -48,20 +48,20 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       </div>
 
       {tab === 'blog' && (
-        <div className="mt-[6vh] divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+        <div className="mt-[6vh] divide-y divide-[var(--border)] border-b border-[var(--border)]">
           {articles.map(({ slug, title, date }) => (
             <Link
               key={slug}
               href={`/writing/${slug}`}
-              className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
+              className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
             >
               <span className="flex items-center gap-2">
-                <span className="text-base font-medium text-[#1C1C1C]">{title}</span>
+                <span className="text-base font-medium text-[var(--text)]">{title}</span>
                 {isNew(date) && (
                   <span className="text-xs font-medium bg-[#FF4DE7] text-white px-2 py-0.5 rounded-full">New</span>
                 )}
               </span>
-              <span className="text-sm text-[#888] shrink-0 ml-6">{date}</span>
+              <span className="text-sm text-[var(--muted)] shrink-0 ml-6">{date}</span>
             </Link>
           ))}
         </div>
@@ -70,15 +70,15 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       {tab === 'newsletter' && (
         <div className="mt-[6vh]">
           <NewsletterSignup />
-          <div className="mt-10 divide-y divide-[#E0E0E0] border-b border-[#E0E0E0]">
+          <div className="mt-10 divide-y divide-[var(--border)] border-b border-[var(--border)]">
             {campaigns.map((c) => (
               <Link
                 key={c.id}
                 href={`/newsletter/${c.id}`}
-                className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[#E8E8E8] transition-colors"
+                className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
               >
-                <span className="text-base font-medium text-[#1C1C1C]">{c.subject}</span>
-                <span className="text-sm text-[#888] shrink-0 ml-6">
+                <span className="text-base font-medium text-[var(--text)]">{c.subject}</span>
+                <span className="text-sm text-[var(--muted)] shrink-0 ml-6">
                   {new Date(c.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
               </Link>

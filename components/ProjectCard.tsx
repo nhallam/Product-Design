@@ -18,11 +18,11 @@ export default function ProjectCard({ slug, title, image, video, comingSoon }: P
         ) : image && !comingSoon ? (
           <Image src={image} alt={title} fill className="object-cover" />
         ) : (
-          <div className="w-full h-full bg-[#E0E0E0]" />
+          <div className="w-full h-full bg-[var(--border)]" />
         )}
       </div>
       <div className="mt-3 mb-[50px]">
-        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[#aaa]' : 'text-[#1C1C1C] group-hover:text-[#555]'}`}>
+        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[var(--faint)]' : 'text-[var(--text)] group-hover:text-[var(--hover)]'}`}>
           {title}
         </span>
       </div>
