@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 const GROTESK = "'AmericanGroteskCondensed', Arial, sans-serif"
 
@@ -49,6 +49,42 @@ function getTodayHours(hours: string): string {
   return '—'
 }
 
+function FitText({ text, height, maxSize = 35, minSize = 10 }: { text: string; height: number; maxSize?: number; minSize?: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState(maxSize)
+
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let s = maxSize
+    el.style.fontSize = `${s}px`
+    while (el.scrollHeight > height + 1 && s > minSize) {
+      s -= 0.5
+      el.style.fontSize = `${s}px`
+    }
+    setSize(s)
+  }, [text, height, maxSize, minSize])
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        fontFamily: GROTESK,
+        fontWeight: 900,
+        fontSize: `${size}px`,
+        lineHeight: 1.15,
+        letterSpacing: '0.01em',
+        textAlign: 'justify',
+        textAlignLast: 'justify',
+        height: `${height}px`,
+        overflow: 'hidden',
+      }}
+    >
+      {text}
+    </div>
+  )
+}
+
 export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
   const store = STORES[index]
@@ -59,50 +95,33 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
 
   return (
     <div
-      className="bg-white shadow-lg w-[160px] text-center overflow-hidden flex flex-col"
-      style={{ borderRadius: '4px', height: '300px' }}
+      className="bg-white shadow-lg w-[160px] overflow-hidden flex flex-col"
+      style={{ borderRadius: '4px', height: '250px', padding: '12px 14px' }}
     >
-      {/* Title */}
-      <div style={{ padding: '10px 16px 8px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-          BEST RECORD SHOPS IN NYC
+      <FitText text="BEST RECORD SHOPS IN NYC" height={30} maxSize={35} />
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+        <div style={{ width: '100%' }}>
+          <FitText text={store.name.toUpperCase()} height={70} maxSize={35} />
         </div>
       </div>
-
-      <div className="flex-1 flex flex-col justify-center" style={{ padding: '4px 16px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-          {store.name.toUpperCase()}
-        </div>
-      </div>
-
-      <div style={{ padding: '4px 16px 8px' }}>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-          {store.borough.toUpperCase()}
-        </div>
-        <div style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-          TODAY {todayHours.toUpperCase()}
-        </div>
-      </div>
-
+      <FitText text={store.borough.toUpperCase()} height={28} maxSize={35} />
+      <FitText text={`TODAY ${todayHours.toUpperCase()}`} height={28} maxSize={35} />
       {!ghost && (
-        <div style={{ padding: '4px 16px 10px' }}>
+        <>
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="block w-full text-center hover:opacity-50 transition-opacity"
+            className="hover:opacity-50 transition-opacity"
+            style={{ display: 'block' }}
           >
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-              DIRECTIONS
-            </span>
+            <FitText text="DIRECTIONS" height={30} maxSize={35} />
           </a>
-          <button onClick={next} className="block w-full text-center hover:opacity-50 transition-opacity">
-            <span style={{ fontFamily: GROTESK, fontWeight: 900, fontSize: '35px', lineHeight: 1.2, letterSpacing: '0.01em' }}>
-              NEXT
-            </span>
+          <button onClick={next} className="hover:opacity-50 transition-opacity text-left w-full">
+            <FitText text="NEXT" height={30} maxSize={35} />
           </button>
-        </div>
+        </>
       )}
     </div>
   )
