@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { Sun, Moon } from 'react-feather'
 import { useHasGhosts, easterEggClearGhostsRef } from './EasterEgg/EasterEggLayer'
 
 interface MenuProps {
@@ -126,6 +127,18 @@ export default function Menu({ open, onClose }: MenuProps) {
           {(() => {
             let i = 0
             const items = []
+            const themeIdx = i++
+            items.push(
+              <div key="theme" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(themeIdx)}>
+                <button
+                  onClick={toggleTheme}
+                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                  className="w-10 h-10 mb-1 flex items-center justify-center rounded-full bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity cursor-pointer"
+                >
+                  {theme === 'dark' ? <Sun size={16} strokeWidth={2.5} /> : <Moon size={16} strokeWidth={2.5} />}
+                </button>
+              </div>
+            )
             socialLinks.forEach(({ href, label, hoverClass }) => {
               const idx = i++
               items.push(
@@ -136,17 +149,6 @@ export default function Menu({ open, onClose }: MenuProps) {
                 </div>
               )
             })
-            const themeIdx = i++
-            items.push(
-              <div key="theme" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(themeIdx)}>
-                <button
-                  onClick={toggleTheme}
-                  className="text-base text-[var(--muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
-                >
-                  {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-                </button>
-              </div>
-            )
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
