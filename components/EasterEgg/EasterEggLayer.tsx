@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, cloneElement, isValidElement, ReactElement } from 'react'
 import { PanInfo } from 'framer-motion'
-import { X, RefreshCw } from 'react-feather'
+import { X, RefreshCw, Trash2 } from 'react-feather'
 
 export const easterEggDismissRef: { current: (() => void) | null } = { current: null }
 export const easterEggActivateRef: { current: (() => void) | null } = { current: null }
@@ -334,47 +334,50 @@ export default function EasterEggLayer() {
 
           <div
             data-egg-control
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
-              controlsVisible && !draggingId && !layerState.isDismissing
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-0.5 bg-[#1C1C1C] rounded-full p-1.5 pointer-events-auto transition-all duration-300 ${
+              (controlsVisible || draggingId) && !layerState.isDismissing
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-2 pointer-events-none'
             }`}
           >
-            <span
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
-              style={{ opacity: buttonLabel ? 1 : 0 }}
-            >
-              {buttonLabel ?? ''}
-            </span>
-            <button
-              data-egg-control
-              onClick={handleShuffle}
-              onMouseEnter={() => setButtonLabel('Refresh')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Refresh stickers"
-            >
-              <RefreshCw size={15} strokeWidth={2.5} />
-            </button>
-            <button
-              data-egg-control
-              onClick={() => { handleDismiss(); clearGhosts() }}
-              onMouseEnter={() => setButtonLabel('Clear')}
-              onMouseLeave={() => setButtonLabel(null)}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
-              aria-label="Clear stickers"
-            >
-              <X size={15} strokeWidth={2.5} />
-            </button>
-          </div>
-
-          <div
-            ref={binRef}
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center text-2xl pointer-events-none transition-all duration-200 ${
-              draggingId && !layerState.isDismissing ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-            }`}
-          >
-            🗑
+            {draggingId ? (
+              <div
+                ref={binRef}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-white"
+                aria-label="Drop to delete"
+              >
+                <Trash2 size={16} strokeWidth={2.5} />
+              </div>
+            ) : (
+              <>
+                <span
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
+                  style={{ opacity: buttonLabel ? 1 : 0 }}
+                >
+                  {buttonLabel ?? ''}
+                </span>
+                <button
+                  data-egg-control
+                  onClick={handleShuffle}
+                  onMouseEnter={() => setButtonLabel('Refresh')}
+                  onMouseLeave={() => setButtonLabel(null)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                  aria-label="Refresh stickers"
+                >
+                  <RefreshCw size={15} strokeWidth={2.5} />
+                </button>
+                <button
+                  data-egg-control
+                  onClick={() => { handleDismiss(); clearGhosts() }}
+                  onMouseEnter={() => setButtonLabel('Clear')}
+                  onMouseLeave={() => setButtonLabel(null)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:bg-white/20 transition-colors"
+                  aria-label="Clear stickers"
+                >
+                  <X size={15} strokeWidth={2.5} />
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
