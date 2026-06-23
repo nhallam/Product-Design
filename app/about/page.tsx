@@ -9,15 +9,15 @@ export default function About() {
           About
         </h1>
       </div>
-      <div className="mt-[calc(20vh-50px)] space-y-6 text-base leading-relaxed text-[#1C1C1C]">
+      <div className="mt-[calc(20vh-50px)] space-y-6 text-base leading-relaxed text-[var(--text)]">
         <p>
           I&apos;m a product designer and founder living in Brooklyn, NY.
         </p>
         <p>
-          Currently, I lead design at <a href="https://www.beautifulfunction.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Beautiful Function</a>. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also built a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, <a href="http://www.sexdrugshelvetica.com/melbourne/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">Sex, Drugs &amp; Helvetica</a>.
+          Currently, I lead design at <a href="https://www.beautifulfunction.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--hover)] transition-colors">Beautiful Function</a>. Previously, I ran product agency, Joan, co-founded a hardware product called Tiller and worked at IDEO. In the early 2010&apos;s I also built a social network for designers on Wordpress (bad idea) and ran Australia&apos;s favourite design conference, <a href="http://www.sexdrugshelvetica.com/melbourne/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--hover)] transition-colors">Sex, Drugs &amp; Helvetica</a>.
         </p>
         <p>
-          I <a href="https://www.discogs.com/user/nick_hallam/collection" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">collect records</a>, DJ in the city and put out <a href="https://soundcloud.com/nhallam" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#555] transition-colors">mixes</a> with each of my <Link href="/writing#newsletter" className="underline underline-offset-2 hover:text-[#555] transition-colors">newsletters</Link>.
+          I <a href="https://www.discogs.com/user/nick_hallam/collection" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--hover)] transition-colors">collect records</a>, DJ in the city and put out <a href="https://soundcloud.com/nhallam" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--hover)] transition-colors">mixes</a> with each of my <Link href="/writing#newsletter" className="underline underline-offset-2 hover:text-[var(--hover)] transition-colors">newsletters</Link>.
         </p>
       </div>
       <div className="flex justify-center mt-16">
@@ -31,7 +31,7 @@ export default function About() {
       </div>
 
       <div className="mt-16 pb-16">
-        <div className="divide-y divide-[#E0E0E0]">
+        <div className="divide-y divide-[var(--border)]">
           {[
             { company: 'Beautiful Function', title: 'Partner and Head of Design', years: '2025 – Present', url: 'https://www.beautifulfunction.com/' },
             { company: 'Telepathic Instruments', title: 'Product Strategy & Research', years: '2025', url: 'https://telepathicinstruments.com/' },
@@ -50,13 +50,13 @@ export default function About() {
               <Row
                 key={years + company}
                 {...(url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className={`flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[#E8E8E8]' : ''}`}
+                className={`flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[var(--surface-hover)]' : ''}`}
               >
                 <div>
-                  <div className="text-base font-medium text-[#1C1C1C]">{company}</div>
-                  <div className="text-sm text-[#888] mt-0.5">{title}</div>
+                  <div className="text-base font-medium text-[var(--text)]">{company}</div>
+                  <div className="text-sm text-[var(--muted)] mt-0.5">{title}</div>
                 </div>
-                <div className="text-sm text-[#888] shrink-0 ml-6">{years}</div>
+                <div className="text-sm text-[var(--muted)] shrink-0 ml-6">{years}</div>
               </Row>
             )
           })}

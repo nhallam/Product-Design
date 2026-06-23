@@ -21,13 +21,13 @@ export default async function CampaignPage({ params }: { params: Promise<{ id: s
         >
           {campaign.subject}
         </h1>
-        <p className="text-sm text-[#888] mt-3 text-center">{formatCampaignDate(campaign.sent_at)}</p>
+        <p className="text-sm text-[var(--muted)] mt-3 text-center">{formatCampaignDate(campaign.sent_at)}</p>
       </div>
 
       <div
         className="mt-16 max-w-prose mx-auto w-full
-          [&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[#1C1C1C]
-          [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[#1C1C1C] [&_a:hover]:text-[#555]
+          [&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[var(--text)]
+          [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[var(--text)] [&_a:hover]:text-[var(--hover)]
           [&_strong]:font-bold
           [&_em]:italic
           [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2 [&_ul_li]:text-base [&_ul_li]:leading-relaxed

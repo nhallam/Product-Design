@@ -164,7 +164,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
   }
 
   return (
-    <div className="relative bg-[#1C1C1C] shadow-lg px-4 py-4 w-[175px] text-center" style={{ borderRadius: '5px' }}>
+    <div className="relative bg-[#1C1C1C] shadow-lg px-4 pt-4 pb-[26px] w-[175px] text-center" style={{ borderRadius: '5px' }}>
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
         <div ref={playerDivRef} />
       </div>
@@ -177,7 +177,7 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
       </div>
 
       {/* Album cover */}
-      <div className="w-full aspect-square mb-2 overflow-hidden rounded-[3px] bg-white/10">
+      <div className="w-full aspect-square mb-2 overflow-hidden rounded-[5px] bg-white/10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={coverFor(currentIndex)}
@@ -195,18 +195,18 @@ export default function BoomboxSticker({ ghost = false }: { ghost?: boolean }) {
         <span
           ref={measureRef}
           aria-hidden
-          className="invisible absolute left-0 top-0 text-sm font-bold whitespace-nowrap"
+          className="invisible absolute left-0 top-0 text-[24px] font-bold whitespace-nowrap"
         >
           {title}
         </span>
 
         {scroll ? (
           <div className="marquee-track inline-flex whitespace-nowrap" style={{ animationDuration: `${duration}s` }}>
-            <span className="text-sm font-bold text-white leading-tight pr-8">{title}</span>
-            <span className="text-sm font-bold text-white leading-tight pr-8" aria-hidden>{title}</span>
+            <span className="text-[24px] font-bold text-white leading-tight pr-8">{title}</span>
+            <span className="text-[24px] font-bold text-white leading-tight pr-8" aria-hidden>{title}</span>
           </div>
         ) : (
-          <span className="text-sm font-bold text-white leading-tight whitespace-nowrap">{title}</span>
+          <span className="text-[24px] font-bold text-white leading-tight whitespace-nowrap">{title}</span>
         )}
       </div>
       <div className="text-xs text-white/60 mt-0.5 line-clamp-1 h-4">

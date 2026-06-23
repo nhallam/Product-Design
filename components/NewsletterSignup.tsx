@@ -32,10 +32,10 @@ export default function NewsletterSignup() {
   return (
     <div className="py-10">
       {status === 'success' ? (
-        <p className="text-base text-[#1C1C1C]">You&apos;re subscribed. Thanks!</p>
+        <p className="text-base text-[var(--text)]">You&apos;re subscribed. Thanks!</p>
       ) : (
         <div className="flex flex-col items-center gap-4 text-center">
-          <p className="text-base text-[#1C1C1C] max-w-sm">
+          <p className="text-base text-[var(--text)] max-w-sm">
             Every few weeks I send an email to around 250 people about design, technology and culture.
           </p>
           <form onSubmit={handleSubmit} className="flex w-full max-w-sm gap-0">
@@ -45,12 +45,12 @@ export default function NewsletterSignup() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
-              className="flex-1 min-w-0 text-base px-4 py-2 border border-[#E0E0E0] bg-white text-[#1C1C1C] placeholder-[#aaa] focus:outline-none focus:border-[#1C1C1C] transition-colors rounded-l-md"
+              className="flex-1 min-w-0 text-base px-4 py-2 border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] placeholder-[var(--faint)] focus:outline-none focus:border-[var(--text)] transition-colors rounded-l-md"
             />
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="text-base px-6 py-2 bg-[#1C1C1C] text-white hover:bg-[#333] transition-colors disabled:opacity-50 cursor-pointer shrink-0 rounded-r-md"
+              className="text-base px-6 py-2 bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer shrink-0 rounded-r-md"
             >
               {status === 'loading' ? 'Subscribing…' : 'Subscribe'}
             </button>

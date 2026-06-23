@@ -24,12 +24,27 @@ const socialLinks = [
 
 export default function Menu({ open, onClose }: MenuProps) {
   const [copied, setCopied] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const hasGhosts = useHasGhosts()
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+
+  // Sync the toggle label with whatever the no-flash script set on <html>.
+  useEffect(() => {
+    const t = document.documentElement.dataset.theme
+    if (t === 'dark' || t === 'light') setTheme(t)
+  }, [])
+
+  function toggleTheme(e: React.MouseEvent) {
+    e.stopPropagation()
+    const next = theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = next
+    try { localStorage.setItem('theme', next) } catch {}
+    setTheme(next)
+  }
 
   function copyEmail() {
     navigator.clipboard.writeText('nrhallam@gmail.com')
@@ -59,12 +74,14 @@ export default function Menu({ open, onClose }: MenuProps) {
   }
 
   return (
-    <div onClick={onClose} className={`fixed inset-0 z-50 bg-[#f0f0f0]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
+    <div onClick={onClose} className={`fixed inset-0 z-50 bg-[var(--bg)]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
-      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4 flex justify-between items-center">
+      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
-        {hasGhosts && (
+      </div>
+      {hasGhosts && (
+        <div className="max-w-2xl mx-auto w-full px-6 flex justify-end -mt-3">
           <div
             className="transition-[opacity,transform] duration-300 ease-out"
             style={{
@@ -75,13 +92,13 @@ export default function Menu({ open, onClose }: MenuProps) {
           >
             <button
               onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
-              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
+              className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors cursor-pointer"
             >
               Clear stickers
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
         <div className="flex-1 flex items-center">
@@ -95,7 +112,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                 <Link
                   href={href}
                   onClick={onClose}
-                  className="inline-block text-[2.75rem] leading-[1.1] font-black text-[#1C1C1C] hover:text-[#555] transition-colors"
+                  className="inline-block text-[2.75rem] leading-[1.1] font-black text-[var(--text)] hover:text-[var(--hover)] transition-colors"
                   style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
                 >
                   {label}
@@ -113,23 +130,34 @@ export default function Menu({ open, onClose }: MenuProps) {
               const idx = i++
               items.push(
                 <div key={label} className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
-                  <a href={href} className={`text-base text-[#888] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
+                  <a href={href} className={`text-base text-[var(--muted)] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
                     {label}
                   </a>
                 </div>
               )
             })
+            const themeIdx = i++
+            items.push(
+              <div key="theme" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(themeIdx)}>
+                <button
+                  onClick={toggleTheme}
+                  className="text-base text-[var(--muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+                >
+                  {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+                </button>
+              </div>
+            )
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
                 <span className="relative inline-flex items-center gap-3">
                   <button
                     onClick={(e) => { e.stopPropagation(); copyEmail() }}
-                    className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
+                    className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors cursor-pointer"
                   >
                     nrhallam@gmail.com
                   </button>
-                  <span className={`text-base text-[#242424] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+                  <span className={`text-base text-[var(--text-strong)] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
                     Copied!
                   </span>
                 </span>

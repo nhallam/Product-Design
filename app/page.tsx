@@ -36,14 +36,14 @@ export default function Home() {
           <a href="https://rsms.me/inter/" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">Inter by Rasmus Andersson</a>
           .
         </p>
-        <div className="text-center text-sm text-[#888]">
+        <div className="text-center text-sm text-[var(--muted)] flex flex-col sm:flex-row sm:justify-center sm:items-center gap-0 sm:gap-0">
           <span>Last updated {lastUpdated}</span>
-          <span className="mx-2">•</span>
+          <span className="hidden sm:inline mx-2">•</span>
           <a
             href="https://x.com/nhallam"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#1C1C1C] transition-colors"
+            className="hover:text-[var(--text)] transition-colors"
           >
             Designed by @nhallam
           </a>

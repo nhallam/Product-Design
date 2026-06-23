@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react'
 
 type Status = 'running' | 'planned' | 'reduced' | 'delays' | 'suspended' | 'loading' | 'unknown'
 
-const STATUS_CONFIG: Record<Status, { color: string; label: string }> = {
-  running:   { color: '#6DBA4A', label: 'Normal Service' },
-  planned:   { color: '#4784FF', label: 'Planned Outage' },
-  reduced:   { color: '#E8820E', label: 'Reduced Service' },
-  delays:    { color: '#D8A500', label: 'Significant Delays' },
-  suspended: { color: '#D12525', label: 'Suspended' },
-  loading:   { color: '#6DBA4A', label: 'Checking...' },
-  unknown:   { color: '#6DBA4A', label: 'Status unknown' },
+const STATUS_CONFIG: Record<Status, { color: string; lines: [string, string?] }> = {
+  running:   { color: '#6DBA4A', lines: ['Normal',      'Service'  ] },
+  planned:   { color: '#4784FF', lines: ['Planned',     'Outage'   ] },
+  reduced:   { color: '#E8820E', lines: ['Reduced',     'Service'  ] },
+  delays:    { color: '#D8A500', lines: ['Significant', 'Delays'   ] },
+  suspended: { color: '#D12525', lines: ['Suspended'               ] },
+  loading:   { color: '#6DBA4A', lines: ['Checking...'             ] },
+  unknown:   { color: '#6DBA4A', lines: ['Status',     'Unknown'   ] },
 }
 
 export default function GTrainSticker() {
@@ -24,7 +24,7 @@ export default function GTrainSticker() {
       .catch(() => setStatus('unknown'))
   }, [])
 
-  const { color, label } = STATUS_CONFIG[status]
+  const { color, lines } = STATUS_CONFIG[status]
 
   return (
     <svg
@@ -60,16 +60,23 @@ export default function GTrainSticker() {
       {/* Divider */}
       <line x1="72" y1="22" x2="72" y2="58" stroke="white" strokeOpacity="0.1" strokeWidth="1" />
 
-      {/* Status label */}
+      {/* Status label — two lines, left-aligned */}
       <text
-        x="84"
-        y="46"
+        x="80"
         fill="white"
         fontSize="12"
         fontWeight="700"
         fontFamily="system-ui, -apple-system, sans-serif"
+        textAnchor="start"
       >
-        {label}
+        {lines[1] ? (
+          <>
+            <tspan x="80" y="37">{lines[0]}</tspan>
+            <tspan x="80" dy="15">{lines[1]}</tspan>
+          </>
+        ) : (
+          <tspan x="80" y="44">{lines[0]}</tspan>
+        )}
       </text>
     </svg>
   )
