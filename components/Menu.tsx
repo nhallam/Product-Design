@@ -62,8 +62,25 @@ export default function Menu({ open, onClose }: MenuProps) {
     <div onClick={onClose} className={`fixed inset-0 z-50 bg-[#f0f0f0]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
-      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
+      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4 flex justify-between items-center">
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
+        {hasGhosts && (
+          <div
+            className="transition-[opacity,transform] duration-300 ease-out"
+            style={{
+              transitionDelay: open ? '60ms' : '0ms',
+              opacity: open ? 1 : 0,
+              transform: open ? 'translateY(0)' : 'translateY(8px)',
+            }}
+          >
+            <button
+              onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
+              className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer"
+            >
+              Clean up the stickers 🍕
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
@@ -92,19 +109,6 @@ export default function Menu({ open, onClose }: MenuProps) {
           {(() => {
             let i = 0
             const items = []
-            if (hasGhosts) {
-              const idx = i++
-              items.push(
-                <div key="ghosts" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); easterEggClearGhostsRef.current?.(); onClose() }}
-                    className="text-base text-[#888] hover:text-[#242424] transition-colors cursor-pointer text-left"
-                  >
-                    Clean up the stickers 🍕
-                  </button>
-                </div>
-              )
-            }
             socialLinks.forEach(({ href, label, hoverClass }) => {
               const idx = i++
               items.push(
