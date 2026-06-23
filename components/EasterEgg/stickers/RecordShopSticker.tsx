@@ -74,8 +74,7 @@ function FitText({ text, height, maxSize = 35, minSize = 10 }: { text: string; h
         fontSize: `${size}px`,
         lineHeight: 1.15,
         letterSpacing: '0.01em',
-        textAlign: 'justify',
-        textAlignLast: 'justify',
+        textAlign: 'center',
         height: `${height}px`,
         overflow: 'hidden',
       }}
