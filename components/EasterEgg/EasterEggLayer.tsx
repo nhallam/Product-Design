@@ -38,7 +38,7 @@ const stickers = [
   { id: 'weather', w: 150, h: 110, rotation: -4, delay: 0, content: <WeatherSticker /> },
   { id: 'video', w: 220, h: 124, rotation: 4, delay: 0.07, content: <VideoSticker /> },
   { id: 'gtrain', w: 170, h: 68, rotation: 5, delay: 0.14, content: <GTrainSticker /> },
-  { id: 'boombox', w: 175, h: 140, rotation: -6, delay: 0.21, content: <BoomboxSticker /> },
+  { id: 'boombox', w: 175, h: 290, rotation: -6, delay: 0.21, content: <BoomboxSticker /> },
   { id: 'scoreboard', w: 200, h: 200, rotation: 4, delay: 0.21, content: <ScoreboardSticker /> },
   {
     id: 'yankees', w: 200, h: 130, rotation: -3, delay: 0.28,
