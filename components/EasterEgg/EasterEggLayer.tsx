@@ -335,14 +335,18 @@ export default function EasterEggLayer() {
               </Sticker>
             ))}
 
+          {/* Zero-width anchor centered on the viewport. The icon layers are
+              centered on this fixed point so their position never depends on
+              the pill's animating width (which caused the shake). Only the
+              background pill animates its width, behind the static icons. */}
           <div
             data-egg-control
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 h-11 rounded-full bg-[#1C1C1C] pointer-events-auto transition-all duration-300 ${
+            className={`fixed bottom-8 left-1/2 -translate-x-1/2 h-11 pointer-events-none transition-[opacity,transform] duration-300 ${
               (controlsVisible || draggingId) && !layerState.isDismissing
                 ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-2 pointer-events-none'
+                : 'opacity-0 translate-y-2'
             }`}
-            style={{ width: draggingId ? 44 : 78, overflow: 'hidden' }}
+            style={{ width: 0 }}
           >
             <span
               className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[#1C1C1C] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
@@ -351,12 +355,18 @@ export default function EasterEggLayer() {
               {buttonLabel ?? ''}
             </span>
 
-            {/* Default state: Refresh + Clear — fixed 78px so icons don't move during pill resize */}
+            {/* Background pill — the only element whose width animates */}
+            <div
+              className="absolute top-0 h-full rounded-full bg-[#1C1C1C] transition-[width] duration-300"
+              style={{ width: draggingId ? 44 : 78, left: 0, transform: 'translateX(-50%)' }}
+            />
+
+            {/* Default state: Refresh + Clear (fixed 78px, centered on anchor) */}
             <div
               className={`absolute top-0 h-full flex items-center justify-center gap-0.5 transition-opacity duration-200 ${
-                draggingId ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                draggingId ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
               }`}
-              style={{ width: 78, left: '50%', transform: 'translateX(-50%)' }}
+              style={{ width: 78, left: 0, transform: 'translateX(-50%)' }}
             >
               <button
                 data-egg-control
@@ -380,13 +390,13 @@ export default function EasterEggLayer() {
               </button>
             </div>
 
-            {/* Dragging state: single trash target — fixed 44px, centered */}
+            {/* Dragging state: single trash target (fixed 44px, centered on anchor) */}
             <div
               ref={binRef}
-              className={`absolute top-0 h-full flex items-center justify-center text-white transition-opacity duration-200 ${
+              className={`absolute top-0 h-full flex items-center justify-center text-white pointer-events-none transition-opacity duration-200 ${
                 draggingId ? 'opacity-100' : 'opacity-0'
               }`}
-              style={{ width: 44, left: '50%', transform: 'translateX(-50%)' }}
+              style={{ width: 44, left: 0, transform: 'translateX(-50%)' }}
               aria-label="Drop to delete"
             >
               <Trash2 size={16} strokeWidth={2.5} />
