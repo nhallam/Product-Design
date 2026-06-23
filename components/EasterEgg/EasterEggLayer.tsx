@@ -300,7 +300,7 @@ export default function EasterEggLayer() {
             transition: ghostFading ? 'opacity 0.6s ease-out' : 'none',
           }}
         >
-          {ghostPositions.map((pos, i) => { const s = layerState.pool[i]; if (!s) return null; return (
+          {ghostPositions.map((pos, i) => { const s = layerState.pool[i]; if (!s || deletedIds.has(s.id)) return null; return (
             <div
               key={s.id}
               className="absolute"
@@ -364,13 +364,15 @@ export default function EasterEggLayer() {
               background pill animates its width, behind the static icons. */}
           {(() => {
           const binActive = !!draggingId || !!deleting
+          const pillVisible = (controlsVisible || binActive) && !layerState.isDismissing
           return (
           <div
             data-egg-control
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 h-11 pointer-events-none transition-[opacity,transform] duration-300 ${
-              (controlsVisible || binActive) && !layerState.isDismissing
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-2'
+              pillVisible ? 'opacity-100' : 'opacity-0'
+            } ${
+              // Keep it in place while dismissing (pure fade); only slide for the entrance.
+              pillVisible || layerState.isDismissing ? 'translate-y-0' : 'translate-y-2'
             }`}
             style={{ width: 0 }}
           >
