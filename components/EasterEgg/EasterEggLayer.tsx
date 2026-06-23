@@ -243,7 +243,7 @@ export default function EasterEggLayer() {
     notifyGhostListeners(true)
     setLayerState((s) => ({ ...s, isDismissing: true }))
     const maxDelay = Math.max(...layerState.pool.map((s) => s.delay)) * 0.4
-    setTimeout(() => setActive(false), (maxDelay + 0.4) * 1000)
+    setTimeout(() => setActive(false), (maxDelay + 0.16) * 1000)
   }
 
   const clearGhosts = () => {
