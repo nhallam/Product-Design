@@ -60,7 +60,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   return (
     <div
       className="bg-white shadow-lg w-[220px] text-center overflow-hidden"
-      style={{ borderRadius: '5px', border: '2.5px solid #1C1C1C' }}
+      style={{ borderRadius: '5px' }}
     >
       {/* Title */}
       <div style={{ borderBottom: '2px solid #1C1C1C', padding: '10px 16px 8px' }}>
