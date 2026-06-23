@@ -102,7 +102,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   return (
     <div
       ref={cardRef}
-      className="bg-white shadow-lg w-[160px] flex flex-col"
+      className="bg-white shadow-lg w-[180px] flex flex-col"
       style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
       {/* Header */}
