@@ -148,7 +148,11 @@ export default function Menu({ open, onClose }: MenuProps) {
                       style={{
                         color: theme === 'dark' ? 'var(--muted)' : '#FACC15',
                         transform: theme === 'dark' ? 'rotate(0deg)' : 'rotate(100deg)',
-                        transition: 'transform 0.5s cubic-bezier(0.45, 0, 0.55, 1), color 0.4s ease',
+                        // Only animate the spin when light is being selected; on
+                        // deselect, reset the rotation instantly and just fade the color.
+                        transition: theme === 'dark'
+                          ? 'color 0.4s ease'
+                          : 'transform 0.5s cubic-bezier(0.45, 0, 0.55, 1), color 0.4s ease',
                       }}
                     />
                   </span>
@@ -161,7 +165,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                         style={{
                           transform: 'translateY(0)',
                           animation: theme === 'dark'
-                            ? 'moon-carousel 0.8s cubic-bezier(0.45, 0, 0.55, 1) both'
+                            ? 'moon-carousel 1.04s cubic-bezier(0.45, 0, 0.55, 1) both'
                             : undefined,
                         }}
                       >
