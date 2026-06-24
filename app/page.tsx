@@ -1,4 +1,5 @@
 import HomeHero from '@/components/HomeHero'
+import EasterEggLayer from '@/components/EasterEgg/EasterEggLayer'
 
 function ordinal(n: number) {
   const s = ['th', 'st', 'nd', 'rd']
@@ -14,6 +15,8 @@ export default function Home() {
   const lastUpdated = `${day} ${month}, ${year}`
 
   return (
+    <>
+    <EasterEggLayer />
     <main className="flex flex-col px-6">
       <section
         className="h-[100dvh] flex items-center"
@@ -50,5 +53,6 @@ export default function Home() {
         </div>
       </section>
     </main>
+    </>
   )
 }
