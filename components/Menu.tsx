@@ -55,7 +55,7 @@ export default function Menu({ open, onClose }: MenuProps) {
 
   const NAV_STAGGER = 70
   const FOOTER_BASE = navLinks.length * NAV_STAGGER + 60
-  const FOOTER_STAGGER = 43
+  const FOOTER_STAGGER = 32
 
   function navStyle(i: number) {
     return {
@@ -67,7 +67,7 @@ export default function Menu({ open, onClose }: MenuProps) {
 
   function footerStyle(i: number) {
     return {
-      transitionDuration: '255ms',
+      transitionDuration: '191ms',
       transitionDelay: open ? `${FOOTER_BASE + i * FOOTER_STAGGER}ms` : '0ms',
       opacity: open ? 1 : 0,
       transform: open ? 'translateY(0)' : 'translateY(12px)',
