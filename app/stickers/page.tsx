@@ -30,7 +30,7 @@ const stickers: { title: string; description: string; sticker: React.ReactNode }
   },
   {
     title: 'Scoreboard',
-    description: 'Last night's score for my New York teams, refreshed after every game.',
+    description: "Last night's score for my New York teams, refreshed after every game.",
     sticker: <ScoreboardSticker ghost />,
   },
   {
