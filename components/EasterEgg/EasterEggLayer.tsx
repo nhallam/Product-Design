@@ -268,9 +268,14 @@ export default function EasterEggLayer() {
     easterEggClearGhostsRef.current = null
   }, [])
 
-  // Auto-activate after a short delay once the page has settled
+  // Auto-activate after a short delay, but only when the initial page load is the home page.
+  // If the user lands on /about etc. the stickers stay dormant until manually triggered.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { const t = setTimeout(activate, 1500); return () => clearTimeout(t) }, [])
+  useEffect(() => {
+    if (window.location.pathname !== '/') return
+    const t = setTimeout(activate, 1500)
+    return () => clearTimeout(t)
+  }, [])
 
   // Click anywhere that isn't a sticker (or the Clear button) dismisses them
   useEffect(() => {
