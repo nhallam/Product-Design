@@ -6,46 +6,32 @@ import PizzaSticker from '@/components/EasterEgg/stickers/PizzaSticker'
 import KelloggsSticker from '@/components/EasterEgg/stickers/KelloggsSticker'
 import VideoSticker from '@/components/EasterEgg/stickers/VideoSticker'
 import RecordShopSticker from '@/components/EasterEgg/stickers/RecordShopSticker'
-import StickerRow from './StickerRow'
 
-// `reference` points to a photo in /public/references/ — drop the images in
-// and they will appear behind the "Reference" toggle. Until then a placeholder
-// is shown.
-const stickers: {
-  title: string
-  description: string
-  sticker: React.ReactNode
-  reference?: string
-}[] = [
+const stickers: { title: string; description: string; sticker: React.ReactNode }[] = [
   {
     title: 'Weather',
     description: 'Live conditions in Brooklyn right now, pulled fresh whenever you stop by.',
     sticker: <WeatherSticker />,
-    reference: '/references/weather.jpg',
   },
   {
     title: 'Video',
     description: 'A looping clip of something I have been watching or working on lately.',
     sticker: <VideoSticker ghost />,
-    reference: '/references/video.jpg',
   },
   {
     title: 'G Train',
     description: 'The real-time service status of the only subway line that matters.',
     sticker: <GTrainSticker />,
-    reference: '/references/gtrain.jpg',
   },
   {
     title: 'Boombox',
     description: 'A few tracks on heavy rotation — hit play to hear what I am listening to.',
     sticker: <BoomboxSticker ghost />,
-    reference: '/references/boombox.jpg',
   },
   {
     title: 'Scoreboard',
-    description: 'Last night’s score for my New York teams, refreshed after every game.',
+    description: 'Last night's score for my New York teams, refreshed after every game.',
     sticker: <ScoreboardSticker ghost />,
-    reference: '/references/scoreboard.jpg',
   },
   {
     title: 'Yankees',
@@ -60,7 +46,6 @@ const stickers: {
         />
       </div>
     ),
-    reference: '/references/yankees.jpg',
   },
   {
     title: 'NYC Love',
@@ -75,25 +60,21 @@ const stickers: {
         />
       </div>
     ),
-    reference: '/references/nyc-love.jpg',
   },
   {
     title: 'Pizza',
     description: 'The unofficial food group of New York, and a personal weakness.',
     sticker: <PizzaSticker />,
-    reference: '/references/pizza.jpg',
   },
   {
     title: 'Kelloggs',
     description: 'A flickering neon nod to a sign I walk past most mornings.',
     sticker: <KelloggsSticker />,
-    reference: '/references/kelloggs.jpg',
   },
   {
     title: 'Record Shops',
     description: 'My favourite spots to dig for vinyl, with hours and directions in hand.',
     sticker: <RecordShopSticker ghost />,
-    reference: '/references/records.jpg',
   },
   {
     title: 'ANTI',
@@ -108,7 +89,6 @@ const stickers: {
         />
       </div>
     ),
-    reference: '/references/anti.jpg',
   },
 ]
 
@@ -125,18 +105,18 @@ export default function StickersPage() {
       </div>
 
       <p className="mt-6 text-base text-[var(--muted)] text-center">
-        The easter egg stickers hidden around the site, and the things that inspired them.
+        The easter egg stickers hidden around the site.
       </p>
 
       <div className="mt-16 divide-y divide-[var(--border)]">
-        {stickers.map(({ title, description, sticker, reference }) => (
-          <StickerRow
-            key={title}
-            title={title}
-            description={description}
-            sticker={sticker}
-            reference={reference}
-          />
+        {stickers.map(({ title, description, sticker }) => (
+          <div key={title} className="grid grid-cols-2 gap-8 items-center py-12">
+            <div>
+              <h2 className="text-xl font-bold text-[var(--text)]">{title}</h2>
+              <p className="mt-2 text-base leading-relaxed text-[var(--muted)]">{description}</p>
+            </div>
+            <div className="flex items-center justify-center">{sticker}</div>
+          </div>
         ))}
       </div>
     </main>
