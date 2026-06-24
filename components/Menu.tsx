@@ -165,7 +165,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                         style={{
                           transform: 'translateY(0)',
                           animation: theme === 'dark'
-                            ? 'moon-carousel 0.94s cubic-bezier(0.2, 0.8, 0.8, 0.2) both'
+                            ? 'moon-carousel 0.94s cubic-bezier(0.3, 0.5, 0.5, 0.3) both'
                             : undefined,
                         }}
                       >
