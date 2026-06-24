@@ -135,6 +135,12 @@ body {
   animation: marquee linear infinite;
 }
 
+/* Theme switch: scroll the moon→stars→moon strip down by two cells (2 × 20px). */
+@keyframes moon-carousel {
+  from { transform: translateY(-40px); }
+  to { transform: translateY(0); }
+}
+
 @layer base {
   a {
     color: inherit;

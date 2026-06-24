@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Sun, Moon, ArrowUpRight } from 'react-feather'
+import { Sun, Moon, Star, ArrowUpRight } from 'react-feather'
 import { useHasGhosts, easterEggClearGhostsRef } from './EasterEgg/EasterEggLayer'
 
 interface MenuProps {
@@ -153,14 +153,33 @@ export default function Menu({ open, onClose }: MenuProps) {
                     />
                   </span>
                   <span className="relative z-10 flex-1 flex items-center justify-center">
-                    <Moon
-                      size={14}
-                      strokeWidth={2.5}
-                      style={{
-                        color: theme === 'dark' ? '#3B82F6' : 'var(--muted)',
-                        transition: 'color 0.4s ease',
-                      }}
-                    />
+                    {/* Vertical carousel: on selecting dark, the moon slides down,
+                        the stars slide in and down, then the moon settles back. */}
+                    <span className="block overflow-hidden" style={{ height: 20, width: 20 }}>
+                      <span
+                        className="flex flex-col items-center"
+                        style={{
+                          transform: 'translateY(0)',
+                          animation: theme === 'dark'
+                            ? 'moon-carousel 0.8s cubic-bezier(0.45, 0, 0.55, 1) both'
+                            : undefined,
+                        }}
+                      >
+                        {/* Top cell — the resting moon (and the light-mode state) */}
+                        <span className="shrink-0 flex items-center justify-center" style={{ height: 20, width: 20 }}>
+                          <Moon size={14} strokeWidth={2.5} style={{ color: theme === 'dark' ? '#3B82F6' : 'var(--muted)', transition: 'color 0.4s ease' }} />
+                        </span>
+                        {/* Middle cell — the stars */}
+                        <span className="shrink-0 relative flex items-center justify-center" style={{ height: 20, width: 20 }}>
+                          <Star size={11} strokeWidth={2} fill="#3B82F6" style={{ color: '#3B82F6' }} />
+                          <Star size={6} strokeWidth={2} fill="#3B82F6" style={{ color: '#3B82F6', position: 'absolute', top: 2, right: 2 }} />
+                        </span>
+                        {/* Bottom cell — the moon the animation starts on */}
+                        <span className="shrink-0 flex items-center justify-center" style={{ height: 20, width: 20 }}>
+                          <Moon size={14} strokeWidth={2.5} style={{ color: '#3B82F6' }} />
+                        </span>
+                      </span>
+                    </span>
                   </span>
                 </button>
               </div>
