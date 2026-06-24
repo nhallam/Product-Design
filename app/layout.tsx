@@ -6,7 +6,13 @@ import { Analytics } from '@vercel/analytics/next';
 export const metadata: Metadata = {
   title: "Nick Hallam — Product Designer",
   description: "A product designer and founder living in Brooklyn, NY.",
-  icons: { icon: '/Favicon.svg' },
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/Favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
