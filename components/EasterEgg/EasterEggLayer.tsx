@@ -225,6 +225,12 @@ export default function EasterEggLayer() {
   }
 
   const handleShuffle = () => {
+    // If coming from ghost mode, clear ghosts and re-activate.
+    if (ghostPositions) {
+      setGhostPositions(null)
+      setGhostFading(false)
+      notifyGhostListeners(false)
+    }
     const pool = selectPool(window.innerWidth)
     const positions = generateEdgePositions(pool, window.innerWidth, window.innerHeight)
     pool.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
@@ -233,6 +239,8 @@ export default function EasterEggLayer() {
     setDeleting(null)
     setOverBin(false)
     setShuffleKey((k) => k + 1)
+    setActive(true)
+    scheduleControls(pool)
   }
 
   const handleDismiss = () => {
@@ -349,7 +357,6 @@ export default function EasterEggLayer() {
                   const hit = pointInBin(info.point.x, info.point.y)
                   setOverBin(false)
                   if (hit) {
-                    // Collapse the sticker down into the trash before removing it.
                     const c = binCenter()
                     setDeleting({ id: s.id, target: { x: c.x - s.w / 2, y: c.y - s.h / 2 } })
                   }
@@ -362,45 +369,66 @@ export default function EasterEggLayer() {
                 {s.content}
               </Sticker>
             ))}
+        </div>
+      )}
 
-          {/* Zero-width anchor centered on the viewport. The icon layers are
-              centered on this fixed point so their position never depends on
-              the pill's animating width (which caused the shake). Only the
-              background pill animates its width, behind the static icons. */}
-          {(() => {
-          const binActive = !!draggingId || !!deleting
-          const pillVisible = (controlsVisible || binActive) && !layerState.isDismissing
-          return (
-          <div
-            data-egg-control
-            className={`fixed bottom-8 left-1/2 -translate-x-1/2 h-11 pointer-events-none transition-[opacity,transform] duration-300 ${
-              pillVisible ? 'opacity-100' : 'opacity-0'
-            } ${
-              // Keep it in place while dismissing (pure fade); only slide for the entrance.
-              pillVisible || layerState.isDismissing ? 'translate-y-0' : 'translate-y-2'
-            }`}
-            style={{ width: 0 }}
+      {/* Control pill — lives outside the active block so it persists in ghost mode.
+          In ghost mode: only the Refresh button is shown (pill is 44px).
+          In active mode: Refresh + Clear (78px), or trash target when dragging (44px).
+          The only way to fully remove the pill is via "Clear stickers" in the menu. */}
+      {(() => {
+        const ghostMode = ghostPositions !== null && !ghostFading
+        const binActive = !!draggingId || !!deleting
+        const pillVisible = ghostMode || ((controlsVisible || binActive) && !layerState.isDismissing)
+        const pillWidth = (ghostMode || binActive) ? 44 : 78
+        return (
+        <div
+          data-egg-control
+          className={`fixed bottom-8 left-1/2 -translate-x-1/2 h-11 z-[100] pointer-events-none transition-[opacity,transform] duration-300 ${
+            pillVisible ? 'opacity-100' : 'opacity-0'
+          } ${
+            pillVisible || layerState.isDismissing ? 'translate-y-0' : 'translate-y-2'
+          }`}
+          style={{ width: 0 }}
+        >
+          <span
+            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[var(--text)] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
+            style={{ opacity: !binActive && buttonLabel ? 1 : 0 }}
           >
-            <span
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 text-[11px] font-medium text-[var(--text)] whitespace-nowrap pointer-events-none transition-opacity duration-200 ease-in-out"
-              style={{ opacity: !binActive && buttonLabel ? 1 : 0 }}
-            >
-              {buttonLabel ?? ''}
-            </span>
+            {buttonLabel ?? ''}
+          </span>
 
-            {/* Background pill — the only element whose width animates. Turns
-                red and grows slightly when a sticker is over the drop zone. */}
+          <div
+            className="absolute top-0 h-full rounded-full transition-[width,background-color,transform] duration-200"
+            style={{
+              width: pillWidth,
+              left: 0,
+              transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})`,
+              backgroundColor: overBin ? '#D12525' : 'var(--text)',
+            }}
+          />
+
+          {/* Ghost mode: single centered Refresh button */}
+          {ghostMode && (
             <div
-              className="absolute top-0 h-full rounded-full transition-[width,background-color,transform] duration-200"
-              style={{
-                width: binActive ? 44 : 78,
-                left: 0,
-                transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})`,
-                backgroundColor: overBin ? '#D12525' : 'var(--text)',
-              }}
-            />
+              className="absolute top-0 h-full flex items-center justify-center pointer-events-auto"
+              style={{ width: 44, left: 0, transform: 'translateX(-50%)' }}
+            >
+              <button
+                data-egg-control
+                onClick={handleShuffle}
+                onMouseEnter={() => setButtonLabel('Refresh')}
+                onMouseLeave={() => setButtonLabel(null)}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--bg)] hover:bg-[var(--bg)]/20 transition-colors"
+                aria-label="Refresh stickers"
+              >
+                <RefreshCw size={15} strokeWidth={2.5} />
+              </button>
+            </div>
+          )}
 
-            {/* Default state: Refresh + Clear (fixed 78px, centered on anchor) */}
+          {/* Active mode: Refresh + Clear (78px, centered on anchor) */}
+          {!ghostMode && (
             <div
               className={`absolute top-0 h-full flex items-center justify-center gap-0.5 transition-opacity duration-200 ${
                 binActive ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
@@ -428,22 +456,22 @@ export default function EasterEggLayer() {
                 <X size={15} strokeWidth={2.5} />
               </button>
             </div>
+          )}
 
-            {/* Dragging state: single trash target (fixed 44px, centered on anchor) */}
-            <div
-              ref={binRef}
-              className={`absolute top-0 h-full flex items-center justify-center text-[var(--bg)] pointer-events-none transition-[opacity,transform] duration-200 ${
-                binActive ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{ width: 44, left: 0, transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})` }}
-              aria-label="Drop to delete"
-            >
-              <Trash2 size={16} strokeWidth={2.5} />
-            </div>
+          {/* Dragging state: single trash target (44px, centered on anchor) */}
+          <div
+            ref={binRef}
+            className={`absolute top-0 h-full flex items-center justify-center text-[var(--bg)] pointer-events-none transition-[opacity,transform] duration-200 ${
+              binActive ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{ width: 44, left: 0, transform: `translateX(-50%) scale(${overBin ? 1.18 : 1})` }}
+            aria-label="Drop to delete"
+          >
+            <Trash2 size={16} strokeWidth={2.5} />
           </div>
-          )})()}
         </div>
-      )}
+        )
+      })()}
     </>
   )
 }
