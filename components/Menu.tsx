@@ -132,10 +132,21 @@ export default function Menu({ open, onClose }: MenuProps) {
               <div key="theme" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(themeIdx)}>
                 <button
                   onClick={toggleTheme}
+                  role="switch"
+                  aria-checked={theme === 'dark'}
                   aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                  className="w-10 h-10 mb-1 flex items-center justify-center rounded-full bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity cursor-pointer"
+                  className="relative w-16 h-8 mb-1 flex items-center rounded-full bg-[var(--surface-hover)] cursor-pointer"
                 >
-                  {theme === 'dark' ? <Sun size={16} strokeWidth={2.5} /> : <Moon size={16} strokeWidth={2.5} />}
+                  <span
+                    className="absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-[var(--text)] transition-transform duration-300 ease-out"
+                    style={{ transform: theme === 'dark' ? 'translateX(32px)' : 'translateX(0)' }}
+                  />
+                  <span className={`relative z-10 flex-1 flex items-center justify-center transition-colors ${theme === 'dark' ? 'text-[var(--muted)]' : 'text-[var(--bg)]'}`}>
+                    <Sun size={14} strokeWidth={2.5} />
+                  </span>
+                  <span className={`relative z-10 flex-1 flex items-center justify-center transition-colors ${theme === 'dark' ? 'text-[var(--bg)]' : 'text-[var(--muted)]'}`}>
+                    <Moon size={14} strokeWidth={2.5} />
+                  </span>
                 </button>
               </div>
             )
