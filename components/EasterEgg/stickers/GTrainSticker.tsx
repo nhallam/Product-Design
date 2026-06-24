@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { cachedFetch, TTL } from '../stickerData'
 
 type Status = 'running' | 'planned' | 'reduced' | 'delays' | 'suspended' | 'loading' | 'unknown'
 
@@ -18,10 +19,11 @@ export default function GTrainSticker() {
   const [status, setStatus] = useState<Status>('loading')
 
   useEffect(() => {
-    fetch('/api/gtrain')
-      .then((r) => r.json())
-      .then((d) => setStatus(d.status))
-      .catch(() => setStatus('unknown'))
+    let cancelled = false
+    cachedFetch<{ status: Status }>('/api/gtrain', TTL.gtrain)
+      .then((d) => { if (!cancelled) setStatus(d.status) })
+      .catch(() => { if (!cancelled) setStatus('unknown') })
+    return () => { cancelled = true }
   }, [])
 
   const { color, lines } = STATUS_CONFIG[status]

@@ -24,6 +24,7 @@ export function useHasGhosts() {
   return hasGhosts
 }
 
+import { prefetchStickerData } from './stickerData'
 import Sticker from './Sticker'
 import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
@@ -287,11 +288,14 @@ export default function EasterEggLayer() {
 
   // Auto-activate after a short delay, but only when the initial page load is the home page.
   // If the user lands on /about etc. the stickers stay dormant until manually triggered.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (window.location.pathname !== '/') return
-    const t = setTimeout(activate, 1500)
+    // Fire the sticker API requests now, ~1s before they animate in, so the
+    // data is usually ready the moment each sticker mounts.
+    prefetchStickerData()
+    const t = setTimeout(activate, 1000)
     return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Click anywhere that isn't a sticker (or the Clear button) dismisses them

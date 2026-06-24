@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import type { ScoreData, TeamKey } from '@/app/api/scoreboard/route'
+import { cachedFetch, freshFetch, TTL } from '../stickerData'
 
 type State = ScoreData | { status: 'loading' }
 
@@ -65,30 +66,32 @@ export default function ScoreboardSticker({ ghost = false }: { ghost?: boolean }
 
   useEffect(() => {
     let cancelled = false
+    const url = `/api/scoreboard?team=${team}`
 
-    const fetchData = () => {
-      fetch(`/api/scoreboard?team=${team}`)
-        .then((r) => r.json())
-        .then((data: ScoreData) => {
-          if (cancelled) return
-          setState(data)
-          if (data.status === 'upcoming') setTimeLeft(getTimeLeft(data.gameTime))
-          if (switchingRef.current) {
-            switchingRef.current = false
-            setFading(false)
-          }
-        })
-        .catch(() => {
-          if (cancelled) return
-          setState({ status: 'unknown' })
-          switchingRef.current = false
-          setFading(false)
-        })
+    const apply = (data: ScoreData) => {
+      if (cancelled) return
+      setState(data)
+      if (data.status === 'upcoming') setTimeLeft(getTimeLeft(data.gameTime))
+      if (switchingRef.current) {
+        switchingRef.current = false
+        setFading(false)
+      }
+    }
+    const onError = () => {
+      if (cancelled) return
+      setState({ status: 'unknown' })
+      switchingRef.current = false
+      setFading(false)
     }
 
-    fetchData()
+    // First paint is served instantly from the (pre)fetched cache when warm.
+    cachedFetch<ScoreData>(url, TTL.scoreboard).then(apply).catch(onError)
+
     if (ghost) return () => { cancelled = true }
-    const poll = setInterval(fetchData, 30000)
+    // Poll bypasses the cache so live scores stay current.
+    const poll = setInterval(() => {
+      freshFetch<ScoreData>(url).then(apply).catch(onError)
+    }, 30000)
     return () => { cancelled = true; clearInterval(poll) }
   }, [team, ghost])
 
