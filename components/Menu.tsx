@@ -141,8 +141,16 @@ export default function Menu({ open, onClose }: MenuProps) {
                     className="absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-[var(--text)] transition-transform duration-300 ease-out"
                     style={{ transform: theme === 'dark' ? 'translateX(32px)' : 'translateX(0)' }}
                   />
-                  <span className={`relative z-10 flex-1 flex items-center justify-center transition-colors ${theme === 'dark' ? 'text-[var(--muted)]' : 'text-[var(--bg)]'}`}>
-                    <Sun size={14} strokeWidth={2.5} />
+                  <span className="relative z-10 flex-1 flex items-center justify-center">
+                    <Sun
+                      size={14}
+                      strokeWidth={2.5}
+                      style={{
+                        color: theme === 'dark' ? 'var(--muted)' : '#FACC15',
+                        transform: theme === 'dark' ? 'rotate(0deg)' : 'rotate(100deg)',
+                        transition: 'transform 0.5s cubic-bezier(0.45, 0, 0.55, 1), color 0.4s ease',
+                      }}
+                    />
                   </span>
                   <span className={`relative z-10 flex-1 flex items-center justify-center transition-colors ${theme === 'dark' ? 'text-[var(--bg)]' : 'text-[var(--muted)]'}`}>
                     <Moon size={14} strokeWidth={2.5} />
