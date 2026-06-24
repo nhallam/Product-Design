@@ -181,6 +181,9 @@ export default function EasterEggLayer() {
   const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
   const [deleting, setDeleting] = useState<{ id: string; target: { x: number; y: number } } | null>(null)
   const [controlsVisible, setControlsVisible] = useState(false)
+  // Set when the user explicitly clears (pill X or menu "Clear stickers"); fully
+  // hides the pill. A plain background click does NOT set this, so the pill persists.
+  const [pillHidden, setPillHidden] = useState(false)
   const [shuffleKey, setShuffleKey] = useState(0)
   const [buttonLabel, setButtonLabel] = useState<string | null>(null)
   const binRef = useRef<HTMLDivElement>(null)
@@ -210,6 +213,7 @@ export default function EasterEggLayer() {
   }
 
   const activate = () => {
+    setPillHidden(false)
     setGhostPositions(null)
     setGhostFading(false)
     notifyGhostListeners(false)
@@ -225,6 +229,7 @@ export default function EasterEggLayer() {
   }
 
   const handleShuffle = () => {
+    setPillHidden(false)
     // If coming from ghost mode, clear ghosts and re-activate.
     if (ghostPositions) {
       setGhostPositions(null)
@@ -255,6 +260,7 @@ export default function EasterEggLayer() {
   }
 
   const clearGhosts = () => {
+    setPillHidden(true)
     setGhostFading(true)
     setTimeout(() => {
       setGhostPositions(null)
@@ -377,9 +383,9 @@ export default function EasterEggLayer() {
           In active mode: Refresh + Clear (78px), or trash target when dragging (44px).
           The only way to fully remove the pill is via "Clear stickers" in the menu. */}
       {(() => {
-        const ghostMode = ghostPositions !== null && !ghostFading
+        const ghostMode = ghostPositions !== null && !ghostFading && !pillHidden
         const binActive = !!draggingId || !!deleting
-        const pillVisible = ghostMode || ((controlsVisible || binActive) && !layerState.isDismissing)
+        const pillVisible = !pillHidden && (ghostMode || ((controlsVisible || binActive) && !layerState.isDismissing))
         const pillWidth = (ghostMode || binActive) ? 44 : 78
         return (
         <div
