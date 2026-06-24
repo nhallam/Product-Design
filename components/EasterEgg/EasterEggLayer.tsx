@@ -245,7 +245,10 @@ export default function EasterEggLayer() {
     setOverBin(false)
     setShuffleKey((k) => k + 1)
     setActive(true)
-    scheduleControls(pool)
+    // The pill is already on screen — keep it visible (with Refresh + Clear)
+    // rather than replaying the entrance delay.
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current)
+    setControlsVisible(true)
   }
 
   const handleDismiss = () => {
