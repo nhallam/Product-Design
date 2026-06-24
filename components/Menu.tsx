@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Sun, Moon } from 'react-feather'
+import { Sun, Moon, ExternalLink } from 'react-feather'
 import { useHasGhosts, easterEggClearGhostsRef } from './EasterEgg/EasterEggLayer'
 
 interface MenuProps {
@@ -154,8 +154,9 @@ export default function Menu({ open, onClose }: MenuProps) {
               const idx = i++
               items.push(
                 <div key={label} className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
-                  <a href={href} className={`text-base text-[var(--muted)] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
+                  <a href={href} className={`group inline-flex items-center gap-1.5 text-base text-[var(--muted)] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
                     {label}
+                    <ExternalLink size={12} strokeWidth={2} className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)]" />
                   </a>
                 </div>
               )
