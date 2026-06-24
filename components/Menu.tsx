@@ -135,7 +135,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                   role="switch"
                   aria-checked={theme === 'dark'}
                   aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                  className="relative w-16 h-8 mb-1 flex items-center rounded-full bg-[var(--surface-hover)] cursor-pointer"
+                  className="relative w-16 h-8 mb-1 flex items-center rounded-full bg-[var(--surface)] cursor-pointer"
                 >
                   <span
                     className="absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-[var(--text)] transition-transform duration-300 ease-out"
