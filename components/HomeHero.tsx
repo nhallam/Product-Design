@@ -6,7 +6,7 @@ export default function HomeHero() {
   useEffect(() => {
     const apply = () => {
       document.documentElement.style.scrollSnapType =
-        window.innerWidth >= 768 ? 'y mandatory' : 'y proximity'
+        window.innerWidth >= 768 ? 'y mandatory' : ''
     }
     apply()
     window.addEventListener('resize', apply)
