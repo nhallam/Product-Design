@@ -156,7 +156,7 @@ export default function Menu({ open, onClose }: MenuProps) {
                 <div key={label} className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(idx)}>
                   <a href={href} className={`group inline-flex items-center gap-1.5 text-base text-[var(--muted)] transition-colors ${hoverClass}`} target="_blank" rel="noopener noreferrer">
                     {label}
-                    <ArrowUpRight size={12} strokeWidth={2} className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)]" />
+                    <ArrowUpRight size={16} strokeWidth={2} className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)]" />
                   </a>
                 </div>
               )
