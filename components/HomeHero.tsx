@@ -4,8 +4,14 @@ import { useEffect } from 'react'
 
 export default function HomeHero() {
   useEffect(() => {
-    document.documentElement.style.scrollSnapType = 'y mandatory'
+    const apply = () => {
+      document.documentElement.style.scrollSnapType =
+        window.innerWidth >= 768 ? 'y mandatory' : 'y proximity'
+    }
+    apply()
+    window.addEventListener('resize', apply)
     return () => {
+      window.removeEventListener('resize', apply)
       document.documentElement.style.scrollSnapType = ''
     }
   }, [])
