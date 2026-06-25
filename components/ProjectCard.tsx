@@ -7,9 +7,10 @@ interface ProjectCardProps {
   image?: string
   video?: string
   comingSoon?: boolean
+  onClick?: () => void
 }
 
-export default function ProjectCard({ slug, title, image, video, comingSoon }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, image, video, comingSoon, onClick }: ProjectCardProps) {
   const inner = (
     <>
       <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
@@ -31,6 +32,14 @@ export default function ProjectCard({ slug, title, image, video, comingSoon }: P
 
   if (comingSoon) {
     return <div>{inner}</div>
+  }
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} className="block group w-full text-left">
+        {inner}
+      </button>
+    )
   }
 
   return (
