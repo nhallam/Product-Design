@@ -49,7 +49,7 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
   return (
     <div
       ref={scrollRef}
-      className={`fixed left-0 right-0 bottom-0 z-[200] bg-white overflow-y-auto transition-transform duration-[380ms] ${
+      className={`fixed left-0 right-0 bottom-0 z-[200] bg-[var(--surface)] overflow-y-auto transition-transform duration-[380ms] ${
         open ? 'translate-y-0' : 'translate-y-full'
       }`}
       style={{
@@ -58,11 +58,11 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
       }}
     >
       {/* Header with close button — full-width bg covers content scrolling behind */}
-      <div className="sticky top-0 bg-white z-10">
+      <div className="sticky top-0 bg-[var(--surface)] z-10">
         <div className="max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
-            className="text-[#1C1C1C] hover:opacity-40 transition-opacity"
+            className="text-[var(--text)] hover:opacity-40 transition-opacity"
             aria-label="Close"
           >
             <X size={20} strokeWidth={2} />

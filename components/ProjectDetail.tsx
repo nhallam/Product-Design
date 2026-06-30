@@ -16,7 +16,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
 
       {project?.body && (
         <div
-          className="max-w-prose text-base leading-relaxed text-[#1C1C1C]
+          className="max-w-prose text-base leading-relaxed text-[var(--text)]
             [&_p]:mb-5
             [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2
             [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:opacity-60 [&_a]:transition-opacity
@@ -27,7 +27,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       )}
 
       {!project?.body && (
-        <div className="max-w-prose text-base leading-relaxed text-[#1C1C1C]">
+        <div className="max-w-prose text-base leading-relaxed text-[var(--text)]">
           <p>Project overview and description will go here.</p>
         </div>
       )}
@@ -64,7 +64,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
 
       {project?.images && project.images.length > 0 && (
         <div className="mt-10 flex flex-col gap-10">
-          <p className="text-base text-[#888888]">Development work.</p>
+          <p className="text-base text-[var(--muted)]">Development work.</p>
           {project.images.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img

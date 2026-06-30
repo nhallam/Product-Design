@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import NewsletterSignup from './NewsletterSignup'
 import ArticleSheet from './ArticleSheet'
+import NewsletterSheet from './NewsletterSheet'
 import type { Campaign } from '@/app/newsletter/campaigns'
 
 const MONTHS: Record<string, number> = {
@@ -26,13 +26,17 @@ interface WritingTabsProps {
   campaigns: Campaign[]
 }
 
+type ActiveSheet =
+  | { type: 'article'; slug: string }
+  | { type: 'campaign'; campaign: Campaign }
+
 export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
   const [tab, setTab] = useState<'blog' | 'newsletter'>('blog')
-  const [activeSlug, setActiveSlug] = useState<string | null>(null)
+  const [active, setActive] = useState<ActiveSheet | null>(null)
   const [sheetOpen, setSheetOpen] = useState(false)
 
-  const openSheet = (slug: string) => {
-    setActiveSlug(slug)
+  const openSheet = (item: ActiveSheet) => {
+    setActive(item)
     // Single rAF so the sheet mounts (translate-y-full) before the open class
     // applies and the enter transition plays.
     requestAnimationFrame(() => setSheetOpen(true))
@@ -40,17 +44,17 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
 
   const closeSheet = () => {
     setSheetOpen(false)
-    // Clear the slug after the exit transition finishes (380ms).
-    setTimeout(() => setActiveSlug(null), 400)
+    // Clear the active item after the exit transition finishes (380ms).
+    setTimeout(() => setActive(null), 400)
   }
 
-  // Keep the slug in sync when closed externally (e.g. Escape).
+  // Keep the active item in sync when closed externally (e.g. Escape).
   useEffect(() => {
-    if (!sheetOpen && activeSlug) {
-      const id = setTimeout(() => setActiveSlug(null), 400)
+    if (!sheetOpen && active) {
+      const id = setTimeout(() => setActive(null), 400)
       return () => clearTimeout(id)
     }
-  }, [sheetOpen, activeSlug])
+  }, [sheetOpen, active])
 
   return (
     <>
@@ -77,7 +81,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
           {articles.map(({ slug, title, date }) => (
             <button
               key={slug}
-              onClick={() => openSheet(slug)}
+              onClick={() => openSheet({ type: 'article', slug })}
               className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
@@ -97,24 +101,27 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
           <NewsletterSignup />
           <div className="mt-10 divide-y divide-[var(--border)] border-b border-[var(--border)]">
             {campaigns.map((c) => (
-              <Link
+              <button
                 key={c.id}
-                href={`/newsletter/${c.id}`}
-                className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
+                onClick={() => openSheet({ type: 'campaign', campaign: c })}
+                className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
               >
                 <span className="text-base font-medium text-[var(--text)]">{c.subject}</span>
                 <span className="text-sm text-[var(--muted)] shrink-0 ml-6">
                   {new Date(c.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
-              </Link>
+              </button>
             ))}
           </div>
         </div>
       )}
     </main>
 
-    {activeSlug && (
-      <ArticleSheet slug={activeSlug} open={sheetOpen} onClose={closeSheet} />
+    {active?.type === 'article' && (
+      <ArticleSheet slug={active.slug} open={sheetOpen} onClose={closeSheet} />
+    )}
+    {active?.type === 'campaign' && (
+      <NewsletterSheet campaign={active.campaign} open={sheetOpen} onClose={closeSheet} />
     )}
     </>
   )
