@@ -79,7 +79,10 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         </div>
       </div>
 
-      {children}
+      {/* Nudge content down so the title clears the header's faded frost */}
+      <div className="pt-5">
+        {children}
+      </div>
     </div>
   )
 }
