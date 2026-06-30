@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X } from 'react-feather'
 import ProjectDetail from './ProjectDetail'
 
@@ -12,6 +12,18 @@ interface ProjectSheetProps {
 
 export default function ProjectSheet({ slug, open, onClose }: ProjectSheetProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
+  // The sheet stops just below the sticky nav, leaving it visible above.
+  const [navHeight, setNavHeight] = useState(0)
+
+  useEffect(() => {
+    const measure = () => {
+      const nav = document.querySelector('nav')
+      setNavHeight(nav ? nav.getBoundingClientRect().height : 0)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [open])
 
   // Lock background scroll while sheet is open
   useEffect(() => {
@@ -34,10 +46,13 @@ export default function ProjectSheet({ slug, open, onClose }: ProjectSheetProps)
   return (
     <div
       ref={scrollRef}
-      className={`fixed inset-0 z-[200] bg-white overflow-y-auto transition-transform duration-[380ms] ${
+      className={`fixed left-0 right-0 bottom-0 z-[200] bg-white overflow-y-auto transition-transform duration-[380ms] ${
         open ? 'translate-y-0' : 'translate-y-full'
       }`}
-      style={{ transitionTimingFunction: open ? 'cubic-bezier(0.32, 0.72, 0, 1)' : 'cubic-bezier(0.5, 0, 0.84, 0)' }}
+      style={{
+        top: navHeight,
+        transitionTimingFunction: open ? 'cubic-bezier(0.32, 0.72, 0, 1)' : 'cubic-bezier(0.5, 0, 0.84, 0)',
+      }}
     >
       {/* Header with close button — full-width bg covers content scrolling behind */}
       <div className="sticky top-0 bg-white z-10">
