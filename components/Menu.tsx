@@ -148,15 +148,11 @@ export default function Menu({ open, onClose }: MenuProps) {
                       style={{
                         color: theme === 'dark' ? 'var(--muted)' : '#FDE047',
                         transform: theme === 'dark' ? 'rotate(0deg)' : 'rotate(100deg)',
-                        // Soft yellow glow that fades in as the sun spins into place.
-                        filter: theme === 'dark'
-                          ? 'drop-shadow(0 0 0 rgba(253, 224, 71, 0))'
-                          : 'drop-shadow(0 0 4px rgba(253, 224, 71, 0.85))',
                         // Only animate the spin when light is being selected; on
-                        // deselect, reset the rotation instantly and just fade the color/glow.
+                        // deselect, reset the rotation instantly and just fade the color.
                         transition: theme === 'dark'
-                          ? 'color 0.4s ease, filter 0.4s ease'
-                          : 'transform 0.5s cubic-bezier(0.45, 0, 0.55, 1), color 0.4s ease, filter 0.5s ease',
+                          ? 'color 0.4s ease'
+                          : 'transform 0.5s cubic-bezier(0.45, 0, 0.55, 1), color 0.4s ease',
                       }}
                     />
                   </span>
