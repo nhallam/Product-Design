@@ -57,8 +57,8 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         transitionTimingFunction: open ? 'cubic-bezier(0.32, 0.72, 0, 1)' : 'cubic-bezier(0.5, 0, 0.84, 0)',
       }}
     >
-      {/* Header with close button — full-width bg covers content scrolling behind */}
-      <div className="sticky top-0 bg-[var(--surface)] z-10">
+      {/* Header with close button — frosted so content is faintly visible scrolling behind */}
+      <div className="sticky top-0 bg-[var(--surface)]/70 backdrop-blur-[12px] z-10">
         <div className="max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
