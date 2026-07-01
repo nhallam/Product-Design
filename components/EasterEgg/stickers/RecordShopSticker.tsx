@@ -19,86 +19,6 @@ const STORES = [
   { name: 'Superior Elevation',      borough: 'Brooklyn',  hours: 'Daily 12–8 PM',                                                              address: '616 Grand St, Brooklyn, NY 11211' },
 ]
 
-const DAY_ABBREVS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-// Current day-of-week (0=Sun) and minutes-since-midnight in NYC time,
-// regardless of the visitor's local timezone.
-function nycNow(): { day: number; minutes: number } {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date())
-
-  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? ''
-  const day = DAY_ABBREVS.indexOf(get('weekday'))
-  let hour = parseInt(get('hour'), 10)
-  if (hour === 24) hour = 0 // some engines emit "24" for midnight
-  const minute = parseInt(get('minute'), 10)
-  return { day, minutes: hour * 60 + minute }
-}
-
-function dayInRange(today: number, startAbbrev: string, endAbbrev: string): boolean {
-  const s = DAY_ABBREVS.indexOf(startAbbrev)
-  const e = DAY_ABBREVS.indexOf(endAbbrev)
-  if (s === -1 || e === -1) return false
-  if (s <= e) return today >= s && today <= e
-  return today >= s || today <= e
-}
-
-function getTodayHours(hours: string): string {
-  const today = nycNow().day
-  for (const segment of hours.split('; ')) {
-    if (/^daily/i.test(segment)) return segment.replace(/^daily\s*/i, '')
-    const match = segment.match(/^(.+?)\s+([\d:].+|closed)$/i)
-    if (!match) continue
-    const dayPart = match[1].trim()
-    const timePart = match[2]
-    const isClosed = /^closed$/i.test(timePart)
-    for (const group of dayPart.split(/\s*&\s*/)) {
-      const parts = group.trim().split('–')
-      const matches = parts.length === 2
-        ? dayInRange(today, parts[0].trim(), parts[1].trim())
-        : DAY_ABBREVS.indexOf(parts[0].trim()) === today
-      if (matches) return isClosed ? 'Closed' : timePart
-    }
-  }
-  return '—'
-}
-
-// Parse "11 AM", "12", "6:30 PM" into minutes since midnight.
-// If no AM/PM is present, inherit the supplied fallback meridiem.
-function parseClock(str: string, fallback: 'AM' | 'PM'): number | null {
-  const m = str.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/i)
-  if (!m) return null
-  let hour = parseInt(m[1], 10)
-  const minute = m[2] ? parseInt(m[2], 10) : 0
-  const meridiem = (m[3]?.toUpperCase() as 'AM' | 'PM') ?? fallback
-  if (meridiem === 'PM' && hour !== 12) hour += 12
-  if (meridiem === 'AM' && hour === 12) hour = 0
-  return hour * 60 + minute
-}
-
-// Returns true if the store is open at the current day/time.
-function isOpenNow(hours: string): boolean {
-  const range = getTodayHours(hours)
-  if (range === 'Closed' || range === '—') return false
-
-  const [startStr, endStr] = range.split('–')
-  if (!startStr || !endStr) return false
-
-  // The closing time always carries AM/PM; the opening time may inherit it.
-  const endMeridiem = /PM/i.test(endStr) ? 'PM' : 'AM'
-  const open = parseClock(startStr, endMeridiem)
-  const close = parseClock(endStr, endMeridiem)
-  if (open === null || close === null) return false
-
-  const mins = nycNow().minutes
-  return close >= open ? mins >= open && mins < close : mins >= open || mins < close
-}
-
 const INFO_RATIO = 0.55
 const LABEL_SIZE = 32
 const MAX_SIZE = 32
@@ -115,7 +35,6 @@ const base: React.CSSProperties = {
 export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
   const store  = STORES[index]
-  const openLabel = isOpenNow(store.hours) ? 'OPEN' : 'CLOSED'
   // Include the store name so Google resolves to the business listing rather
   // than just dropping a pin at the address coordinates.
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${store.name}, ${store.address}`)}`
