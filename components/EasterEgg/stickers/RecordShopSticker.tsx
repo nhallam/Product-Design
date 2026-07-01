@@ -70,7 +70,11 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
       if (nameRef.current) nameRef.current.style.fontSize = `${s}px`
       if (infoRef.current) infoRef.current.style.fontSize = `${s * INFO_RATIO}px`
     }
-    const fits = () => card.scrollHeight <= card.clientHeight + 1
+    // Fit both vertically (whole card) and horizontally (the name itself, so a
+    // long unbreakable word like "MANHATTAN45" shrinks instead of clipping).
+    const fits = () =>
+      card.scrollHeight <= card.clientHeight + 1 &&
+      (!nameRef.current || nameRef.current.scrollWidth <= nameRef.current.clientWidth + 1)
 
     apply()
     while (!fits() && s > MIN_SIZE) { s -= 0.5; apply() }
