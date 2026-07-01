@@ -73,11 +73,11 @@ const stickers = [
   },
 ]
 
-const VISIBLE = 0.3
 const GAP = 24
-// Stickers may sit close to UI elements (nav, controls) but must not touch them.
+// Stickers may sit close to UI elements but must not touch them.
 const EXCLUSION_GAP = 12
-const EDGES = ['left', 'right', 'top', 'bottom'] as const
+// Keep stickers fully on-screen, off the very edge.
+const EDGE_MARGIN = 12
 
 type Rect = { x: number; y: number; w: number; h: number }
 
@@ -90,18 +90,23 @@ function overlaps(a: Rect, b: Rect, gap = GAP): boolean {
   )
 }
 
-// Areas the stickers must keep clear of: the nav items (Nick Hallam / Menu)
-// and the bottom-center control pill (incl. its hover label).
+// Areas the stickers must keep clear of: the nav items (Nick Hallam / Menu),
+// the main heading in the center of the screen, and the bottom-center control
+// pill (incl. its hover label).
 function getExclusionZones(viewW: number, viewH: number): Rect[] {
   const zones: Rect[] = []
 
-  const nav = typeof document !== 'undefined' ? document.querySelector('nav') : null
-  if (nav) {
-    for (const child of Array.from(nav.children)) {
-      const r = child.getBoundingClientRect()
-      if (r.width > 0 && r.height > 0) zones.push({ x: r.left, y: r.top, w: r.width, h: r.height })
-    }
+  const push = (el: Element | null) => {
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    if (r.width > 0 && r.height > 0) zones.push({ x: r.left, y: r.top, w: r.width, h: r.height })
   }
+
+  const nav = typeof document !== 'undefined' ? document.querySelector('nav') : null
+  if (nav) for (const child of Array.from(nav.children)) push(child)
+
+  // The main heading (home hero or page title) sits in the center of the screen.
+  if (typeof document !== 'undefined') push(document.querySelector('main h1'))
 
   // Control pill footprint: ~100px wide, ~44px tall, 32px above the bottom,
   // plus ~22px for the hover label that appears above it.
@@ -119,16 +124,13 @@ function getExclusionZones(viewW: number, viewH: number): Rect[] {
   return zones
 }
 
-function edgePosition(edge: typeof EDGES[number], s: { w: number; h: number }, viewW: number, viewH: number) {
-  switch (edge) {
-    case 'left':
-      return { x: -(s.w * (1 - VISIBLE)), y: Math.random() * Math.max(viewH - s.h, 0) }
-    case 'right':
-      return { x: viewW - s.w * VISIBLE, y: Math.random() * Math.max(viewH - s.h, 0) }
-    case 'top':
-      return { x: Math.random() * Math.max(viewW - s.w, 0), y: -(s.h * (1 - VISIBLE)) }
-    case 'bottom':
-      return { x: Math.random() * Math.max(viewW - s.w, 0), y: viewH - s.h * VISIBLE }
+// A random position with the whole sticker on-screen (minus a small margin).
+function randomPosition(s: { w: number; h: number }, viewW: number, viewH: number) {
+  const maxX = Math.max(viewW - s.w - EDGE_MARGIN, EDGE_MARGIN)
+  const maxY = Math.max(viewH - s.h - EDGE_MARGIN, EDGE_MARGIN)
+  return {
+    x: EDGE_MARGIN + Math.random() * (maxX - EDGE_MARGIN),
+    y: EDGE_MARGIN + Math.random() * (maxY - EDGE_MARGIN),
   }
 }
 
@@ -141,7 +143,9 @@ function selectPool(viewW: number) {
   return shuffled.slice(0, MOBILE_MAX_STICKERS)
 }
 
-function generateEdgePositions(pool: typeof stickers, viewW: number, viewH: number): { x: number; y: number }[] {
+// Scatter the stickers across the whole screen, avoiding each other and the
+// exclusion zones (nav, main heading, control pill).
+function generateScatterPositions(pool: typeof stickers, viewW: number, viewH: number): { x: number; y: number }[] {
   const placed: Rect[] = []
   const exclusions = getExclusionZones(viewW, viewH)
 
@@ -150,10 +154,9 @@ function generateEdgePositions(pool: typeof stickers, viewW: number, viewH: numb
     !exclusions.some((z) => overlaps(rect, z, EXCLUSION_GAP))
 
   return pool.map((s) => {
-    let pos = edgePosition(EDGES[Math.floor(Math.random() * EDGES.length)], s, viewW, viewH)
-    for (let attempt = 0; attempt < 80; attempt++) {
-      const edge = EDGES[Math.floor(Math.random() * EDGES.length)]
-      pos = edgePosition(edge, s, viewW, viewH)
+    let pos = randomPosition(s, viewW, viewH)
+    for (let attempt = 0; attempt < 150; attempt++) {
+      pos = randomPosition(s, viewW, viewH)
       if (clears({ ...pos, w: s.w, h: s.h })) break
     }
     placed.push({ ...pos, w: s.w, h: s.h })
@@ -222,7 +225,7 @@ export default function EasterEggLayer() {
     setDeleting(null)
     setOverBin(false)
     const pool = selectPool(window.innerWidth)
-    const positions = generateEdgePositions(pool, window.innerWidth, window.innerHeight)
+    const positions = generateScatterPositions(pool, window.innerWidth, window.innerHeight)
     pool.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
     setLayerState({ pool, positions, isDismissing: false })
     setActive(true)
@@ -238,7 +241,7 @@ export default function EasterEggLayer() {
       notifyGhostListeners(false)
     }
     const pool = selectPool(window.innerWidth)
-    const positions = generateEdgePositions(pool, window.innerWidth, window.innerHeight)
+    const positions = generateScatterPositions(pool, window.innerWidth, window.innerHeight)
     pool.forEach((s, i) => { livePositionsRef.current[s.id] = positions[i] })
     setLayerState({ pool, positions, isDismissing: false })
     setDeletedIds(new Set())
