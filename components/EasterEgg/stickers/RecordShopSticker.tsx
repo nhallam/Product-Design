@@ -116,7 +116,9 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
   const store  = STORES[index]
   const openLabel = isOpenNow(store.hours) ? 'OPEN' : 'CLOSED'
-  const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(store.address)}`
+  // Include the store name so Google resolves to the business listing rather
+  // than just dropping a pin at the address coordinates.
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${store.name}, ${store.address}`)}`
 
   const cardRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
