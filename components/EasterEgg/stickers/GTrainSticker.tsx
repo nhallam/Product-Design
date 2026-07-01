@@ -1,7 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { cachedFetch, TTL } from '../stickerData'
+
+// The status text starts at TEXT_X; the box is sized to end RIGHT_PAD past the
+// widest line so it hugs the content. DOT_INSET keeps the status dot the same
+// distance from the (now dynamic) right edge.
+const TEXT_X = 80
+const RIGHT_PAD = 16
+const DOT_INSET = 12
 
 type Status = 'running' | 'planned' | 'reduced' | 'delays' | 'suspended' | 'loading' | 'unknown'
 
@@ -17,6 +24,8 @@ const STATUS_CONFIG: Record<Status, { color: string; lines: [string, string?] }>
 
 export default function GTrainSticker() {
   const [status, setStatus] = useState<Status>('loading')
+  const [width, setWidth] = useState(230)
+  const textRef = useRef<SVGTextElement>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -28,17 +37,24 @@ export default function GTrainSticker() {
 
   const { color, lines } = STATUS_CONFIG[status]
 
+  // Size the box to hug the widest status line whenever the status changes.
+  useLayoutEffect(() => {
+    if (!textRef.current) return
+    const textWidth = textRef.current.getBBox().width
+    setWidth(Math.ceil(TEXT_X + textWidth + RIGHT_PAD))
+  }, [status])
+
   return (
     <svg
-      width="230"
+      width={width}
       height="68"
-      viewBox="0 0 230 68"
+      viewBox={`0 0 ${width} 68`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="select-none [filter:drop-shadow(0_10px_15px_rgba(0,0,0,0.2))]"
     >
-      <rect width="230" height="68" rx="10" fill="#1D1D1D" />
-      <line x1="0" y1="16.5" x2="230" y2="16.5" stroke="white" strokeWidth="3" />
+      <rect width={width} height="68" rx="10" fill="#1D1D1D" />
+      <line x1="0" y1="16.5" x2={width} y2="16.5" stroke="white" strokeWidth="3" />
 
       <style>{`
         @keyframes gtrain-pulse {
@@ -47,8 +63,8 @@ export default function GTrainSticker() {
         }
         .gtrain-pulse { animation: gtrain-pulse 2s ease-out infinite; }
       `}</style>
-      <circle cx="218" cy="8" r="4" fill={color} />
-      <circle cx="218" cy="8" r="4" fill={color} className="gtrain-pulse" />
+      <circle cx={width - DOT_INSET} cy="8" r="4" fill={color} />
+      <circle cx={width - DOT_INSET} cy="8" r="4" fill={color} className="gtrain-pulse" />
 
       {/* G circle at 44% of original size, centered at (38, 42) */}
       <circle cx="38" cy="42" r="22" fill={color} />
@@ -64,7 +80,8 @@ export default function GTrainSticker() {
 
       {/* Status label — two lines, left-aligned */}
       <text
-        x="80"
+        ref={textRef}
+        x={TEXT_X}
         fill="white"
         fontSize="12"
         fontWeight="700"
@@ -73,11 +90,11 @@ export default function GTrainSticker() {
       >
         {lines[1] ? (
           <>
-            <tspan x="80" y="37">{lines[0]}</tspan>
-            <tspan x="80" dy="15">{lines[1]}</tspan>
+            <tspan x={TEXT_X} y="37">{lines[0]}</tspan>
+            <tspan x={TEXT_X} dy="15">{lines[1]}</tspan>
           </>
         ) : (
-          <tspan x="80" y="44">{lines[0]}</tspan>
+          <tspan x={TEXT_X} y="44">{lines[0]}</tspan>
         )}
       </text>
     </svg>
