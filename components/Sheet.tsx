@@ -49,7 +49,7 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
   return (
     <div
       ref={scrollRef}
-      className={`fixed left-0 right-0 bottom-0 z-[200] bg-[var(--surface)] overflow-y-auto transition-transform duration-[380ms] ${
+      className={`fixed left-0 right-0 bottom-0 z-[200] rounded-t-[5px] bg-[var(--surface)] overflow-y-auto transition-transform duration-[380ms] ${
         open ? 'translate-y-0' : 'translate-y-full'
       }`}
       style={{
