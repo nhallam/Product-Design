@@ -30,7 +30,6 @@ import GTrainSticker from './stickers/GTrainSticker'
 import BoomboxSticker from './stickers/BoomboxSticker'
 import ScoreboardSticker from './stickers/ScoreboardSticker'
 import WeatherSticker from './stickers/WeatherSticker'
-import PizzaSticker from './stickers/PizzaSticker'
 import KelloggsSticker from './stickers/KelloggsSticker'
 import VideoSticker from './stickers/VideoSticker'
 import RecordShopSticker from './stickers/RecordShopSticker'
@@ -59,7 +58,6 @@ const stickers = [
       </div>
     ),
   },
-  { id: 'pizza', w: 160, h: 160, rotation: 8, delay: 0.42, content: <PizzaSticker /> },
   { id: 'kelloggs', w: 220, h: 80, rotation: -3, delay: 0.49, content: <KelloggsSticker /> },
   { id: 'records', w: 180, h: 250, rotation: -4, delay: 0.56, content: <RecordShopSticker /> },
   {

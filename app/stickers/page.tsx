@@ -2,7 +2,6 @@ import GTrainSticker from '@/components/EasterEgg/stickers/GTrainSticker'
 import BoomboxSticker from '@/components/EasterEgg/stickers/BoomboxSticker'
 import ScoreboardSticker from '@/components/EasterEgg/stickers/ScoreboardSticker'
 import WeatherSticker from '@/components/EasterEgg/stickers/WeatherSticker'
-import PizzaSticker from '@/components/EasterEgg/stickers/PizzaSticker'
 import KelloggsSticker from '@/components/EasterEgg/stickers/KelloggsSticker'
 import VideoSticker from '@/components/EasterEgg/stickers/VideoSticker'
 import RecordShopSticker from '@/components/EasterEgg/stickers/RecordShopSticker'
@@ -60,11 +59,6 @@ const stickers: { title: string; description: string; sticker: React.ReactNode }
         />
       </div>
     ),
-  },
-  {
-    title: 'Pizza',
-    description: 'The unofficial food group of New York, and a personal weakness.',
-    sticker: <PizzaSticker />,
   },
   {
     title: 'Kelloggs',
