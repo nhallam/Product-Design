@@ -68,6 +68,12 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
             WebkitMaskImage: 'linear-gradient(to bottom, black 45%, transparent 100%)',
           }}
         />
+        {/* Blend the sheet's top edge into the page bg behind the nav, so the
+            surface dissolves into the background instead of a hard line. */}
+        <div
+          className="pointer-events-none absolute top-0 left-0 right-0 h-6"
+          style={{ background: 'linear-gradient(to bottom, var(--bg), transparent)' }}
+        />
         <div className="relative max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
