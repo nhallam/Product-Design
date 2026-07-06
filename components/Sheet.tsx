@@ -79,8 +79,9 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         </div>
       </div>
 
-      {/* Nudge content down so the title clears the header's faded frost */}
-      <div className="pt-5">
+      {/* Nudge content down so the title clears the header bar and its faded
+          frost tail (~60px bar + ~32px fade) rather than starting under it. */}
+      <div className="pt-9">
         {children}
       </div>
     </div>
