@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, PanInfo } from 'framer-motion'
 import { ReactNode } from 'react'
+import PeelCorner from './PeelCorner'
 
 interface StickerProps {
   children: ReactNode
@@ -68,7 +69,7 @@ export default function Sticker({ children, initialX, initialY, rotation = 0, de
       onDragEnd={onDragEnd}
       onAnimationComplete={() => { if (deleting) onDeleted?.() }}
     >
-      {children}
+      <PeelCorner>{children}</PeelCorner>
     </motion.div>
   )
 }
