@@ -24,7 +24,7 @@ function Stage({ theme, s }: { theme: 'light' | 'dark'; s: PaperSettings }) {
     >
       <span className="text-[11px] font-medium uppercase tracking-widest text-[var(--muted)]">{theme}</span>
       <div style={{ position: 'relative', width: 180, height: 250, isolation: 'isolate' }}>
-        <RecordShopSticker />
+        <RecordShopSticker themed />
         <PaperOverlay s={s} />
       </div>
     </div>

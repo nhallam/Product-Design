@@ -32,7 +32,7 @@ const base: React.CSSProperties = {
   textAlign: 'center',
 }
 
-export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }) {
+export default function RecordShopSticker({ ghost = false, themed = false }: { ghost?: boolean; themed?: boolean }) {
   const [index, setIndex] = useState(() => Math.floor(Math.random() * STORES.length))
   const store  = STORES[index]
   // Include the store name so Google resolves to the business listing rather
@@ -90,7 +90,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
   return (
     <div
       ref={cardRef}
-      className="bg-[#1C1C1C] text-[#F2F2F2] shadow-lg w-[180px] flex flex-col"
+      className={`${themed ? 'bg-[var(--surface)] text-[var(--text)]' : 'bg-[#1C1C1C] text-[#F2F2F2]'} shadow-lg w-[180px] flex flex-col`}
       style={{ borderRadius: '2px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
       {/* Header */}
