@@ -6,18 +6,20 @@ interface ProjectCardProps {
   title: string
   image?: string
   video?: string
+  poster?: string
   comingSoon?: boolean
   onClick?: () => void
 }
 
-export default function ProjectCard({ slug, title, image, video, comingSoon, onClick }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, image, video, poster, comingSoon, onClick }: ProjectCardProps) {
   const inner = (
     <>
       <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
         {video && !comingSoon ? (
-          <video src={video} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+          // poster shows instantly so the card isn't blank while the video buffers
+          <video src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" className="w-full h-full object-cover" />
         ) : image && !comingSoon ? (
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image src={image} alt={title} fill priority sizes="(max-width: 700px) 100vw, 620px" className="object-cover" />
         ) : (
           <div className="w-full h-full bg-[var(--border)]" />
         )}

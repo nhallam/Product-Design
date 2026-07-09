@@ -5,7 +5,7 @@ import ProjectCard from '@/components/ProjectCard'
 import ProjectSheet from '@/components/ProjectSheet'
 
 const projects = [
-  { slug: 'gumroad', title: 'Tipping on Gumroad', video: '/Gumroad_Tipping1.mp4' },
+  { slug: 'gumroad', title: 'Tipping on Gumroad', video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
   { slug: 'tiller', title: 'Tiller, onboarding', image: '/project-one.jpg' },
   { slug: 'tiller-onboarding', title: 'Tiller', comingSoon: true },
   { slug: 'halo', title: 'Halo', comingSoon: true },
