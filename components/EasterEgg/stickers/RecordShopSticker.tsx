@@ -91,7 +91,7 @@ export default function RecordShopSticker({ ghost = false }: { ghost?: boolean }
     <div
       ref={cardRef}
       className="bg-[#1C1C1C] text-[#F2F2F2] shadow-lg w-[180px] flex flex-col"
-      style={{ borderRadius: '4px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
+      style={{ borderRadius: '2px', height: '250px', padding: '12px 14px', overflow: 'hidden' }}
     >
       {/* Header */}
       <div ref={(el) => { labelRefs.current[0] = el }} style={ls}>BEST NYC</div>
