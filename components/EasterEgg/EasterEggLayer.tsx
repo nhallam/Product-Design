@@ -337,7 +337,7 @@ export default function EasterEggLayer() {
                 width: s.w,
                 transform: `rotate(${s.rotation}deg)`,
                 transformOrigin: 'top left',
-                opacity: 0.12,
+                opacity: 0.06,
                 filter: 'grayscale(1)',
               }}
             >
