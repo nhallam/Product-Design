@@ -102,8 +102,8 @@ export default function Menu({ open, onClose }: MenuProps) {
       )}
 
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
-        <div className="flex-1 flex items-center justify-end">
-          <nav className="flex flex-col gap-1 items-end text-right">
+        <div className="flex-1 flex items-center">
+          <nav className="flex flex-col gap-1">
             {navLinks.map(({ href, label }, i) => (
               <div
                 key={href}
@@ -123,7 +123,7 @@ export default function Menu({ open, onClose }: MenuProps) {
           </nav>
         </div>
 
-        <div className="flex flex-col gap-1 items-end">
+        <div className="flex flex-col gap-1">
           {(() => {
             let i = 0
             const items = []
@@ -202,15 +202,14 @@ export default function Menu({ open, onClose }: MenuProps) {
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
-                <span className="relative inline-flex items-center">
+                <span className="relative inline-flex items-center gap-3">
                   <button
                     onClick={(e) => { e.stopPropagation(); copyEmail() }}
                     className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors cursor-pointer"
                   >
                     nrhallam@gmail.com
                   </button>
-                  {/* Out of flow (to the left) so the email stays flush-right */}
-                  <span className={`absolute right-full mr-3 whitespace-nowrap text-base text-[var(--text-strong)] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+                  <span className={`text-base text-[var(--text-strong)] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
                     Copied!
                   </span>
                 </span>
