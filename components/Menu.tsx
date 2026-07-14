@@ -199,6 +199,18 @@ export default function Menu({ open, onClose }: MenuProps) {
                 </div>
               )
             })
+            const stickersIdx = i++
+            items.push(
+              <div key="stickers" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(stickersIdx)}>
+                <Link
+                  href="/stickers"
+                  onClick={() => { easterEggClearGhostsRef.current?.(); onClose() }}
+                  className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors"
+                >
+                  Stickers
+                </Link>
+              </div>
+            )
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
