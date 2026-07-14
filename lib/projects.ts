@@ -39,7 +39,11 @@ export const projects: Project[] = [
     card: { video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
     media: { video: '/Gumroad_Tipping1.mp4', image: '/Gumroad_01.svg' },
     gallery: ['/Gumroad_03.svg', '/Gumroad_04.svg', '/Gumroad_05.svg', '/Gumroad_06.svg', '/Gumroad_07.svg'],
-    body: `<p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>`,
+    body: `
+      <p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>
+      <p>I prototyped a bunch of different approaches for the team to review. Percentages, absolute dollars, round up, games, and eventually we shipped what you see in the video below.</p>
+      <p>Tipping is still live on Gumroad today.</p>
+    `,
   },
   {
     slug: 'tiller',
