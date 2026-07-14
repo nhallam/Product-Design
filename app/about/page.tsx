@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowUpRight } from 'react-feather'
 
 export default function About() {
   return (
@@ -50,10 +51,15 @@ export default function About() {
               <Row
                 key={years + company}
                 {...(url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className={`flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[var(--surface-hover)]' : ''}`}
+                className={`group flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[var(--surface-hover)]' : ''}`}
               >
                 <div>
-                  <div className="text-base font-medium text-[var(--text)]">{company}</div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-base font-medium text-[var(--text)]">{company}</span>
+                    {url && (
+                      <ArrowUpRight size={16} strokeWidth={2} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)]" />
+                    )}
+                  </div>
                   <div className="text-sm text-[var(--muted)] mt-0.5">{title}</div>
                 </div>
                 <div className="text-sm text-[var(--muted)] shrink-0 ml-6">{years}</div>
