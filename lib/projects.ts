@@ -48,8 +48,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'tiller',
-    title: 'Tiller, onboarding',
-    description: 'Onboarding for Tiller, a hardware and software product for tracking your time.',
+    title: 'Onboarding for Tiller',
+    description: 'Designing an onboarding experience for new hardware',
     tag: 'Product Design',
     card: { image: '/project-one.jpg' },
     media: { vimeoId: '1195689621' },
