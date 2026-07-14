@@ -51,8 +51,8 @@ export const projects: Project[] = [
     title: 'Stealth',
     description: 'Product design for AI video translation',
     tag: 'Product Design',
-    card: { image: '/Stealth1.png' },
-    media: { image: '/Stealth1.png' },
+    card: { image: '/Stealth2.png' },
+    media: { image: '/Stealth2.png' },
   },
   {
     slug: 'tiller',
