@@ -38,7 +38,7 @@ export default function Projects() {
             className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
             style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
           >
-            A selection of past design work
+            Selected design work
           </h1>
         </div>
 
