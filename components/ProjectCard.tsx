@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRef, useState } from 'react'
 
 interface ProjectCardProps {
   slug: string
@@ -9,10 +12,20 @@ interface ProjectCardProps {
   video?: string
   poster?: string
   comingSoon?: boolean
+  toast?: string
   onClick?: () => void
 }
 
-export default function ProjectCard({ slug, title, description, image, video, poster, comingSoon, onClick }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, description, image, video, poster, comingSoon, toast, onClick }: ProjectCardProps) {
+  const [toastOn, setToastOn] = useState(false)
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const showToast = () => {
+    setToastOn(true)
+    if (toastTimer.current) clearTimeout(toastTimer.current)
+    toastTimer.current = setTimeout(() => setToastOn(false), 2400)
+  }
+
   const inner = (
     <>
       <div className="mb-3">
@@ -34,12 +47,34 @@ export default function ProjectCard({ slug, title, description, image, video, po
         ) : (
           <div className="w-full h-full bg-[var(--border)]" />
         )}
+        {toast && (
+          <div
+            role="status"
+            aria-live="polite"
+            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+              toastOn ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <span className="bg-[var(--text)] text-[var(--bg)] px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+              {toast}
+            </span>
+          </div>
+        )}
       </div>
     </>
   )
 
   if (comingSoon) {
     return <div>{inner}</div>
+  }
+
+  // A toast card intercepts the click to flash a message over its image.
+  if (toast) {
+    return (
+      <button onClick={showToast} className="block group w-full text-left">
+        {inner}
+      </button>
+    )
   }
 
   if (onClick) {
