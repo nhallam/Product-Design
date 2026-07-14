@@ -62,10 +62,14 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
           edge between the header and the content scrolling beneath it. */}
       <div className="sticky top-0 z-10">
         <div
-          className="pointer-events-none absolute top-0 left-0 right-0 -bottom-8 bg-[var(--surface)]/70 backdrop-blur-[12px]"
+          className="pointer-events-none absolute top-0 left-0 right-0 -bottom-12 bg-[var(--surface)]/70 backdrop-blur-[12px]"
           style={{
-            maskImage: 'linear-gradient(to bottom, black 45%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 45%, transparent 100%)',
+            // Eased (smoothstep-like) fade: the extra stops kill the visible
+            // edge a plain two-stop gradient leaves where the blur cuts off.
+            maskImage:
+              'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
           }}
         />
         <div className="relative max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
@@ -80,7 +84,7 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
       </div>
 
       {/* Nudge content down so the title clears the header bar and its faded
-          frost tail (~60px bar + ~32px fade) rather than starting under it. */}
+          frost tail (~60px bar + ~48px fade) rather than starting under it. */}
       <div className="pt-9">
         {children}
       </div>

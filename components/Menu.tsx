@@ -214,15 +214,22 @@ export default function Menu({ open, onClose }: MenuProps) {
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
-                <span className="relative inline-flex items-center gap-3">
+                <span className="group relative inline-flex items-center gap-3">
                   <button
                     onClick={(e) => { e.stopPropagation(); copyEmail() }}
                     className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors cursor-pointer"
                   >
                     nrhallam@gmail.com
                   </button>
-                  <span className={`text-base text-[var(--text-strong)] transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
-                    Copied!
+                  {/* Hover hint; swaps to a persistent "Copied!" after a click */}
+                  <span
+                    className={`text-base transition-opacity duration-300 ${
+                      copied
+                        ? 'text-[var(--text-strong)] opacity-100'
+                        : 'text-[var(--muted)] opacity-0 group-hover:opacity-100'
+                    }`}
+                  >
+                    {copied ? 'Copied!' : 'Click to copy'}
                   </span>
                 </span>
               </div>
