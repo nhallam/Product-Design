@@ -21,8 +21,10 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             [&_p]:mb-5
             [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2
             [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:opacity-60 [&_a]:transition-opacity
+            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4
             [&_figure]:my-8
-            [&_figure_img]:w-full [&_figure_img]:rounded-sm"
+            [&_figure_img]:w-full [&_figure_img]:rounded-sm
+            [&_figure_video]:w-full [&_figure_video]:rounded-sm"
           dangerouslySetInnerHTML={{ __html: project.body }}
         />
       )}
