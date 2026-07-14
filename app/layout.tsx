@@ -15,7 +15,17 @@ export const metadata: Metadata = {
   },
 };
 
+function ordinal(n: number) {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] ?? s[v] ?? s[0])
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Computed at build/render time on the server, so it reflects the last deploy.
+  const now = new Date()
+  const lastUpdated = `${ordinal(now.getDate())} ${now.toLocaleDateString('en-GB', { month: 'long' })}, ${now.getFullYear()}`
+
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
@@ -29,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-full">
-        <SiteShell>{children}</SiteShell>
+        <SiteShell lastUpdated={lastUpdated}>{children}</SiteShell>
         <Analytics />
       </body>
     </html>
