@@ -21,6 +21,8 @@ export type Project = {
   description: string
   tag?: string
   comingSoon?: boolean
+  // If set, clicking the card shows this as a toast instead of opening the sheet.
+  toast?: string
   // List card thumbnail
   card?: { image?: string; video?: string; poster?: string }
   // Detail hero media (priority: vimeoId > video > image)
@@ -51,6 +53,7 @@ export const projects: Project[] = [
     title: 'Stealth',
     description: 'Product design for AI video translation',
     tag: 'Product Design',
+    toast: 'Launching Q4, 2026',
     card: { image: '/Stealth2.png' },
     media: { image: '/Stealth2.png' },
   },
