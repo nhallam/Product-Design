@@ -69,7 +69,7 @@ export const projects: Project[] = [
   {
     slug: 'tiller-onboarding',
     title: 'Tiller',
-    description: 'A one-sentence explanation of this project goes here.',
+    description: 'The Tiller story — turning a pub sketch into a Kickstarter-funded hardware product.',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
@@ -77,7 +77,7 @@ export const projects: Project[] = [
   {
     slug: 'halo',
     title: 'Halo',
-    description: 'A one-sentence explanation of this project goes here.',
+    description: 'Product design for Halo, a rental service where cars arrive driven remotely to your door.',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
@@ -85,7 +85,7 @@ export const projects: Project[] = [
   {
     slug: 'rea',
     title: 'REA, inspection booking',
-    description: 'A one-sentence explanation of this project goes here.',
+    description: 'A rethink of how home buyers book property inspections at REA.',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
@@ -93,7 +93,7 @@ export const projects: Project[] = [
   {
     slug: 'wsv',
     title: 'WSV, design system',
-    description: 'A one-sentence explanation of this project goes here.',
+    description: 'Building the design system behind the digital products at WorkSafe Victoria.',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
@@ -101,7 +101,7 @@ export const projects: Project[] = [
   {
     slug: 'ai-experiments',
     title: 'AI Experiments',
-    description: 'A one-sentence explanation of this project goes here.',
+    description: 'A rolling collection of small, self-initiated AI product experiments.',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
