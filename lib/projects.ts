@@ -73,8 +73,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'tiller-onboarding',
-    title: 'Tiller',
-    description: 'The Tiller story — turning a pub sketch into a Kickstarter-funded hardware product.',
+    title: 'Tiller Hardware Design',
+    description: 'From a napkin sketch to thousands of units',
     tag: 'Product Design',
     comingSoon: true,
     media: { image: '/project-one.jpg' },
