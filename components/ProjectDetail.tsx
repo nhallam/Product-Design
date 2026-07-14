@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { projectData } from '@/lib/projectData'
+import { projectBySlug } from '@/lib/projects'
 
 export default function ProjectDetail({ slug }: { slug: string }) {
-  const project = projectData[slug]
+  const project = projectBySlug(slug)
   const title = project?.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  const media = project?.media
 
   return (
     <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
@@ -14,7 +15,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         {title}
       </h1>
 
-      {project?.body && (
+      {project?.body ? (
         <div
           className="max-w-prose text-base leading-relaxed text-[var(--text)]
             [&_p]:mb-5
@@ -24,18 +25,16 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             [&_figure_img]:w-full [&_figure_img]:rounded-sm"
           dangerouslySetInnerHTML={{ __html: project.body }}
         />
-      )}
-
-      {!project?.body && (
+      ) : (
         <div className="max-w-prose text-base leading-relaxed text-[var(--text)]">
           <p>Project overview and description will go here.</p>
         </div>
       )}
 
-      {project?.vimeoId && (
+      {media?.vimeoId && (
         <div className="mt-10 relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
           <iframe
-            src={`https://player.vimeo.com/video/${project.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
+            src={`https://player.vimeo.com/video/${media.vimeoId}?autoplay=1&muted=1&loop=1&background=1`}
             className="absolute inset-0 w-full h-full"
             allow="autoplay; fullscreen"
             style={{ border: 'none' }}
@@ -43,10 +42,10 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         </div>
       )}
 
-      {project?.videoSrc && (
+      {media?.video && (
         <div className="mt-10 w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
           <video
-            src={project.videoSrc}
+            src={media.video}
             autoPlay
             muted
             loop
@@ -56,16 +55,16 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         </div>
       )}
 
-      {!project?.vimeoId && project?.image && (
+      {!media?.vimeoId && media?.image && (
         <div className="mt-10 relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
-          <Image src={project.image} alt={title} fill className="object-cover" />
+          <Image src={media.image} alt={title} fill className="object-cover" />
         </div>
       )}
 
-      {project?.images && project.images.length > 0 && (
+      {project?.gallery && project.gallery.length > 0 && (
         <div className="mt-10 flex flex-col gap-10">
           <p className="text-base text-[var(--muted)]">Development work.</p>
-          {project.images.map((src, i) => (
+          {project.gallery.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={i}

@@ -1,4 +1,4 @@
-import { projectData } from '@/lib/projectData'
+import { projects } from '@/lib/projects'
 import ProjectDetail from '@/components/ProjectDetail'
 
 interface Props {
@@ -16,5 +16,5 @@ export default async function ProjectPage({ params }: Props) {
 }
 
 export function generateStaticParams() {
-  return Object.keys(projectData).map((slug) => ({ slug }))
+  return projects.map((p) => ({ slug: p.slug }))
 }

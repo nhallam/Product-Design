@@ -3,16 +3,7 @@
 import { useState, useEffect } from 'react'
 import ProjectCard from '@/components/ProjectCard'
 import ProjectSheet from '@/components/ProjectSheet'
-
-const projects = [
-  { slug: 'gumroad', title: 'Tipping on Gumroad', description: 'Adding tipping to the Gumroad checkout — an experiment in translating a cafe behaviour online.', video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
-  { slug: 'tiller', title: 'Tiller, onboarding', description: 'Onboarding for Tiller, a hardware and software product for tracking your time.', image: '/project-one.jpg' },
-  { slug: 'tiller-onboarding', title: 'Tiller', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
-  { slug: 'halo', title: 'Halo', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
-  { slug: 'rea', title: 'REA, inspection booking', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
-  { slug: 'wsv', title: 'WSV, design system', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
-  { slug: 'ai-experiments', title: 'AI Experiments', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
-]
+import { projects } from '@/lib/projects'
 
 export default function Projects() {
   const [activeSlug, setActiveSlug] = useState<string | null>(null)
@@ -55,7 +46,13 @@ export default function Projects() {
           {projects.map((project) => (
             <ProjectCard
               key={project.slug}
-              {...project}
+              slug={project.slug}
+              title={project.title}
+              description={project.description}
+              image={project.card?.image}
+              video={project.card?.video}
+              poster={project.card?.poster}
+              comingSoon={project.comingSoon}
               onClick={project.comingSoon ? undefined : () => openSheet(project.slug)}
             />
           ))}
