@@ -34,7 +34,7 @@ export const projects: Project[] = [
   {
     slug: 'gumroad',
     title: 'Tipping on Gumroad',
-    description: 'Adding tipping to the Gumroad checkout — an experiment in translating a cafe behaviour online.',
+    description: 'Adding tipping to the Gumroad checkout, an experiment in translating a cafe behaviour online.',
     tag: 'Product Design',
     card: { video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
     media: { video: '/Gumroad_Tipping1.mp4', image: '/Gumroad_01.svg' },
