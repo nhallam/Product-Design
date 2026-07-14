@@ -47,6 +47,14 @@ export const projects: Project[] = [
     `,
   },
   {
+    slug: 'stealth',
+    title: 'Stealth',
+    description: 'Product design for AI video translation',
+    tag: 'Product Design',
+    comingSoon: true,
+    media: { image: '/project-one.jpg' },
+  },
+  {
     slug: 'tiller',
     title: 'Onboarding for Tiller',
     description: 'Designing an onboarding experience for new hardware',
