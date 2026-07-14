@@ -4,6 +4,7 @@ import Image from 'next/image'
 interface ProjectCardProps {
   slug: string
   title: string
+  description?: string
   image?: string
   video?: string
   poster?: string
@@ -11,10 +12,20 @@ interface ProjectCardProps {
   onClick?: () => void
 }
 
-export default function ProjectCard({ slug, title, image, video, poster, comingSoon, onClick }: ProjectCardProps) {
+export default function ProjectCard({ slug, title, description, image, video, poster, comingSoon, onClick }: ProjectCardProps) {
   const inner = (
     <>
-      <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden">
+      <div className="mb-3">
+        <span className={`block text-base font-medium transition-colors ${comingSoon ? 'text-[var(--faint)]' : 'text-[var(--text)] group-hover:text-[var(--hover)]'}`}>
+          {title}
+        </span>
+        {description && (
+          <p className={`text-sm leading-snug mt-1 max-w-prose ${comingSoon ? 'text-[var(--faint)]' : 'text-[var(--muted)]'}`}>
+            {description}
+          </p>
+        )}
+      </div>
+      <div className="relative w-full aspect-[5/3] rounded-sm overflow-hidden mb-[50px]">
         {video && !comingSoon ? (
           // poster shows instantly so the card isn't blank while the video buffers
           <video src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" className="w-full h-full object-cover" />
@@ -23,11 +34,6 @@ export default function ProjectCard({ slug, title, image, video, poster, comingS
         ) : (
           <div className="w-full h-full bg-[var(--border)]" />
         )}
-      </div>
-      <div className="mt-3 mb-[50px]">
-        <span className={`text-base font-medium transition-colors ${comingSoon ? 'text-[var(--faint)]' : 'text-[var(--text)] group-hover:text-[var(--hover)]'}`}>
-          {title}
-        </span>
       </div>
     </>
   )

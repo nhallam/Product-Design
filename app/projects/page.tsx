@@ -5,13 +5,13 @@ import ProjectCard from '@/components/ProjectCard'
 import ProjectSheet from '@/components/ProjectSheet'
 
 const projects = [
-  { slug: 'gumroad', title: 'Tipping on Gumroad', video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
-  { slug: 'tiller', title: 'Tiller, onboarding', image: '/project-one.jpg' },
-  { slug: 'tiller-onboarding', title: 'Tiller', comingSoon: true },
-  { slug: 'halo', title: 'Halo', comingSoon: true },
-  { slug: 'rea', title: 'REA, inspection booking', comingSoon: true },
-  { slug: 'wsv', title: 'WSV, design system', comingSoon: true },
-  { slug: 'ai-experiments', title: 'AI Experiments', comingSoon: true },
+  { slug: 'gumroad', title: 'Tipping on Gumroad', description: 'Adding tipping to the Gumroad checkout — an experiment in translating a cafe behaviour online.', video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
+  { slug: 'tiller', title: 'Tiller, onboarding', description: 'Onboarding for Tiller, a hardware and software product for tracking your time.', image: '/project-one.jpg' },
+  { slug: 'tiller-onboarding', title: 'Tiller', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
+  { slug: 'halo', title: 'Halo', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
+  { slug: 'rea', title: 'REA, inspection booking', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
+  { slug: 'wsv', title: 'WSV, design system', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
+  { slug: 'ai-experiments', title: 'AI Experiments', description: 'A one-sentence explanation of this project goes here.', comingSoon: true },
 ]
 
 export default function Projects() {
