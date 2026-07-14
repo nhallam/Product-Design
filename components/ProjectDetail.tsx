@@ -15,7 +15,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         {title}
       </h1>
 
-      {project?.body ? (
+      {project?.body && (
         <div
           className="max-w-prose text-base leading-relaxed text-[var(--text)]
             [&_p]:mb-5
@@ -25,10 +25,6 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             [&_figure_img]:w-full [&_figure_img]:rounded-sm"
           dangerouslySetInnerHTML={{ __html: project.body }}
         />
-      ) : (
-        <div className="max-w-prose text-base leading-relaxed text-[var(--text)]">
-          <p>Project overview and description will go here.</p>
-        </div>
       )}
 
       {media?.vimeoId && (
