@@ -112,7 +112,7 @@ export default function Menu({ open, onClose }: MenuProps) {
               >
                 <Link
                   href={href}
-                  onClick={onClose}
+                  onClick={() => { easterEggClearGhostsRef.current?.(); onClose() }}
                   className="inline-block text-[2.75rem] leading-[1.1] font-black text-[var(--text)] hover:text-[var(--hover)] transition-colors"
                   style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
                 >
