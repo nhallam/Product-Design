@@ -89,7 +89,7 @@ const stickers: { title: string; description: string; sticker: React.ReactNode }
 export default function StickersPage() {
   return (
     <main className="flex-1 flex flex-col px-6 pb-16">
-      <div className="pt-[28vh]">
+      <div className="pt-[16.8vh]">
         <h1
           className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}

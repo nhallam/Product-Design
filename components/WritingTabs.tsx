@@ -59,7 +59,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
   return (
     <>
     <main className="flex-1 flex flex-col px-6 pb-6">
-      <div className="pt-[28vh] flex justify-center gap-8">
+      <div className="pt-[16.8vh] flex justify-center gap-8">
         <button
           onClick={() => setTab('blog')}
           className={`text-[2.75rem] font-black leading-[1.1] transition-opacity cursor-pointer ${tab === 'blog' ? 'opacity-100' : 'opacity-25'}`}
