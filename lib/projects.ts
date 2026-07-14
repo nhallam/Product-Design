@@ -43,6 +43,7 @@ export const projects: Project[] = [
       <p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>
       <p>I prototyped a bunch of different approaches for the team to review. Percentages, absolute dollars, round up, games, and eventually we shipped what you see in the video below.</p>
       <p>Tipping is still live on Gumroad today.</p>
+      <p>Read more on how tipping works <a href="https://gumroad.com/help/article/345-tipping.html" target="_blank" rel="noopener noreferrer">here</a>.</p>
     `,
   },
   {
