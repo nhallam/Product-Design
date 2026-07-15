@@ -15,28 +15,8 @@ interface SheetProps {
 // sticky nav. Shared by the project and article sheets.
 export default function Sheet({ open, onClose, resetKey, children }: SheetProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
-  const frostRef = useRef<HTMLDivElement>(null)
   // The sheet stops just below the sticky nav, leaving it visible above.
   const [navHeight, setNavHeight] = useState(0)
-
-  // The frost fades in with scroll so it never sits over the title at rest;
-  // fully opaque once the content has scrolled 64px under the header. The
-  // opacity goes on each layer, not their wrapper — a translucent wrapper
-  // would cut its children's backdrop-filter off from the page behind it.
-  useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-    const sync = () => {
-      if (!frostRef.current) return
-      const o = String(Math.min(1, el.scrollTop / 64))
-      for (const layer of Array.from(frostRef.current.children)) {
-        ;(layer as HTMLElement).style.opacity = o
-      }
-    }
-    sync()
-    el.addEventListener('scroll', sync, { passive: true })
-    return () => el.removeEventListener('scroll', sync)
-  }, [open])
 
   useEffect(() => {
     const measure = () => {
@@ -77,38 +57,8 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         transitionTimingFunction: open ? 'cubic-bezier(0.32, 0.72, 0, 1)' : 'cubic-bezier(0.5, 0, 0.84, 0)',
       }}
     >
-      {/* Header with close button. The frost extends below the bar and fades
-          out on the way down. The tint fades via a gradient mask, but the
-          blur can't (WebKit ignores masks on backdrop-filter output, leaving
-          a hard edge where the layer ends) — so it steps down instead:
-          stacked layers of decreasing reach, each adding a small blur on top
-          of the ones beneath it, so no single edge is strong enough to see. */}
+      {/* Header with close button. Content scrolls beneath it unobscured. */}
       <div className="sticky top-0 z-10">
-        <div ref={frostRef} className="pointer-events-none absolute top-0 left-0 right-0 -bottom-12">
-          <div
-            className="absolute inset-0 bg-[var(--surface)]/70"
-            style={{
-              opacity: 0,
-              maskImage:
-                'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
-              WebkitMaskImage:
-                'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
-            }}
-          />
-          {[100, 82, 64, 46, 28].map((height) => (
-            <div
-              key={height}
-              className="absolute top-0 left-0 right-0 backdrop-blur-[4px]"
-              style={{
-                height: `${height}%`,
-                opacity: 0,
-                // Softens each step further in browsers that do mask the blur
-                maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-              }}
-            />
-          ))}
-        </div>
         <div className="relative max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
@@ -120,8 +70,7 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         </div>
       </div>
 
-      {/* Nudge content down so the title clears the header bar and its faded
-          frost tail (~60px bar + ~48px fade) rather than starting under it. */}
+      {/* Nudge content down so the title starts below the header bar. */}
       <div className="pt-9">
         {children}
       </div>
