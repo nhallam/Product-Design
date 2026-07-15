@@ -43,7 +43,8 @@ export default function ProjectCard({ slug, title, description, image, video, po
           // poster shows instantly so the card isn't blank while the video buffers
           <video src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" className="w-full h-full object-cover" />
         ) : image && !comingSoon ? (
-          <Image src={image} alt={title} fill priority sizes="(max-width: 700px) 100vw, 620px" className="object-cover" />
+          /* The optimizer rejects SVG sources, so serve those as-is */
+          <Image src={image} alt={title} fill priority unoptimized={image.endsWith('.svg')} sizes="(max-width: 700px) 100vw, 620px" className="object-cover" />
         ) : (
           <div className="w-full h-full bg-[var(--border)]" />
         )}
