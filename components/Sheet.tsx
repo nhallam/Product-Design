@@ -20,13 +20,17 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
   const [navHeight, setNavHeight] = useState(0)
 
   // The frost fades in with scroll so it never sits over the title at rest;
-  // fully opaque once the content has scrolled 64px under the header.
+  // fully opaque once the content has scrolled 64px under the header. The
+  // opacity goes on each layer, not their wrapper — a translucent wrapper
+  // would cut its children's backdrop-filter off from the page behind it.
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
     const sync = () => {
-      if (frostRef.current) {
-        frostRef.current.style.opacity = String(Math.min(1, el.scrollTop / 64))
+      if (!frostRef.current) return
+      const o = String(Math.min(1, el.scrollTop / 64))
+      for (const layer of Array.from(frostRef.current.children)) {
+        ;(layer as HTMLElement).style.opacity = o
       }
     }
     sync()
@@ -73,23 +77,38 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
         transitionTimingFunction: open ? 'cubic-bezier(0.32, 0.72, 0, 1)' : 'cubic-bezier(0.5, 0, 0.84, 0)',
       }}
     >
-      {/* Header with close button. The frost is a separate layer that extends
-          below the bar and fades out via a gradient mask, so there is no hard
-          edge between the header and the content scrolling beneath it. */}
+      {/* Header with close button. The frost extends below the bar and fades
+          out on the way down. The tint fades via a gradient mask, but the
+          blur can't (WebKit ignores masks on backdrop-filter output, leaving
+          a hard edge where the layer ends) — so it steps down instead:
+          stacked layers of decreasing reach, each adding a small blur on top
+          of the ones beneath it, so no single edge is strong enough to see. */}
       <div className="sticky top-0 z-10">
-        <div
-          ref={frostRef}
-          className="pointer-events-none absolute top-0 left-0 right-0 -bottom-12 bg-[var(--surface)]/70 backdrop-blur-[12px]"
-          style={{
-            opacity: 0,
-            // Eased (smoothstep-like) fade: the extra stops kill the visible
-            // edge a plain two-stop gradient leaves where the blur cuts off.
-            maskImage:
-              'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
-            WebkitMaskImage:
-              'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
-          }}
-        />
+        <div ref={frostRef} className="pointer-events-none absolute top-0 left-0 right-0 -bottom-12">
+          <div
+            className="absolute inset-0 bg-[var(--surface)]/70"
+            style={{
+              opacity: 0,
+              maskImage:
+                'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
+              WebkitMaskImage:
+                'linear-gradient(to bottom, black 30%, rgba(0,0,0,0.68) 55%, rgba(0,0,0,0.32) 75%, rgba(0,0,0,0.1) 90%, transparent 100%)',
+            }}
+          />
+          {[100, 82, 64, 46, 28].map((height) => (
+            <div
+              key={height}
+              className="absolute top-0 left-0 right-0 backdrop-blur-[4px]"
+              style={{
+                height: `${height}%`,
+                opacity: 0,
+                // Softens each step further in browsers that do mask the blur
+                maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+              }}
+            />
+          ))}
+        </div>
         <div className="relative max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
