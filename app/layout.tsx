@@ -15,13 +15,13 @@ export const metadata: Metadata = {
     type: "website",
     title: "Nick Hallam — Product Designer",
     description: "A product designer and founder living in Brooklyn, NY.",
-    images: ["/Nick_Profile.jpg"],
+    images: ["/Nick_Profile_800.jpg"],
   },
   twitter: {
     card: "summary",
     title: "Nick Hallam — Product Designer",
     description: "A product designer and founder living in Brooklyn, NY.",
-    images: ["/Nick_Profile.jpg"],
+    images: ["/Nick_Profile_800.jpg"],
   },
   icons: {
     icon: [
@@ -41,7 +41,7 @@ const personSchema = {
   description:
     'Product designer and founder living in Brooklyn, NY. Currently Head of Design at Beautiful Function.',
   url: 'https://nhallam.design',
-  image: 'https://nhallam.design/Nick_Profile.jpg',
+  image: 'https://nhallam.design/Nick_Profile_800.jpg',
   email: 'mailto:nrhallam@gmail.com',
   address: {
     '@type': 'PostalAddress',

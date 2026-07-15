@@ -30,10 +30,11 @@ export default function About() {
       </div>
       <div className="flex justify-center mt-16">
         <Image
-          src="/Nick_Profile.jpg"
+          src="/Nick_Profile_800.jpg"
           alt="Nick Hallam"
           width={400}
           height={400}
+          priority
           className="object-cover rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)] transition-transform duration-300 ease-out hover:rotate-1 cursor-pointer"
         />
       </div>
