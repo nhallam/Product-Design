@@ -15,8 +15,24 @@ interface SheetProps {
 // sticky nav. Shared by the project and article sheets.
 export default function Sheet({ open, onClose, resetKey, children }: SheetProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const frostRef = useRef<HTMLDivElement>(null)
   // The sheet stops just below the sticky nav, leaving it visible above.
   const [navHeight, setNavHeight] = useState(0)
+
+  // The frost fades in with scroll so it never sits over the title at rest;
+  // fully opaque once the content has scrolled 64px under the header.
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const sync = () => {
+      if (frostRef.current) {
+        frostRef.current.style.opacity = String(Math.min(1, el.scrollTop / 64))
+      }
+    }
+    sync()
+    el.addEventListener('scroll', sync, { passive: true })
+    return () => el.removeEventListener('scroll', sync)
+  }, [open])
 
   useEffect(() => {
     const measure = () => {
@@ -62,8 +78,10 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
           edge between the header and the content scrolling beneath it. */}
       <div className="sticky top-0 z-10">
         <div
+          ref={frostRef}
           className="pointer-events-none absolute top-0 left-0 right-0 -bottom-12 bg-[var(--surface)]/70 backdrop-blur-[12px]"
           style={{
+            opacity: 0,
             // Eased (smoothstep-like) fade: the extra stops kill the visible
             // edge a plain two-stop gradient leaves where the blur cuts off.
             maskImage:
