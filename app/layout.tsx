@@ -32,6 +32,49 @@ export const metadata: Metadata = {
   },
 };
 
+// Machine-readable identity for search engines and screening tools.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Nick Hallam',
+  jobTitle: 'Product Designer',
+  description:
+    'Product designer and founder living in Brooklyn, NY. Currently Head of Design at Beautiful Function.',
+  url: 'https://nhallam.design',
+  image: 'https://nhallam.design/Nick_Profile.jpg',
+  email: 'mailto:nrhallam@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Brooklyn',
+    addressRegion: 'NY',
+    addressCountry: 'US',
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Beautiful Function',
+    url: 'https://www.beautifulfunction.com/',
+  },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Monash University' },
+    { '@type': 'CollegeOrUniversity', name: 'Swinburne University' },
+  ],
+  knowsAbout: [
+    'Product design',
+    'Product strategy',
+    'Design systems',
+    'User research',
+    'Prototyping',
+    'Interaction design',
+    'Hardware design',
+  ],
+  sameAs: [
+    'https://www.linkedin.com/in/nickhallam/',
+    'https://github.com/nhallam',
+    'https://x.com/nhallam',
+    'https://www.instagram.com/nhallam/',
+  ],
+}
+
 function ordinal(n: number) {
   const s = ['th', 'st', 'nd', 'rd']
   const v = n % 100
@@ -50,6 +93,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

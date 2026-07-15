@@ -5,7 +5,7 @@ import { articleList } from '@/app/writing/articles'
 const BASE = 'https://nhallam.design'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ['', '/about', '/projects', '/writing', '/newsletter', '/stickers'].map(
+  const pages = ['', '/about', '/resume', '/projects', '/writing', '/newsletter', '/stickers'].map(
     (path) => ({ url: `${BASE}${path}` })
   )
 

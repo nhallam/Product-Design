@@ -13,6 +13,9 @@ export default function Footer({ lastUpdated }: { lastUpdated: string }) {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
         <span>Last updated {lastUpdated}</span>
         <div className="flex items-center gap-5">
+          <Link href="/resume" className="hover:text-[var(--text)] transition-colors">
+            Resume
+          </Link>
           <Link href="/newsletter" className="hover:text-[var(--text)] transition-colors">
             Newsletter
           </Link>
