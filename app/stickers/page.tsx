@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import GTrainSticker from '@/components/EasterEgg/stickers/GTrainSticker'
 import BoomboxSticker from '@/components/EasterEgg/stickers/BoomboxSticker'
 import ScoreboardSticker from '@/components/EasterEgg/stickers/ScoreboardSticker'
@@ -5,6 +6,8 @@ import WeatherSticker from '@/components/EasterEgg/stickers/WeatherSticker'
 import KelloggsSticker from '@/components/EasterEgg/stickers/KelloggsSticker'
 import VideoSticker from '@/components/EasterEgg/stickers/VideoSticker'
 import RecordShopSticker from '@/components/EasterEgg/stickers/RecordShopSticker'
+
+export const metadata: Metadata = { title: 'Stickers' }
 
 const stickers: { title: string; description: string; sticker: React.ReactNode }[] = [
   {

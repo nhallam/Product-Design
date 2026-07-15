@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import { getCampaigns, formatCampaignDate } from './campaigns'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Newsletter',
+  description: "Nick Hallam's newsletter on product design, AI and music — each issue ships with a DJ mix.",
+}
 
 export default async function NewsletterPage() {
   const campaigns = await getCampaigns()

@@ -1,8 +1,16 @@
-import { projects } from '@/lib/projects'
+import { projects, projectBySlug } from '@/lib/projects'
 import ProjectDetail from '@/components/ProjectDetail'
+import type { Metadata } from 'next'
 
 interface Props {
   params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const project = projectBySlug(slug)
+  if (!project) return {}
+  return { title: project.title, description: project.description }
 }
 
 export default async function ProjectPage({ params }: Props) {

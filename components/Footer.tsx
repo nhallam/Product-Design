@@ -24,6 +24,9 @@ export default function Footer({ lastUpdated }: { lastUpdated: string }) {
           >
             Twitter
           </a>
+          <a href="mailto:nrhallam@gmail.com" className="hover:text-[var(--text)] transition-colors">
+            Email
+          </a>
         </div>
       </div>
     </footer>

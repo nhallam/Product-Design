@@ -1,6 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'react-feather'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Nick Hallam is a product designer and founder in Brooklyn, NY — currently leading design at Beautiful Function, previously Tiller, Joan and IDEO.',
+}
 
 export default function About() {
   return (

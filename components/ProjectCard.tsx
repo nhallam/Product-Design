@@ -69,25 +69,22 @@ export default function ProjectCard({ slug, title, description, image, video, po
     return <div>{inner}</div>
   }
 
-  // A toast card intercepts the click to flash a message over its image.
-  if (toast) {
-    return (
-      <button onClick={showToast} className="block group w-full text-left">
-        {inner}
-      </button>
-    )
-  }
-
-  if (onClick) {
-    return (
-      <button onClick={onClick} className="block group w-full text-left">
-        {inner}
-      </button>
-    )
-  }
-
+  // Always render a real link so crawlers can discover the detail page; the
+  // click is intercepted to open the sheet (or flash the toast) instead.
   return (
-    <Link href={`/projects/${slug}`} className="block group">
+    <Link
+      href={`/projects/${slug}`}
+      className="block group"
+      onClick={(e) => {
+        if (toast) {
+          e.preventDefault()
+          showToast()
+        } else if (onClick) {
+          e.preventDefault()
+          onClick()
+        }
+      }}
+    >
       {inner}
     </Link>
   )
