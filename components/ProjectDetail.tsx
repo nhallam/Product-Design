@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { projectBySlug } from '@/lib/projects'
+import PrototypeFrame from '@/components/PrototypeFrame'
 
 export default function ProjectDetail({ slug }: { slug: string }) {
   const project = projectBySlug(slug)
@@ -64,13 +65,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           <p className="text-base text-[var(--muted)]">Interactive prototypes.</p>
           {project.prototypes.map(({ title, src, height }) => (
             <figure key={src}>
-              <iframe
-                src={src}
-                title={title}
-                loading="lazy"
-                className="w-full rounded-[10px] border border-[var(--border)] bg-white shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]"
-                style={{ height: height ?? 900 }}
-              />
+              <PrototypeFrame src={src} title={title} initialHeight={height} />
               <figcaption className="text-sm text-[var(--muted)] mt-2">{title}</figcaption>
             </figure>
           ))}
