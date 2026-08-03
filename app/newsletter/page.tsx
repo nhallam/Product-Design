@@ -1,13 +1,19 @@
 import Link from 'next/link'
 import { getCampaigns, formatCampaignDate } from './campaigns'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Newsletter',
+  description: "Nick Hallam's newsletter on product design, AI and music — each issue ships with a DJ mix.",
+}
 
 export default async function NewsletterPage() {
   const campaigns = await getCampaigns()
 
   return (
     <main className="flex-1 flex flex-col px-6 pb-6">
-      <div className="pt-[28vh]">
+      <div className="pt-[16.8vh]">
         <h1
           className="text-[2.75rem] font-black leading-[1.1] w-full text-center"
           style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}

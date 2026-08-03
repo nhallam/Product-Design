@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import NewsletterSignup from './NewsletterSignup'
+import ArticleSheet from './ArticleSheet'
+import NewsletterSheet from './NewsletterSheet'
 import type { Campaign } from '@/app/newsletter/campaigns'
 
 const MONTHS: Record<string, number> = {
@@ -25,12 +26,40 @@ interface WritingTabsProps {
   campaigns: Campaign[]
 }
 
+type ActiveSheet =
+  | { type: 'article'; slug: string }
+  | { type: 'campaign'; campaign: Campaign }
+
 export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
   const [tab, setTab] = useState<'blog' | 'newsletter'>('blog')
+  const [active, setActive] = useState<ActiveSheet | null>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+
+  const openSheet = (item: ActiveSheet) => {
+    setActive(item)
+    // Single rAF so the sheet mounts (translate-y-full) before the open class
+    // applies and the enter transition plays.
+    requestAnimationFrame(() => setSheetOpen(true))
+  }
+
+  const closeSheet = () => {
+    setSheetOpen(false)
+    // Clear the active item after the exit transition finishes (380ms).
+    setTimeout(() => setActive(null), 400)
+  }
+
+  // Keep the active item in sync when closed externally (e.g. Escape).
+  useEffect(() => {
+    if (!sheetOpen && active) {
+      const id = setTimeout(() => setActive(null), 400)
+      return () => clearTimeout(id)
+    }
+  }, [sheetOpen, active])
 
   return (
+    <>
     <main className="flex-1 flex flex-col px-6 pb-6">
-      <div className="pt-[28vh] flex justify-center gap-8">
+      <div className="pt-[16.8vh] flex justify-center gap-8">
         <button
           onClick={() => setTab('blog')}
           className={`text-[2.75rem] font-black leading-[1.1] transition-opacity cursor-pointer ${tab === 'blog' ? 'opacity-100' : 'opacity-25'}`}
@@ -50,10 +79,10 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       {tab === 'blog' && (
         <div className="mt-[6vh] divide-y divide-[var(--border)] border-b border-[var(--border)]">
           {articles.map(({ slug, title, date }) => (
-            <Link
+            <button
               key={slug}
-              href={`/writing/${slug}`}
-              className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
+              onClick={() => openSheet({ type: 'article', slug })}
+              className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 <span className="text-base font-medium text-[var(--text)]">{title}</span>
@@ -62,7 +91,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
                 )}
               </span>
               <span className="text-sm text-[var(--muted)] shrink-0 ml-6">{date}</span>
-            </Link>
+            </button>
           ))}
         </div>
       )}
@@ -72,20 +101,28 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
           <NewsletterSignup />
           <div className="mt-10 divide-y divide-[var(--border)] border-b border-[var(--border)]">
             {campaigns.map((c) => (
-              <Link
+              <button
                 key={c.id}
-                href={`/newsletter/${c.id}`}
-                className="flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors"
+                onClick={() => openSheet({ type: 'campaign', campaign: c })}
+                className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
               >
                 <span className="text-base font-medium text-[var(--text)]">{c.subject}</span>
                 <span className="text-sm text-[var(--muted)] shrink-0 ml-6">
                   {new Date(c.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
-              </Link>
+              </button>
             ))}
           </div>
         </div>
       )}
     </main>
+
+    {active?.type === 'article' && (
+      <ArticleSheet slug={active.slug} open={sheetOpen} onClose={closeSheet} />
+    )}
+    {active?.type === 'campaign' && (
+      <NewsletterSheet campaign={active.campaign} open={sheetOpen} onClose={closeSheet} />
+    )}
+    </>
   )
 }

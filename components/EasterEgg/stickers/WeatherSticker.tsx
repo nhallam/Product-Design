@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { WeatherData } from '@/app/api/weather/route'
+import { cachedFetch, TTL } from '../stickerData'
 
 type State = WeatherData | { status: 'loading' } | { status: 'unknown' }
 
@@ -21,10 +22,11 @@ export default function WeatherSticker() {
   const [state, setState] = useState<State>({ status: 'loading' })
 
   useEffect(() => {
-    fetch('/api/weather')
-      .then((r) => r.json())
-      .then(setState)
-      .catch(() => setState({ status: 'unknown' }))
+    let cancelled = false
+    cachedFetch<WeatherData>('/api/weather', TTL.weather)
+      .then((d) => { if (!cancelled) setState(d) })
+      .catch(() => { if (!cancelled) setState({ status: 'unknown' }) })
+    return () => { cancelled = true }
   }, [])
 
   const loaded = 'tempC' in state

@@ -1,10 +1,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowUpRight } from 'react-feather'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Nick Hallam is a product designer and founder in Brooklyn, NY — currently leading design at Beautiful Function, previously Tiller, Joan and IDEO.',
+}
 
 export default function About() {
   return (
     <main className="flex-1 flex flex-col px-6 pb-6">
-      <div className="pt-[28vh]">
+      <div className="pt-[16.8vh]">
         <h1 className="text-[2.75rem] font-black leading-[1.1] w-full text-center" style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}>
           About
         </h1>
@@ -22,10 +30,11 @@ export default function About() {
       </div>
       <div className="flex justify-center mt-16">
         <Image
-          src="/Nick_Profile.jpg"
+          src="/Nick_Profile_800.jpg"
           alt="Nick Hallam"
           width={400}
           height={400}
+          priority
           className="object-cover rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)] transition-transform duration-300 ease-out hover:rotate-1 cursor-pointer"
         />
       </div>
@@ -50,10 +59,15 @@ export default function About() {
               <Row
                 key={years + company}
                 {...(url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className={`flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[var(--surface-hover)]' : ''}`}
+                className={`group flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg transition-colors ${url ? 'cursor-pointer hover:bg-[var(--surface-hover)]' : ''}`}
               >
                 <div>
-                  <div className="text-base font-medium text-[var(--text)]">{company}</div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-base font-medium text-[var(--text)]">{company}</span>
+                    {url && (
+                      <ArrowUpRight size={16} strokeWidth={2} className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--muted)]" />
+                    )}
+                  </div>
                   <div className="text-sm text-[var(--muted)] mt-0.5">{title}</div>
                 </div>
                 <div className="text-sm text-[var(--muted)] shrink-0 ml-6">{years}</div>

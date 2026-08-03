@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+:root,
+[data-theme="light"] {
   --bg: #f0f0f0;
   --surface: #ffffff;
   --text: #1C1C1C;
@@ -133,6 +134,12 @@ body {
 
 .marquee-track {
   animation: marquee linear infinite;
+}
+
+/* Theme switch: scroll the moon→stars→moon strip down by two cells (2 × 20px). */
+@keyframes moon-carousel {
+  from { transform: translateY(-40px); }
+  to { transform: translateY(0); }
 }
 
 @layer base {

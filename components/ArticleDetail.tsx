@@ -1,34 +1,28 @@
-import { notFound } from 'next/navigation'
-import { articles } from '../articles'
-import type { Metadata } from 'next'
+import { articles } from '@/app/writing/articles'
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params
-  const article = articles[slug]
-  if (!article) return {}
-  return { title: article.title }
-}
-
-export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export default function ArticleDetail({ slug }: { slug: string }) {
   const article = articles[slug]
 
-  if (!article) notFound()
+  if (!article) {
+    return (
+      <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
+        <p className="text-base text-[var(--muted)]">Article not found.</p>
+      </div>
+    )
+  }
 
   return (
-    <main className="flex-1 flex flex-col px-6 pb-16">
-      <div className="pt-[16.8vh]">
-        <h1
-          className="text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
-          style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
-        >
-          {article.title}
-        </h1>
-        <p className="text-sm text-[var(--muted)] mt-3 text-center">{article.date}</p>
-      </div>
+    <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
+      <h1
+        className="text-[2.75rem] font-black leading-[1.1] text-balance text-[var(--text)]"
+        style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
+      >
+        {article.title}
+      </h1>
+      <p className="text-sm text-[var(--muted)] mt-3 mb-10">{article.date}</p>
 
       <div
-        className="mt-16 max-w-prose mx-auto w-full
+        className="max-w-prose w-full
           [&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[var(--text)]
           [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[var(--text)] [&_a:hover]:text-[var(--hover)]
           [&_strong]:font-bold
@@ -44,6 +38,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           [&_h3]:text-xl [&_h3]:font-bold [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-[var(--text)]"
         dangerouslySetInnerHTML={{ __html: article.body }}
       />
-    </main>
+    </div>
   )
 }
