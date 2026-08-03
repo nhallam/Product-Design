@@ -59,6 +59,24 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         </div>
       )}
 
+      {project?.prototypes && project.prototypes.length > 0 && (
+        <div className="mt-10 flex flex-col gap-10">
+          <p className="text-base text-[var(--muted)]">Interactive prototypes.</p>
+          {project.prototypes.map(({ title, src, height }) => (
+            <figure key={src}>
+              <iframe
+                src={src}
+                title={title}
+                loading="lazy"
+                className="w-full rounded-[10px] border border-[var(--border)] bg-white shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]"
+                style={{ height: height ?? 900 }}
+              />
+              <figcaption className="text-sm text-[var(--muted)] mt-2">{title}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+
       {project?.gallery && project.gallery.length > 0 && (
         <div className="mt-10 flex flex-col gap-10">
           <p className="text-base text-[var(--muted)]">Development work.</p>

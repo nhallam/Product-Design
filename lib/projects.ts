@@ -30,6 +30,8 @@ export type Project = {
   // Detail body (HTML) and the "Development work" gallery
   body?: string
   gallery?: string[]
+  // Interactive prototypes embedded after the media (self-contained HTML in /public)
+  prototypes?: { title: string; src: string; height?: number }[]
 }
 
 export const projects: Project[] = [
@@ -40,7 +42,15 @@ export const projects: Project[] = [
     tag: 'Product Design',
     card: { video: '/Gumroad_Tipping1.mp4', poster: '/Gumroad_01.svg' },
     media: { video: '/Gumroad_Tipping1.mp4', image: '/Gumroad_01.svg' },
-    gallery: ['/Gumroad_03.svg', '/Gumroad_04.svg', '/Gumroad_05.svg', '/Gumroad_06.svg', '/Gumroad_07.svg'],
+    prototypes: [
+      { title: 'Leave a tip', src: '/gumroad-prototypes/tip.html', height: 640 },
+      { title: 'Checkout tipping', src: '/gumroad-prototypes/checkout.html' },
+      { title: 'Tip upsell', src: '/gumroad-prototypes/upsell.html' },
+      { title: 'Thank-you moment', src: '/gumroad-prototypes/thankyou.html' },
+      { title: 'Back the creator', src: '/gumroad-prototypes/backcreator.html' },
+      { title: 'Fair-price slider', src: '/gumroad-prototypes/slider.html' },
+      { title: 'The complete checkout', src: '/gumroad-prototypes/final.html' },
+    ],
     body: `
       <p>A couple of summers ago, I was asked to design and implement a solution to adding tipping to the checkout flow in Gumroad. It was an experiment. Customers in the US are used to tipping but would it be a behaviour that would translate to an online purchase? Would non-US customers understand the concept? And importantly, how much should the UI and flow differ from the experience you are used to in a cafe?</p>
       <p>I prototyped a bunch of different approaches for the team to review. Percentages, absolute dollars, round up, games, and eventually we shipped what you see in the video below.</p>
