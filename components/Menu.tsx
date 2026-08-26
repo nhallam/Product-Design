@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Sun, Moon, Star, ArrowUpRight } from 'react-feather'
 import { useHasGhosts, easterEggClearGhostsRef } from './EasterEgg/EasterEggLayer'
+import { stickersPaused } from '@/lib/flags'
 
 interface MenuProps {
   open: boolean
@@ -199,18 +200,20 @@ export default function Menu({ open, onClose }: MenuProps) {
                 </div>
               )
             })
-            const stickersIdx = i++
-            items.push(
-              <div key="stickers" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(stickersIdx)}>
-                <Link
-                  href="/stickers"
-                  onClick={() => { easterEggClearGhostsRef.current?.(); onClose() }}
-                  className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors"
-                >
-                  Stickers
-                </Link>
-              </div>
-            )
+            if (!stickersPaused) {
+              const stickersIdx = i++
+              items.push(
+                <div key="stickers" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(stickersIdx)}>
+                  <Link
+                    href="/stickers"
+                    onClick={() => { easterEggClearGhostsRef.current?.(); onClose() }}
+                    className="text-base text-[var(--muted)] hover:text-[var(--text-strong)] transition-colors"
+                  >
+                    Stickers
+                  </Link>
+                </div>
+              )
+            }
             const emailIdx = i++
             items.push(
               <div key="email" className="transition-[opacity,transform] duration-300 ease-out" style={footerStyle(emailIdx)}>
