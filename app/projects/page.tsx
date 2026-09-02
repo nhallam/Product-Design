@@ -14,13 +14,27 @@ export default function Projects() {
     // Single rAF to ensure the sheet is in the DOM (translate-y-full) before
     // applying the open class so the enter transition plays.
     requestAnimationFrame(() => setSheetOpen(true))
+    // Put the project's real URL in the address bar so it can be copied/shared.
+    window.history.pushState({ projectSheet: true }, '', `/projects/${slug}`)
   }
 
   const closeSheet = () => {
     setSheetOpen(false)
     // Clear the slug after the exit transition finishes (380ms)
     setTimeout(() => setActiveSlug(null), 400)
+    // Restore /projects by popping the entry the sheet pushed.
+    if (window.history.state?.projectSheet) window.history.back()
   }
+
+  // Browser back while a sheet is open should close it (its URL was pushed).
+  useEffect(() => {
+    const onPop = () => {
+      setSheetOpen(false)
+      setTimeout(() => setActiveSlug(null), 400)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   // Keep the sheet slug in sync when open state changes externally (e.g. Escape)
   useEffect(() => {

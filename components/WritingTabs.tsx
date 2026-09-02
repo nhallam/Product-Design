@@ -40,13 +40,28 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
     // Single rAF so the sheet mounts (translate-y-full) before the open class
     // applies and the enter transition plays.
     requestAnimationFrame(() => setSheetOpen(true))
+    // Put the item's real URL in the address bar so it can be copied/shared.
+    const url = item.type === 'article' ? `/writing/${item.slug}` : `/newsletter/${item.campaign.id}`
+    window.history.pushState({ writingSheet: true }, '', url)
   }
 
   const closeSheet = () => {
     setSheetOpen(false)
     // Clear the active item after the exit transition finishes (380ms).
     setTimeout(() => setActive(null), 400)
+    // Restore /writing by popping the entry the sheet pushed.
+    if (window.history.state?.writingSheet) window.history.back()
   }
+
+  // Browser back while a sheet is open should close it (its URL was pushed).
+  useEffect(() => {
+    const onPop = () => {
+      setSheetOpen(false)
+      setTimeout(() => setActive(null), 400)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   // Keep the active item in sync when closed externally (e.g. Escape).
   useEffect(() => {
@@ -79,9 +94,10 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
       {tab === 'blog' && (
         <div className="mt-[6vh] divide-y divide-[var(--border)] border-b border-[var(--border)]">
           {articles.map(({ slug, title, date }) => (
-            <button
+            <a
               key={slug}
-              onClick={() => openSheet({ type: 'article', slug })}
+              href={`/writing/${slug}`}
+              onClick={(e) => { e.preventDefault(); openSheet({ type: 'article', slug }) }}
               className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
@@ -91,7 +107,7 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
                 )}
               </span>
               <span className="text-sm text-[var(--muted)] shrink-0 ml-6">{date}</span>
-            </button>
+            </a>
           ))}
         </div>
       )}
@@ -101,16 +117,17 @@ export default function WritingTabs({ articles, campaigns }: WritingTabsProps) {
           <NewsletterSignup />
           <div className="mt-10 divide-y divide-[var(--border)] border-b border-[var(--border)]">
             {campaigns.map((c) => (
-              <button
+              <a
                 key={c.id}
-                onClick={() => openSheet({ type: 'campaign', campaign: c })}
+                href={`/newsletter/${c.id}`}
+                onClick={(e) => { e.preventDefault(); openSheet({ type: 'campaign', campaign: c }) }}
                 className="w-full text-left flex justify-between items-baseline py-4 -mx-3 px-3 rounded-lg hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
               >
                 <span className="text-base font-medium text-[var(--text)]">{c.subject}</span>
                 <span className="text-sm text-[var(--muted)] shrink-0 ml-6">
                   {new Date(c.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
-              </button>
+              </a>
             ))}
           </div>
         </div>
