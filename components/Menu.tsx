@@ -26,7 +26,8 @@ const socialLinks = [
 
 export default function Menu({ open, onClose }: MenuProps) {
   const [copied, setCopied] = useState(false)
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  // Dark is the site default; the effect below syncs with any stored choice.
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const hasGhosts = useHasGhosts()
 
   useEffect(() => {
