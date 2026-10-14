@@ -44,7 +44,11 @@ export default function Menu({ open, onClose }: MenuProps) {
   function toggleTheme(e: React.MouseEvent) {
     e.stopPropagation()
     const next = theme === 'dark' ? 'light' : 'dark'
-    document.documentElement.dataset.theme = next
+    const root = document.documentElement
+    // Fade every themed element together (see html.theme-switching in globals.css)
+    root.classList.add('theme-switching')
+    window.setTimeout(() => root.classList.remove('theme-switching'), 500)
+    root.dataset.theme = next
     try { localStorage.setItem('theme', next) } catch {}
     setTheme(next)
   }
