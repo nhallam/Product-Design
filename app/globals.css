@@ -68,7 +68,10 @@ html.theme-switching *::after {
     flex: none;
     left: 50%;
     transform: translateX(-50%);
-    padding-inline: 24px;
+    /* Start the text at the nav's left edge (the max-w-2xl container +
+       its 24px gutter), while still running full-bleed to the right. */
+    padding-left: max(24px, calc(50vw - 312px));
+    padding-right: 24px;
     text-align: left;
     text-wrap: initial;
     font-size: clamp(4.5rem, 7.5vw, 10rem);
