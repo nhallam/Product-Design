@@ -70,20 +70,8 @@ html.theme-switching *::after {
     transform: translateX(-50%);
     padding-inline: 24px;
     text-align: center;
-    text-wrap: initial;
-    /* Sized so line 2 ("and founder based in Brooklyn, NY." — 13.02em wide
-       in this font) exactly fills the viewport minus the 24px gutters. */
-    font-size: min(calc((100vw - 48px) / 13.4), 12rem);
-    line-height: 1.02;
-  }
-  /* Deliberate break: first line centered, second flush left. */
-  .home-hero .hero-line-1 {
-    display: block;
-    text-align: center;
-  }
-  .home-hero .hero-line-2 {
-    display: block;
-    text-align: left;
+    font-size: 58px;
+    line-height: 1.1;
   }
 }
 
