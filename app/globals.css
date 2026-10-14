@@ -57,6 +57,25 @@ html.theme-switching *::after {
   transition-timing-function: ease;
 }
 
+/* Full-bleed home hero on desktop: breaks out of the centered column,
+   left-aligned, fluidly sized with the viewport. Mobile keeps the
+   centered 2.75rem treatment from the utility classes. */
+@media (min-width: 768px) {
+  .home-hero {
+    position: relative;
+    width: 100vw;
+    /* it's a flex item — don't let the column shrink it back down */
+    flex: none;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-inline: 24px;
+    text-align: left;
+    text-wrap: initial;
+    font-size: clamp(4.5rem, 7.5vw, 10rem);
+    line-height: 1.02;
+  }
+}
+
 ::view-transition-group(site-nav) {
   animation: none;
   z-index: 100;

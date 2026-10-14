@@ -18,7 +18,7 @@ export default function HomeHero() {
 
   return (
     <h1
-      className="text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
+      className="home-hero text-[2.75rem] font-black leading-[1.1] w-full text-center text-balance"
       style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}
     >
       A product designer and founder based in Brooklyn, NY.
