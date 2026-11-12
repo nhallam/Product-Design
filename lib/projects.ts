@@ -73,9 +73,8 @@ export const projects: Project[] = [
     description: 'Interactive prototype work for Kiki',
     tag: 'Product Design',
     body: `
-      <p>A collection of working prototypes built for Kiki. Everything below is live — click around, the prototypes manage their own navigation.</p>
-      <figure><iframe src="/kiki/index.html" title="Kiki prototypes" loading="lazy" style="width:100%;height:80vh;min-height:600px;border:1px solid var(--border);border-radius:10px;background:#fff"></iframe></figure>
-      <p><a href="/kiki/index.html" target="_blank" rel="noopener noreferrer">Open the prototypes full screen</a>.</p>
+      <p>Working prototypes from the matches flow — guest and host side by side. Everything is live, click around.</p>
+      <figure><iframe src="/kiki/matches.html" title="Kiki matches flow prototype" loading="lazy" style="width:min(92vw,1440px);height:980px;border:0;position:relative;left:50%;transform:translateX(-50%)"></iframe></figure>
     `,
   },
   {
