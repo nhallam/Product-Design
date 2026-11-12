@@ -29,19 +29,26 @@ export default function KikiMatches() {
 
   return (
     <div
-      className="mt-8 flex"
+      className="mt-8 flex flex-col"
       style={{ width: 'min(92vw, 1440px)', position: 'relative', left: '50%', transform: 'translateX(-50%)' }}
     >
+      <iframe
+        ref={frameRef}
+        src="/kiki/matches.html"
+        title="Kiki matches flow prototype"
+        loading="lazy"
+        className="w-full"
+        style={{ height: 810, border: 0 }}
+      />
       <nav
         aria-label="Prototype versions"
-        className="sticky self-start flex flex-col gap-2.5 pt-2 shrink-0"
-        style={{ top: 110 }}
+        className="mt-6 flex justify-center gap-4"
       >
         {VERSIONS.map(([key, label]) => (
           <button
             key={key}
             onClick={() => show(key)}
-            className={`text-left text-[15px] px-2 py-1 rounded-md cursor-pointer transition-colors ${
+            className={`text-[15px] px-2 py-1 rounded-md cursor-pointer transition-colors ${
               active === key
                 ? 'font-bold text-[var(--text)]'
                 : 'font-medium text-[var(--muted)] hover:text-[var(--hover)]'
@@ -51,14 +58,6 @@ export default function KikiMatches() {
           </button>
         ))}
       </nav>
-      <iframe
-        ref={frameRef}
-        src="/kiki/matches.html"
-        title="Kiki matches flow prototype"
-        loading="lazy"
-        className="flex-1 min-w-0"
-        style={{ height: 810, border: 0 }}
-      />
     </div>
   )
 }
