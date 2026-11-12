@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { projectBySlug } from '@/lib/projects'
 import PrototypeFrame from '@/components/PrototypeFrame'
+import KikiMatches from '@/components/KikiMatches'
 
 export default function ProjectDetail({ slug }: { slug: string }) {
   const project = projectBySlug(slug)
@@ -29,6 +30,8 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           dangerouslySetInnerHTML={{ __html: project.body }}
         />
       )}
+
+      {slug === 'kiki' && <KikiMatches />}
 
       {media?.vimeoId && (
         <div className="mt-10 relative w-full aspect-video overflow-hidden rounded-[10px] shadow-[0_4px_9px_-1px_rgb(0,0,0,0.10),0_2px_6px_-2px_rgb(0,0,0,0.10)]">
