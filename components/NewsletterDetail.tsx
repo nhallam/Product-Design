@@ -10,7 +10,7 @@ export default function NewsletterDetail({ campaign }: { campaign: Campaign }) {
   const date = new Date(campaign.sent_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 
   return (
-    <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
+    <div className="pb-20 px-6 max-w-4xl mx-auto w-full">
       <h1
         className="text-[2.75rem] font-black leading-[1.1] text-balance text-[var(--text)]"
         style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}

@@ -59,7 +59,7 @@ export default function Sheet({ open, onClose, resetKey, children }: SheetProps)
     >
       {/* Header with close button. Content scrolls beneath it unobscured. */}
       <div className="sticky top-0 z-10">
-        <div className="relative max-w-2xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
+        <div className="relative max-w-4xl mx-auto w-full flex justify-end px-6 pt-6 pb-4">
           <button
             onClick={onClose}
             className="text-[var(--text)] hover:opacity-40 transition-opacity"

@@ -13,7 +13,7 @@ export default function SiteShell({ children, lastUpdated }: { children: React.R
   return (
     <>
       {!stickersPaused && <EasterEggLayer />}
-      <div className="relative max-w-2xl mx-auto min-h-[100dvh] flex flex-col">
+      <div className="relative max-w-4xl mx-auto min-h-[100dvh] flex flex-col">
         <Nav menuOpen={menuOpen} onToggle={() => setMenuOpen(!menuOpen)} />
         {children}
         <Footer lastUpdated={lastUpdated} />

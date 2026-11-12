@@ -5,14 +5,14 @@ export default function ArticleDetail({ slug }: { slug: string }) {
 
   if (!article) {
     return (
-      <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
+      <div className="pb-20 px-6 max-w-4xl mx-auto w-full">
         <p className="text-base text-[var(--muted)]">Article not found.</p>
       </div>
     )
   }
 
   return (
-    <div className="pb-20 px-6 max-w-2xl mx-auto w-full">
+    <div className="pb-20 px-6 max-w-4xl mx-auto w-full">
       <h1
         className="text-[2.75rem] font-black leading-[1.1] text-balance text-[var(--text)]"
         style={{ fontFamily: "'AmericanGroteskCondensed', Arial, sans-serif" }}

@@ -84,11 +84,11 @@ export default function Menu({ open, onClose }: MenuProps) {
     <div onClick={onClose} className={`fixed inset-0 z-50 bg-[var(--bg)]/75 backdrop-blur-[15px] flex flex-col transition-opacity duration-[150ms] ease-in ${
       open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
     }`}>
-      <div className="max-w-2xl mx-auto w-full px-6 pt-6 pb-4">
+      <div className="max-w-4xl mx-auto w-full px-6 pt-6 pb-4">
         <span className="text-base opacity-0 select-none">Nick Hallam</span>
       </div>
       {hasGhosts && (
-        <div className="max-w-2xl mx-auto w-full px-6 flex justify-end -mt-3">
+        <div className="max-w-4xl mx-auto w-full px-6 flex justify-end -mt-3">
           <div
             className="transition-[opacity,transform] duration-300 ease-out"
             style={{
@@ -107,7 +107,7 @@ export default function Menu({ open, onClose }: MenuProps) {
         </div>
       )}
 
-      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
+      <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col px-6 pb-[28px]">
         <div className="flex-1 flex items-center">
           <nav className="flex flex-col gap-1">
             {navLinks.map(({ href, label }, i) => (
