@@ -74,7 +74,7 @@ export const projects: Project[] = [
     tag: 'Product Design',
     body: `
       <p>Working prototypes from the matches flow — guest and host side by side. Everything is live, click around.</p>
-      <figure><iframe src="/kiki/matches.html" title="Kiki matches flow prototype" loading="lazy" style="width:min(92vw,1440px);height:clamp(440px,calc(100dvh - 350px),980px);border:0;position:relative;left:50%;transform:translateX(-50%)"></iframe></figure>
+      <figure><iframe src="/kiki/matches.html" title="Kiki matches flow prototype" loading="lazy" style="width:min(92vw,1440px);height:640px;border:0;position:relative;left:50%;transform:translateX(-50%)"></iframe></figure>
     `,
   },
   {
