@@ -69,7 +69,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'kiki',
-    title: 'Kiki',
+    title: 'HTML Prototype Display',
     description: 'Interactive prototype work for Kiki',
     tag: 'Product Design',
     body: `
