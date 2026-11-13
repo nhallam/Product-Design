@@ -74,7 +74,9 @@ export const projects: Project[] = [
     tag: 'Product Design',
     card: { image: '/HTML_Prototype_Cover.svg' },
     body: `
-      <p>Working prototypes from the matches flow — guest and host side by side. Everything is live, click around.</p>
+      <p>Recently I was asked by a client to redesign the booking request flow in their app.</p>
+      <p>The scenario was that Ryan had listed his apartment for rent on the platform and multiple people have sent requests to book it.</p>
+      <p>Flows like these have lots of edge cases and it can be hard to visualise all the different states clearly.</p>
     `,
   },
   {

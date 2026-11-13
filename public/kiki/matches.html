@@ -15,7 +15,7 @@
 <script>
   var data = JSON.parse(document.getElementById('v-matches').textContent);
   // Let the site's background show through, and hide the demo chrome
-  var INJECT = '<style>html,body{background:transparent!important}.restart-btn{display:none!important}.duo-viewport{overflow:visible!important}.duo-label{background:transparent!important;border:none!important;padding:0!important}.duo-role{background:transparent!important;color:#909090!important;padding:0!important;font-weight:600!important}.duo-name{color:#909090!important;font-weight:600!important}.duo-chev{color:#909090!important}.duo-pick-btn:hover{background:rgba(128,128,128,0.15)!important}.phone{box-shadow:0 0 0 10px #1a1a1c,0 0 0 12px #3a3a3c,0 30px 70px rgba(0,0,0,0.45),0 12px 28px rgba(0,0,0,0.3)!important}</style>';
+  var INJECT = '<style>html,body{background:transparent!important}.restart-btn{display:none!important}.duo-viewport{overflow:visible!important}.duo-label{background:transparent!important;border:none!important;padding:0!important;height:36px!important;align-items:center!important}.duo-pick-btn{padding:0!important}.duo-role{background:transparent!important;color:#909090!important;padding:0!important;font-weight:600!important}.duo-name{color:#909090!important;font-weight:600!important}.duo-chev{color:#909090!important}.duo-pick-btn:hover{background:rgba(128,128,128,0.15)!important}.phone{box-shadow:0 0 0 10px #1a1a1c,0 0 0 12px #3a3a3c,0 30px 70px rgba(0,0,0,0.45),0 12px 28px rgba(0,0,0,0.3)!important}</style>';
   var fr = document.getElementById('fr');
 
   function decode(b64) {
