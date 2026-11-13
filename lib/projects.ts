@@ -77,6 +77,12 @@ export const projects: Project[] = [
       <p>Recently I was asked by a client to redesign the booking request flow in their app.</p>
       <p>The scenario was that Ryan had listed his apartment for rent on the platform and multiple people have sent requests to book it.</p>
       <p>Flows like these have lots of edge cases and it can be hard to visualise all the different states clearly.</p>
+      <p>To help the team see everything in one place, I mocked up both sides of the transaction on iPhones with a toggle that lets you switch between user types.</p>
+      <p>As you take actions the outcome is reflected on the other user's screen.</p>
+      <p>We found visualising the flows like this really helpful.</p>
+      <p>And to track changes and feedback, I added a basic version control to the bottom which let us switch between older versions of the flow.</p>
+      <p>This is a new way of working for us and something that has only become possible now that we are shipping prototypes in code.</p>
+      <p>Fun times ahead.</p>
     `,
   },
   {
