@@ -72,6 +72,7 @@ export const projects: Project[] = [
     title: 'HTML Prototype Display',
     description: 'Interactive prototype work for Kiki',
     tag: 'Product Design',
+    card: { image: '/HTML_Prototype_Cover.svg' },
     body: `
       <p>Working prototypes from the matches flow — guest and host side by side. Everything is live, click around.</p>
     `,

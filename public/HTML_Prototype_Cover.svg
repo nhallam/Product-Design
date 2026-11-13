@@ -1,0 +1,101 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Technical line drawing: two phones + version switches, light/dark blue -->
+  <rect width="1200" height="720" fill="#FAFBFE"/>
+
+  <!-- fine blueprint grid -->
+  <g stroke="#E3EBF8" stroke-width="1">
+    <path d="M100 0V720M200 0V720M300 0V720M400 0V720M500 0V720M600 0V720M700 0V720M800 0V720M900 0V720M1000 0V720M1100 0V720"/>
+    <path d="M0 100H1200M0 200H1200M0 300H1200M0 400H1200M0 500H1200M0 600H1200"/>
+  </g>
+  <!-- corner registration marks -->
+  <g stroke="#B9CCEE" stroke-width="1.5">
+    <path d="M70 60H90M80 50V70"/>
+    <path d="M1110 60H1130M1120 50V70"/>
+    <path d="M70 660H90M80 650V670"/>
+    <path d="M1110 660H1130M1120 650V670"/>
+  </g>
+
+  <!-- dimension line above phones -->
+  <g stroke="#9FB9E8" stroke-width="1.5">
+    <path d="M330 52V72"/>
+    <path d="M870 52V72"/>
+    <path d="M330 62H870" stroke-dasharray="5 5"/>
+  </g>
+
+  <!-- LEFT PHONE -->
+  <g>
+    <rect x="330" y="88" width="250" height="500" rx="40" stroke="#1D3F8F" stroke-width="3"/>
+    <rect x="341" y="99" width="228" height="478" rx="30" stroke="#9FB9E8" stroke-width="1.5"/>
+    <!-- dynamic island -->
+    <rect x="420" y="112" width="70" height="18" rx="9" stroke="#1D3F8F" stroke-width="2"/>
+    <!-- ghost header -->
+    <rect x="365" y="152" width="110" height="14" rx="7" fill="#DCE6F8"/>
+    <!-- segmented tabs -->
+    <path d="M365 192H455" stroke="#1D3F8F" stroke-width="2.5"/>
+    <path d="M475 192H545" stroke="#DCE6F8" stroke-width="2.5"/>
+    <!-- text box -->
+    <rect x="365" y="216" width="180" height="58" rx="10" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="379" y="234" width="100" height="9" rx="4.5" fill="#DCE6F8"/>
+    <rect x="379" y="251" width="140" height="9" rx="4.5" fill="#E9F0FB"/>
+    <!-- list cards -->
+    <rect x="365" y="292" width="180" height="48" rx="10" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="377" y="304" width="24" height="24" rx="6" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="411" y="306" width="78" height="8" rx="4" fill="#DCE6F8"/>
+    <rect x="411" y="320" width="52" height="8" rx="4" fill="#E9F0FB"/>
+    <rect x="365" y="352" width="180" height="48" rx="10" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="377" y="364" width="24" height="24" rx="6" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="411" y="366" width="78" height="8" rx="4" fill="#DCE6F8"/>
+    <rect x="411" y="380" width="52" height="8" rx="4" fill="#E9F0FB"/>
+    <!-- ghost primary button -->
+    <rect x="365" y="440" width="180" height="40" rx="20" stroke="#1D3F8F" stroke-width="2" stroke-dasharray="6 5"/>
+    <rect x="425" y="456" width="60" height="8" rx="4" fill="#DCE6F8"/>
+    <!-- tab bar -->
+    <path d="M341 524H569" stroke="#E3EBF8" stroke-width="1.5"/>
+    <circle cx="383" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="438" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="493" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
+    <circle cx="527" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+  </g>
+
+  <!-- RIGHT PHONE -->
+  <g>
+    <rect x="620" y="88" width="250" height="500" rx="40" stroke="#1D3F8F" stroke-width="3"/>
+    <rect x="631" y="99" width="228" height="478" rx="30" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="710" y="112" width="70" height="18" rx="9" stroke="#1D3F8F" stroke-width="2"/>
+    <!-- ghost header -->
+    <rect x="655" y="152" width="90" height="14" rx="7" fill="#DCE6F8"/>
+    <!-- big hero card -->
+    <rect x="655" y="184" width="180" height="110" rx="12" stroke="#9FB9E8" stroke-width="1.5"/>
+    <path d="M655 254L700 224L728 246L770 210L835 262" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="690" cy="208" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <!-- text lines -->
+    <rect x="655" y="312" width="130" height="10" rx="5" fill="#DCE6F8"/>
+    <rect x="655" y="330" width="166" height="9" rx="4.5" fill="#E9F0FB"/>
+    <rect x="655" y="347" width="150" height="9" rx="4.5" fill="#E9F0FB"/>
+    <!-- input + ghost button pair -->
+    <rect x="655" y="382" width="180" height="38" rx="10" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="668" y="396" width="70" height="9" rx="4.5" fill="#E9F0FB"/>
+    <rect x="655" y="440" width="86" height="40" rx="20" stroke="#1D3F8F" stroke-width="2" stroke-dasharray="6 5"/>
+    <rect x="755" y="440" width="80" height="40" rx="20" stroke="#9FB9E8" stroke-width="1.5"/>
+    <!-- tab bar -->
+    <path d="M631 524H859" stroke="#E3EBF8" stroke-width="1.5"/>
+    <circle cx="673" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="728" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
+    <circle cx="783" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="817" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+  </g>
+
+  <!-- version switches below -->
+  <g>
+    <rect x="432" y="624" width="56" height="30" rx="15" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="449" y="636" width="22" height="6" rx="3" fill="#DCE6F8"/>
+    <rect x="500" y="624" width="56" height="30" rx="15" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="517" y="636" width="22" height="6" rx="3" fill="#DCE6F8"/>
+    <rect x="568" y="624" width="56" height="30" rx="15" fill="#E1E9FB" stroke="#1D3F8F" stroke-width="2"/>
+    <rect x="585" y="636" width="22" height="6" rx="3" fill="#1D3F8F"/>
+    <rect x="636" y="624" width="56" height="30" rx="15" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="653" y="636" width="22" height="6" rx="3" fill="#DCE6F8"/>
+    <rect x="704" y="624" width="56" height="30" rx="15" stroke="#9FB9E8" stroke-width="1.5"/>
+    <rect x="721" y="636" width="22" height="6" rx="3" fill="#DCE6F8"/>
+  </g>
+</svg>
