@@ -52,8 +52,8 @@
     <!-- tab bar -->
     <path d="M341 524H569" stroke="#E3EBF8" stroke-width="1.5"/>
     <circle cx="383" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
-    <circle cx="438" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
-    <circle cx="493" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
+    <circle cx="431" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="479" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
     <circle cx="527" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
   </g>
 
@@ -80,8 +80,8 @@
     <!-- tab bar -->
     <path d="M631 524H859" stroke="#E3EBF8" stroke-width="1.5"/>
     <circle cx="673" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
-    <circle cx="728" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
-    <circle cx="783" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
+    <circle cx="721" cy="548" r="8" stroke="#1D3F8F" stroke-width="2"/>
+    <circle cx="769" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
     <circle cx="817" cy="548" r="8" stroke="#9FB9E8" stroke-width="1.5"/>
   </g>
 
