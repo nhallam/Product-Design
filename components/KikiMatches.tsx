@@ -38,7 +38,7 @@ export default function KikiMatches() {
         title="Kiki matches flow prototype"
         loading="lazy"
         className="w-full"
-        style={{ height: 810, border: 0 }}
+        style={{ height: 900, border: 0 }}
       />
       <nav
         aria-label="Prototype versions"
