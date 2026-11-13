@@ -42,7 +42,8 @@ export default function KikiMatches() {
       />
       <nav
         aria-label="Prototype versions"
-        className="mt-6 flex justify-center gap-4"
+        className="relative z-10 flex justify-center gap-4"
+        style={{ marginTop: -48 }}
       >
         {VERSIONS.map(([key, label]) => (
           <button
