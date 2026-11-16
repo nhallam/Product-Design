@@ -1,6 +1,20 @@
-export type Article = { title: string; date: string; body: string }
+export type Article = {
+  title: string
+  date: string
+  body: string
+  // Optional live component rendered after `body`; `bodyAfter` continues below it.
+  embed?: 'kiki-matches'
+  bodyAfter?: string
+}
 
 export const articles: Record<string, Article> = {
+  'cause-and-effect-prototypes': {
+    title: 'Cause & Effect Prototypes',
+    date: 'Nov 2026',
+    embed: 'kiki-matches',
+    body: `<p>I had a project recently where I needed to share multiple iterations of a flow with a client.</p><p>The flow had two sides to it. On one side, people sending booking requests. On the other, the person who had listed their apartment and was receiving them.</p><p>A flow like this comes with a bunch of edge cases and versions. Different dates, different durations, one person booking or a couple.</p><p>It was also one of the first times I decided to make my deliverables HTML prototypes built with Claude. And somewhere along the way it occurred to me that it was possible to show both sides of the flow at once, mocked up on iPhones side by side. You click an action on one side and see the corresponding effect on the other. A sort of cause-and-effect prototype.</p><p>Here is an example of what that looks like.</p>`,
+    bodyAfter: `<p>This is a step change. Previously you'd be linking up multiple screens in Figma trying to give people a sense of what was happening. By shipping live code and working prototypes, you're sharing a much higher-fidelity version of the idea.</p><p>The side-by-side thing was a big unlock for us. It gave everyone a much clearer sense of what was happening, right from their browser.</p><p>It's just one example of the kind of thing we're able to unlock now. And a very useful display tool.</p><p>More on this project <a href="/projects/kiki">here</a>.</p>`,
+  },
   'personal-software': {
     title: 'Personal Software',
     date: 'Jul 2026',
@@ -84,6 +98,7 @@ export const articles: Record<string, Article> = {
 }
 
 export const articleList: Array<{ slug: string; title: string; date: string }> = [
+  { slug: 'cause-and-effect-prototypes', title: 'Cause & Effect Prototypes', date: 'Nov 2026' },
   { slug: 'personal-software', title: 'Personal Software', date: 'Jul 2026' },
   { slug: 'leaving-spotify', title: 'Leaving Spotify for Deezer', date: 'Jun 2026' },
   { slug: 'ai-product-experiments', title: 'AI Product Experiments', date: 'Jun 2026' },
