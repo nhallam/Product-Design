@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: dictation-to-blog-post
+expected_outcome: |
+  A short blog post in Nick's voice built from the dictation: opens inside the
+  story, short one-to-three-sentence paragraphs, keeps his casual phrasing
+  ("the most me thing on the site"), honours the admitted lack of a neat
+  conclusion rather than inventing one, ends short and forward-looking.
+  No buzzwords, no summarising intro or outro, title of 1-4 plain words.

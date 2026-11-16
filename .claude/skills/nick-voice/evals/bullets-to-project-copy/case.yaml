@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: bullets-to-project-copy
+expected_outcome: |
+  Project-page copy in the register of the Gumroad/Kiki writeups: 4-8 short
+  first-person paragraphs telling the story (brief, situation, insight, what
+  shipped), concrete details from the bullets kept ("low key anxiety",
+  12 weeks, NDA), no headers or bullet lists, no case-study jargon
+  (stakeholders, outcomes, impact), ends plainly.

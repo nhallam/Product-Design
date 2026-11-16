@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: rewrite-overpolished-draft
+expected_outcome: |
+  A rewrite that strips every buzzword (leveraging, seamlessly, empowering,
+  robust, landscape, unprecedented) and the em-dash triad rhythm, and restates
+  the same ideas as plain first-person Nick prose: short declarative
+  sentences, concrete where possible, understated enthusiasm, no grand
+  "future of design" closer.
