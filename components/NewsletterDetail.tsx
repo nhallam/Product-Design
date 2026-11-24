@@ -20,7 +20,7 @@ export default function NewsletterDetail({ campaign }: { campaign: Campaign }) {
       <p className="text-sm text-[var(--muted)] mt-3 mb-10">{date}</p>
 
       <div
-        className="max-w-prose w-full
+        className="w-full
           [&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[var(--text)]
           [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[var(--text)] [&_a:hover]:text-[var(--hover)]
           [&_strong]:font-bold

@@ -3,7 +3,7 @@ import { articles } from '../articles'
 import KikiMatches from '@/components/KikiMatches'
 import type { Metadata } from 'next'
 
-const bodyClasses = `max-w-prose mx-auto w-full
+const bodyClasses = `max-w-4xl mx-auto w-full
   [&_p]:mb-5 [&_p]:text-base [&_p]:leading-relaxed [&_p]:text-[var(--text)]
   [&_a]:underline [&_a]:underline-offset-2 [&_a]:text-[var(--text)] [&_a:hover]:text-[var(--hover)]
   [&_strong]:font-bold
