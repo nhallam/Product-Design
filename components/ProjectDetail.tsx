@@ -20,9 +20,9 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       {project?.body && (
         <div
           className="text-base leading-relaxed text-[var(--text)]
-            [&_p]:mb-5 [&_p]:max-w-prose
-            [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul]:max-w-prose [&_ul_li]:mb-2
-            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:max-w-prose
+            [&_p]:mb-5
+            [&_ul]:mb-5 [&_ul]:pl-5 [&_ul]:list-disc [&_ul_li]:mb-2
+            [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-4
             [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:opacity-60 [&_a]:transition-opacity
             [&_figure]:my-8
             [&_figure_img]:w-full [&_figure_img]:rounded-sm
